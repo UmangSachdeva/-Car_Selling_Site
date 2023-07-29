@@ -1,0 +1,64 @@
+.colored-road {
+    height: 200px;
+    background: #ffc107;
+    width: 102%;
+    bottom: -48px;
+    position: absolute;
+    z-index: 2;
+    transform: rotate(-3deg);
+}
+
+.information {
+    overflow: hidden;
+}
+
+.header-image img {
+    z-index: 3;
+    position: relative;
+}
+
+.header-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.information .image-container {
+    margin-top: 15%;
+}
+
+.information .image-container img {
+    position: relative;
+    left: 25%;
+}
+
+.information .text {
+    padding: 10%;
+}
+
+.banner-details .image-container-banner {
+    width: 20%
+}
+
+.figure {
+    font-size: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.arrow {
+    margin-bottom: 54px;
+    rotate: -33deg;
+}
+
+.our-numbers {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.vehicle-selector {
+    margin: 170px auto;
+}
+
+.vehicle-selector .row {
+    padding: 10px 10%;
+}

@@ -1,0 +1,91 @@
+.search-container {
+  display: inline-block;
+  margin: 22px auto;
+}
+
+.selection-box-container,
+.search-box-container {
+  padding: 10px;
+  width: fit-content;
+  display: flex;
+  min-width: 250px;
+  min-height: 68px;
+  background-color: white;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 11px 20px 20px 3px #62626233;
+}
+
+.search-box-container {
+  padding: 10px 30px;
+}
+
+.search-box-container {
+  width: 1000px;
+  height: 120px;
+}
+
+.active-btn {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+
+}
+
+.selection-box,
+.search-box {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.for-bus,
+.for-car {
+  padding: 5px;
+  transition: 0.5s;
+}
+
+.border-right {
+  border-right: 2px solid gray;
+}
+
+.btn-search .btn {
+  width: 100%;
+  float: right;
+  border-radius: 10px;
+  height: 79px;
+  font-size: 20px;
+}
+
+.btn-search {
+  width: 29% !important;
+}
+
+.select-boxes {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+}
+
+.subheading {
+  font-size: 17px;
+}
+
+.select-container .form-select {
+  border: none;
+  font-size: 19px;
+  padding: 10px 0px;
+  color: gray;
+  --bs-form-select-bg-img: none;
+  margin: 0px !important;
+  cursor: pointer;
+}
+
+.select-container .form-select:focus {
+  box-shadow: none;
+
+}
