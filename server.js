@@ -1,6 +1,7 @@
 const app = require("./app");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const { Server } = require("socket.io");
 
 dotenv.config({ path: "./config.env" });
 
@@ -15,6 +16,49 @@ mongoose
     console.log("Connected to DB 👋");
   });
 
-app.listen(port, () => {
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+const server = app.listen(port, () => {
   console.log("Server running on port 9000 ✅⚡");
+});
+
+// Socket Setup
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("user connected");
+  socket.on("setup", (userData) => {
+    console.log(userData);
+    socket.join(userData?._id);
+
+    socket.emit("connected");
+  });
+
+  socket.on("join-chat", (room) => {
+    socket.join(room);
+  });
+
+  socket.on("new-message", (newMessageReceived) => {
+    console.log(newMessageReceived);
+    let chat = newMessageReceived.chat;
+    
+    if (!chat.users) return console.log(`chat.users not defined`);
+
+    chat.users.forEach((user) => {
+      if (user._id === newMessageReceived.sender._id) return;
+
+      socket.in(user._id).emit("message-received", newMessageReceived);
+    });
+  });
+
+  socket.off("setup", () => {
+    socket.leave(userData._id);
+  });
 });

@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  height: 100%;
+}
+
+body {
+  height: 100vh;
 }
 
 .App-logo {
@@ -33,7 +38,7 @@
 }
 
 #root {
-  overflow: hidden;
+  height: auto;
 }
 
 .MuiBottomNavigation-root {
@@ -828,7 +833,84 @@ label.close {
   transform: translateX(20%);
 }
 
+/* Message Tab */
+.chat-container {
+  display: flex;
+  height: 85vh;
+  padding: 20px;
+}
 
+.chathead-container {
+  width: 50%;
+  background: #FFF;
+  border: 1px solid #404040;
+  min-height: 100%;
+}
+
+.chatspace-container {
+  border: 1px solid #404040;
+  background: #FFFCF5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-topic-head {
+  border-top: 1px solid #404040;
+  padding: 10px 10px;
+  border-bottom: 1px solid #404040;
+  background: #FFE494;
+  width: 100%;
+  text-align: left;
+}
+
+.chat-topic-head p {
+  color: #000;
+  font-size: 22px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.chat-topic-head span {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.message-container::-webkit-scrollbar {
+  display: none;
+}
+
+.message-container {
+  overflow-y: scroll;
+  width: 100%;
+  padding: 10px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-box {
+  list-style-type: none;
+  margin: 10px;
+  width: fit-content;
+  padding: 10px;
+}
+
+.sender {
+  align-self: flex-end;
+  background-color: #FFF1C8 !important;
+}
+
+.receiver {
+  background-color: #FFBF00 !important;
+}
 
 
 @media (min-width: 1280px) {

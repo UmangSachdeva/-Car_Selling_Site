@@ -127,8 +127,8 @@ function NavBar() {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    Car Locations
+                  <a className="nav-link" href="/messages">
+                    Messages
                   </a>
                 </li>
                 <li className="nav-item">
@@ -156,7 +156,9 @@ function NavBar() {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <Avatar {...stringAvatar(loggedIn.profile_name)} />
+                    <Avatar
+                      {...stringAvatar(loggedIn.f_name + " " + loggedIn.l_name)}
+                    />
                   </IconButton>
                   <span>{loggedIn.profile_name}</span>
                   <Menu
