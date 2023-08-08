@@ -17,6 +17,7 @@ exports.sendMessage = async (req, res, next) => {
     };
 
     let msg = await Message.create(newMessage);
+    msg = await msg.populate("chat");
     msg = await User.populate(msg, {
       path: "chat.users",
       select: "profile_name email _id",
@@ -40,7 +41,9 @@ exports.allMessages = async (req, res) => {
 
     const getMessage = await Message.find({
       chat: chatId,
-    }).populate({ path: "sender", select: "-password -__v -f_name -l_name" });
+    })
+      .populate({ path: "sender", select: "-password -__v -f_name -l_name" })
+      .populate({ path: "chat", select: "users" });
 
     res.status(200).json({
       status: "success",

@@ -22,8 +22,8 @@ const ShopState = (props) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      fetchMe();
+    if (localStorage.getItem("user")) {
+      setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, []);
 

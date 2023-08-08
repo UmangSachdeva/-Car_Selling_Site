@@ -58,6 +58,11 @@ exports.signup = async (req, res, next) => {
       profile_name: req.body.profile_name,
     });
 
+    user.password = undefined;
+    user.passwordConfirm = undefined;
+    user.role = undefined;
+    user.__v = undefined;
+
     const token = signToken(user._id);
 
     res.status(200).json({
