@@ -39,6 +39,7 @@ body {
 
 #root {
   height: auto;
+  overflow: hidden;
 }
 
 .MuiBottomNavigation-root {
@@ -901,6 +902,12 @@ label.close {
   margin: 10px;
   width: fit-content;
   padding: 10px;
+  border-radius: 10px;
+  max-width: 50%;
+}
+
+.margin-2 {
+  margin-top: 0px !important;
 }
 
 .sender {
@@ -910,6 +917,62 @@ label.close {
 
 .receiver {
   background-color: #FFBF00 !important;
+}
+
+/* Typing indecator */
+.typingIndicatorContainer {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  margin: 4 0;
+}
+
+.typingIndicatorBubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 40px;
+  margin: 0px 8px;
+  background-color: #FFBF00;
+  border-radius: 10px;
+}
+
+.typingIndicatorBubbleDot {
+  width: 4px;
+  height: 4px;
+  margin-right: 4px;
+  background-color: #57585a;
+  border-radius: 50%;
+  animation-name: bounce1;
+  animation-duration: 1.3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.typingIndicatorBubbleDot:first-of-type {
+  margin: 0px 4px;
+}
+
+.typingIndicatorBubbleDot:nth-of-type(2) {
+  animation-delay: 0.1s;
+}
+
+.typingIndicatorBubbleDot:nth-of-type(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce1 {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-4px);
+  }
 }
 
 

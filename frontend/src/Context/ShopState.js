@@ -17,6 +17,10 @@ const ShopState = (props) => {
       });
   };
 
+  const isSameUser = (messages, m, i) => {
+    return i > 0 && messages[i - 1].sender._id === m.sender._id;
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetchMe();
@@ -25,7 +29,14 @@ const ShopState = (props) => {
 
   return (
     <shopContext.Provider
-      value={{ loginState, setLoginState, selectedChat, setSelectedChat, user }}
+      value={{
+        loginState,
+        setLoginState,
+        selectedChat,
+        setSelectedChat,
+        user,
+        isSameUser,
+      }}
     >
       {props.children}
     </shopContext.Provider>
