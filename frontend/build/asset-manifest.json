@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bdf0edf8.css",
+    "main.js": "/static/js/main.765f93f4.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/signup.gif": "/static/media/signup.33985af690a2981ac0d0.gif",
+    "static/media/image2.jpg": "/static/media/image2.9302874d116f29c4a52f.jpg",
+    "static/media/suv.jpg": "/static/media/suv.042d71090feeb299da5b.jpg",
+    "static/media/van.jpg": "/static/media/van.714242d338a0cf516fa8.jpg",
+    "static/media/login.gif": "/static/media/login.d49fb7cd0e7f19b55e34.gif",
+    "static/media/car.jpg": "/static/media/car.e80c73c9b0db3a7402fd.jpg",
+    "static/media/electric.jpg": "/static/media/electric.7e98f38b37e14fae0185.jpg",
+    "static/media/car-logo-5.png": "/static/media/car-logo-5.48c5d798e75dba607d8c.png",
+    "static/media/car-logo-3.png": "/static/media/car-logo-3.0341ba4241327bf81c02.png",
+    "static/media/car-logo-7.png": "/static/media/car-logo-7.9d2655a8b202ea7f3baa.png",
+    "static/media/car-bmw.png": "/static/media/car-bmw.ec1a978e03adad81c382.png",
+    "static/media/car-logo-6.png": "/static/media/car-logo-6.15514584354d9e40659d.png",
+    "static/media/car-logo-4.png": "/static/media/car-logo-4.d852534ff3ab989783a7.png",
+    "static/media/car-jeep.png": "/static/media/car-jeep.6415e4f9468ba802745e.png",
+    "static/media/car-rover.png": "/static/media/car-rover.81152409b0ad985623c5.png",
+    "static/media/aventedor.png": "/static/media/aventedor.1a9a13a1537d09e798fe.png",
+    "static/media/car-logo-1.png": "/static/media/car-logo-1.bcba7ff10d325d15804a.png",
+    "static/media/car-logo-2.png": "/static/media/car-logo-2.2dd16e09154e8ebd3661.png",
+    "static/media/image1.jpg": "/static/media/image1.ca5e84fe797bfe489352.jpg",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "index.html": "/index.html",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "main.bdf0edf8.css.map": "/static/css/main.bdf0edf8.css.map",
+    "main.765f93f4.js.map": "/static/js/main.765f93f4.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bdf0edf8.css",
+    "static/js/main.765f93f4.js"
+  ]
+}
