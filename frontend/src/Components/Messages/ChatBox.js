@@ -42,7 +42,6 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        console.log("typing stop");
         socket.emit("stop-typing", selectedChat);
         setTyping(false);
       }
@@ -51,7 +50,6 @@ function ChatBox({ username, setUsername, room, setRoom }) {
   };
 
   const fetchMessages = () => {
-    console.log("fetch message called");
     try {
       axios
         .get(
@@ -73,36 +71,34 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (e.key === "Enter" && message) {
-      socket.emit("stop-typing", selectedChat._id);
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/message`,
-          {
-            message: message,
-            chatId: selectedChat,
+
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/message`,
+        {
+          message: message,
+          chatId: selectedChat,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
-        .then((res) => {
-          setMessage("");
-          setMessages([...messages, res.data.data]);
-          socket.emit("new-message", res.data.data);
-          fetchMessages();
-        })
-        .catch((err) => {
-          toast.error(`Cannot send the message`);
-        });
-    }
+        }
+      )
+      .then((res) => {
+        setMessage("");
+        setMessages([...messages, res.data.data]);
+        socket.emit("new-message", res.data.data);
+      })
+      .catch((err) => {
+        toast.error(`Cannot send the message`);
+      });
   };
 
   useEffect(() => {
     socket = io.connect(process.env.REACT_APP_SOCKET_URL);
-    socket.emit("setup", user);
+    const userData = JSON.parse(localStorage.getItem("user"));
+    socket.emit("setup", userData);
 
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop-typing", () => setIsTyping(false));
@@ -119,15 +115,12 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
   useEffect(() => {
     socket.on("message-received", (newMessageReceived) => {
-      console.log("message recieved");
       if (
         !selectedChatCompare ||
         selectedChatCompare !== newMessageReceived.chat._id
       ) {
         setFetchAgain(!fetchAgain);
       } else {
-        console.log(messages);
-        // console.log([...messages, newMessageReceived]);
         setMessages([...messages, newMessageReceived]);
       }
     });
@@ -140,27 +133,16 @@ function ChatBox({ username, setUsername, room, setRoom }) {
         <span>Umang Sachdeva | Delhi, India</span>
       </div>
       <SingleMessage messages={messages} isTyping={isTyping} />
-      {/* <form id="form" action="" onSubmit={sendMessage}> */}
-      <FormControl>
-        <TextField
-          type="text"
-          variant="filled"
-          defaultValue="Filled"
+
+      <form id="form" action="" onSubmit={sendMessage}>
+        <input
+          id="input"
+          autocomplete="off"
           value={message}
           onChange={typingHandler}
         />
-      </FormControl>
-      {/* <Input
-          variant="filled"
-          bg="#E0E0E0"
-          placeholder="Enter a message.."
-          value={message}
-          onChange={typingHandler}
-        /> */}
-
-      {/* <button>Send</button>  */}
-      {/* <button>Join Room</button> */}
-      {/* </form> */}
+        <button>Send</button>
+      </form>
     </>
   );
 }

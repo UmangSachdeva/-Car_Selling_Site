@@ -59,6 +59,7 @@ function Login({ showCmd, handleClose }) {
       .post(`${process.env.REACT_APP_BASE_URL}/auth/signup`, signupDetails)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         setLoginState(true);
         toast.success("Signup successfull", {
           id: toastIdSignup,
@@ -89,6 +90,7 @@ function Login({ showCmd, handleClose }) {
       .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, loginDetails)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         setLoginState(true);
         toast.success("Logged in successfully", {
           id: toastId,

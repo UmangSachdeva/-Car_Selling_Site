@@ -26,6 +26,7 @@ const server = app.listen(port, () => {
 
 // Socket Setup
 const io = new Server(server, {
+  pingTimeout: 60000,
   cors: {
     origin: "*",
   },
@@ -34,8 +35,8 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("user connected");
   socket.on("setup", (userData) => {
-    console.log(userData);
     socket.join(userData?._id);
+    console.log("user with id " + userData?._id);
 
     socket.emit("connected");
   });
@@ -48,13 +49,15 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-message", (newMessageReceived) => {
+    console.log("message recieved");
+    console.log(newMessageReceived);
     let chat = newMessageReceived.chat;
 
     if (!chat.users) return console.log(`chat.users not defined`);
 
     chat.users.forEach((user) => {
       if (user._id === newMessageReceived.sender._id) return;
-      console.log("event emitted");
+
       socket.in(user._id).emit("message-received", newMessageReceived);
     });
   });
