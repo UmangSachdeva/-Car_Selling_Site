@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Input, FormControl, TextField } from "@mui/material";
+import send from "../../Resources/send.png";
 
 import { io } from "socket.io-client";
 import shopContext from "../../Context/shopContext";
@@ -17,7 +17,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [isSocketConnected, setSocketConnected] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const { selectedChat, user } = context;
+  const { selectedChat } = context;
   const [typing, setTyping] = useState(false);
   const [timeout, setTimeoutTyping] = useState();
 
@@ -50,6 +50,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
   };
 
   const fetchMessages = () => {
+    console.log("messages fetched");
     try {
       axios
         .get(
@@ -87,6 +88,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       )
       .then((res) => {
         setMessage("");
+
         setMessages([...messages, res.data.data]);
         socket.emit("new-message", res.data.data);
       })
@@ -121,9 +123,15 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       ) {
         setFetchAgain(!fetchAgain);
       } else {
+        console.log(messages);
+
         setMessages([...messages, newMessageReceived]);
       }
     });
+
+    return () => {
+      socket.off("message-received");
+    };
   });
 
   return (
@@ -134,14 +142,18 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       </div>
       <SingleMessage messages={messages} isTyping={isTyping} />
 
-      <form id="form" action="" onSubmit={sendMessage}>
+      <form id="form" action="" onSubmit={sendMessage} className="chat-box">
         <input
           id="input"
           autocomplete="off"
           value={message}
+          placeholder="Message..."
+          className="chat-box-input"
           onChange={typingHandler}
         />
-        <button>Send</button>
+        <button className="send-btn">
+          <img src={send} alt="" />
+        </button>
       </form>
     </>
   );

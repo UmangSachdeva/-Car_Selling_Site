@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useEffect } from "react";
 import shopContext from "../../Context/shopContext";
+import { formatDistanceToNow, subDays } from "date-fns";
 
 function SingleMessage({ messages, isTyping }) {
   const scrollContainerRef = useRef(null);
@@ -12,6 +13,7 @@ function SingleMessage({ messages, isTyping }) {
 
   useEffect(() => {
     scrollToBottom();
+    console.log(messages);
   }, [messages, isTyping]);
 
   return (
@@ -29,6 +31,11 @@ function SingleMessage({ messages, isTyping }) {
                 key={index}
               >
                 <span>{msg.message}</span>
+                <span className="time-stamp">
+                  {formatDistanceToNow(new Date(msg.createdAt), {
+                    addSuffix: true,
+                  })}
+                </span>
               </li>
             );
           })}

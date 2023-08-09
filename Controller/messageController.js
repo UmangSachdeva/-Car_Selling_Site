@@ -17,13 +17,21 @@ exports.sendMessage = async (req, res, next) => {
     };
 
     let msg = await Message.create(newMessage);
-    msg = await msg.populate("chat");
+    msg = await msg.populate({
+      path: "sender",
+      select: "email profile_name _id",
+    });
+    msg = await msg.populate({ path: "chat", select: "users _id" });
     msg = await User.populate(msg, {
       path: "chat.users",
       select: "profile_name email _id",
     });
 
-    await Chat.findByIdAndUpdate(chatId, { latestMessage: msg }, { new: true });
+    await Chat.findByIdAndUpdate(
+      chatId,
+      { latestMessages: msg },
+      { new: true }
+    );
 
     res.status(200).json({ status: "success", data: msg });
   } catch (err) {
