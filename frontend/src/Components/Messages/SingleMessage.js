@@ -2,10 +2,10 @@ import React, { useContext, useRef, useEffect } from "react";
 import shopContext from "../../Context/shopContext";
 import { formatDistanceToNow, subDays } from "date-fns";
 
-function SingleMessage({ messages, isTyping }) {
+function SingleMessage() {
   const scrollContainerRef = useRef(null);
   const context = useContext(shopContext);
-  const { user, isSameUser } = context;
+  const { user, isSameUser, isTyping, messages } = context;
 
   const scrollToBottom = () => {
     scrollContainerRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -13,7 +13,7 @@ function SingleMessage({ messages, isTyping }) {
 
   useEffect(() => {
     scrollToBottom();
-    console.log(messages);
+    console.log("typing");
   }, [messages, isTyping]);
 
   return (

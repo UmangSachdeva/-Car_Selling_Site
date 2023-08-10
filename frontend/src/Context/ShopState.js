@@ -4,18 +4,14 @@ import shopContext from "./shopContext";
 
 const ShopState = (props) => {
   const [loginState, setLoginState] = useState(false);
-  const [selectedChat, setSelectedChat] = useState("64cfc76e6d39e1dfe14a69a3");
+  const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState({});
-
-  const fetchMe = () => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/auth/me`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => {
-        setUser(res.data.user);
-      });
-  };
+  const [messages, setMessages] = useState([]);
+  const [fetchAgain, setFetchAgain] = useState(true);
+  const [notification, setNotification] = useState([]);
+  const [socket, setSocket] = useState();
+  const [isTyping, setIsTyping] = useState(false);
+  const [isSocketConnected, setSocketConnected] = useState(false);
 
   const isSameUser = (messages, m, i) => {
     return i > 0 && messages[i - 1].sender._id === m.sender._id;
@@ -36,6 +32,18 @@ const ShopState = (props) => {
         setSelectedChat,
         user,
         isSameUser,
+        fetchAgain,
+        setFetchAgain,
+        notification,
+        setNotification,
+        messages,
+        setMessages,
+        socket,
+        setSocket,
+        isTyping,
+        setIsTyping,
+        isSocketConnected,
+        setSocketConnected,
       }}
     >
       {props.children}

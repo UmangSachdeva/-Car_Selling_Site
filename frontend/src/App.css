@@ -842,10 +842,18 @@ label.close {
 }
 
 .chathead-container {
-  width: 50%;
+  width: 40%;
   background: #FFF;
   border: 1px solid #404040;
   min-height: 100%;
+  padding: 20px 0;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.chathead-container::-webkit-scrollbar {
+  display: none;
 }
 
 .chatspace-container {
@@ -887,6 +895,7 @@ label.close {
 .message-container {
   overflow-y: scroll;
   width: 100%;
+  height: 100%;
   padding: 10px;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -904,6 +913,8 @@ label.close {
   padding: 10px;
   border-radius: 10px;
   max-width: 50%;
+  text-align: left;
+  word-wrap: break-word;
 }
 
 .margin-2 {
@@ -968,6 +979,7 @@ label.close {
   top: 7px;
   left: 0px;
   margin-left: 10px;
+  float: right;
 }
 
 .chat-box {
@@ -1005,6 +1017,57 @@ label.close {
   align-items: center;
 }
 
+/* Chat Head Styles */
+.chat-head-container {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  padding: 10px 32px;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.user-details {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chat-for {
+  font-size: 16px;
+}
+
+.last_message {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.chat-head-heading {
+  font-weight: 600;
+  margin-bottom: 45px;
+}
+
+.selected {
+  background: #FFF1C8;
+}
+
+.alternate-text-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.alternate-text-container p {
+  font-size: 24px;
+  color: #4c4c4c;
+}
 
 @keyframes bounce1 {
 

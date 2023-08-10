@@ -4,6 +4,17 @@ body {
 }
 
 /* NavBar */
+.navbar-expand-lg .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  justify-content: space-between !important;
+}
+
+.profile-part {
+  display: flex;
+  padding: 0 20px;
+}
+
 .menu-title {
   color: rgb(90, 90, 90)
 }

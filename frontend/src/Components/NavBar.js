@@ -9,9 +9,12 @@ import {
   ListItemIcon,
   IconButton,
   Divider,
+  Badge,
 } from "@mui/material";
 
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { Logout, Settings } from "@mui/icons-material";
+import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
@@ -19,23 +22,45 @@ import CarRentalRoundedIcon from "@mui/icons-material/CarRentalRounded";
 import Login from "./Auth/Login";
 import axios from "axios";
 import shopContext from "../Context/shopContext";
+import io from "socket.io-client";
+
+let selectedChatCompare;
+let socket;
 
 function NavBar() {
   const [selectedPage, setSelectedPage] = useState("home");
   const context = useContext(shopContext);
-  const { loginState, setLoginState } = context;
+  const {
+    setLoginState,
+    loginState,
+    selectedChat,
+    fetchAgain,
+    setFetchAgain,
+    notification,
+    setNotification,
+  } = context;
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
   const [login, setLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isSocketConnected, setSocketConnected] = useState(false);
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
 
   const handleClose = () => setLogin(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
   const handleCloseAccount = () => {
     setAnchorEl(null);
+  };
+  const handleCloseAccount2 = () => {
+    setAnchorEl2(null);
   };
 
   const stringToColor = (string) => {
@@ -89,8 +114,14 @@ function NavBar() {
   };
 
   useEffect(() => {
+    socket = io.connect(process.env.REACT_APP_SOCKET_URL);
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  useEffect(() => {
     checkMe();
   }, [loginState]);
+
   return (
     <div>
       <Login showCmd={login} handleClose={handleClose} />
@@ -147,71 +178,214 @@ function NavBar() {
                 </button>
               )}
               {loggedIn && (
-                <div className="login-info">
-                  <IconButton
-                    onClick={handleClick}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={open ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                  >
-                    <Avatar
-                      {...stringAvatar(loggedIn.f_name + " " + loggedIn.l_name)}
-                    />
-                  </IconButton>
-                  <span>{loggedIn.profile_name}</span>
-                  <Menu
-                    anchorEl={anchorEl}
-                    id="account-menu"
-                    open={open}
-                    onClose={handleCloseAccount}
-                    onClick={handleCloseAccount}
-                    PaperProps={{
-                      elevation: 0,
-                      sx: {
-                        overflow: "visible",
-                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                        mt: 1.5,
-                        "& .MuiAvatar-root": {
-                          width: 32,
-                          height: 32,
-                          ml: -0.5,
-                          mr: 1,
+                <div className="profile-part">
+                  <div className="login-info">
+                    <IconButton
+                      onClick={handleClick2}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={open2 ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open2 ? "true" : undefined}
+                    >
+                      {notification.length === 0 ? (
+                        <NotificationsNoneRoundedIcon
+                          sx={{ color: "#212529", width: 30, height: 30 }}
+                        />
+                      ) : (
+                        <Badge
+                          badgeContent={notification.length}
+                          color="primary"
+                        >
+                          <NotificationsRoundedIcon
+                            sx={{ color: "#212529", width: 30, height: 30 }}
+                          />
+                        </Badge>
+                      )}
+                    </IconButton>
+
+                    {notification.length === 0 ? (
+                      <Menu
+                        anchorEl={anchorEl2}
+                        id="account-menu"
+                        open={open2}
+                        onClose={handleCloseAccount2}
+                        onClick={handleCloseAccount2}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: "visible",
+                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                            mt: 1.5,
+                            "& .MuiAvatar-root": {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            "&:before": {
+                              content: '""',
+                              display: "block",
+                              position: "absolute",
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: "background.paper",
+                              color: "black",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{
+                          horizontal: "right",
+                          vertical: "top",
+                        }}
+                        anchorOrigin={{
+                          horizontal: "right",
+                          vertical: "bottom",
+                        }}
+                      >
+                        <MenuItem onClick={handleClose}>
+                          <span className="menu-title">No Notifications</span>
+                        </MenuItem>
+                        <Divider />
+                      </Menu>
+                    ) : (
+                      <Menu
+                        anchorEl={anchorEl2}
+                        id="account-menu"
+                        open={open2}
+                        onClose={handleCloseAccount2}
+                        onClick={handleCloseAccount2}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: "visible",
+                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                            mt: 1.5,
+                            "& .MuiAvatar-root": {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            "&:before": {
+                              content: '""',
+                              display: "block",
+                              position: "absolute",
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: "background.paper",
+                              color: "black",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{
+                          horizontal: "right",
+                          vertical: "top",
+                        }}
+                        anchorOrigin={{
+                          horizontal: "right",
+                          vertical: "bottom",
+                        }}
+                      >
+                        <MenuItem onClick={handleClose}>
+                          <ListItemIcon>
+                            <Settings fontSize="small" />
+                          </ListItemIcon>
+                          <span className="menu-title">Setting</span>
+                          Settings
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem
+                          onClick={handleLogout}
+                          sx={{ color: "black" }}
+                        >
+                          <ListItemIcon>
+                            <Logout
+                              sx={{ color: "#ff7730" }}
+                              fontSize="small"
+                            />
+                          </ListItemIcon>
+                          <span className="Logout">Logout</span>
+                        </MenuItem>
+                      </Menu>
+                    )}
+                  </div>
+                  <div className="login-info">
+                    <IconButton
+                      onClick={handleClick}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={open ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                    >
+                      <Avatar
+                        {...stringAvatar(
+                          loggedIn.f_name + " " + loggedIn.l_name
+                        )}
+                      />
+                    </IconButton>
+                    <span>{loggedIn.profile_name}</span>
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
+                      open={open}
+                      onClose={handleCloseAccount}
+                      onClick={handleCloseAccount}
+                      PaperProps={{
+                        elevation: 0,
+                        sx: {
+                          overflow: "visible",
+                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                          mt: 1.5,
+                          "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                          },
+                          "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            color: "black",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0,
+                          },
                         },
-                        "&:before": {
-                          content: '""',
-                          display: "block",
-                          position: "absolute",
-                          top: 0,
-                          right: 14,
-                          width: 10,
-                          height: 10,
-                          bgcolor: "background.paper",
-                          color: "black",
-                          transform: "translateY(-50%) rotate(45deg)",
-                          zIndex: 0,
-                        },
-                      },
-                    }}
-                    transformOrigin={{ horizontal: "right", vertical: "top" }}
-                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      <ListItemIcon>
-                        <Settings fontSize="small" />
-                      </ListItemIcon>
-                      <span className="menu-title">Setting</span>
-                      Settings
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
-                      <ListItemIcon>
-                        <Logout sx={{ color: "#ff7730" }} fontSize="small" />
-                      </ListItemIcon>
-                      <span className="Logout">Logout</span>
-                    </MenuItem>
-                  </Menu>
+                      }}
+                      transformOrigin={{ horizontal: "right", vertical: "top" }}
+                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    >
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <Settings fontSize="small" />
+                        </ListItemIcon>
+                        <span className="menu-title">Setting</span>
+                        Settings
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
+                        <ListItemIcon>
+                          <Logout sx={{ color: "#ff7730" }} fontSize="small" />
+                        </ListItemIcon>
+                        <span className="Logout">Logout</span>
+                      </MenuItem>
+                    </Menu>
+                  </div>
                 </div>
               )}
             </div>
