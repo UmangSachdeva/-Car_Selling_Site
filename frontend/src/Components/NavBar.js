@@ -15,37 +15,41 @@ import {
 import { Logout, Settings } from "@mui/icons-material";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
-import HomeIcon from "@mui/icons-material/Home";
+import HomeIcon from "@mui/icons-material/HomeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
-import CarRentalRoundedIcon from "@mui/icons-material/CarRentalRounded";
+import PaidRoundedIcon from "@mui/icons-material/ForumOutlined";
+import CarRentalRoundedIcon from "@mui/icons-material/CarRentalOutlined";
+import LoginIcon from "@mui/icons-material/Login";
 import Login from "./Auth/Login";
 import axios from "axios";
 import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
+import { useLocation, useNavigate } from "react-router-dom";
 
 let selectedChatCompare;
 let socket;
 
 function NavBar() {
-  const [selectedPage, setSelectedPage] = useState("home");
   const context = useContext(shopContext);
   const {
     setLoginState,
     loginState,
     selectedChat,
-    fetchAgain,
-    setFetchAgain,
     notification,
     setNotification,
+    setSelectedChat,
+    loggedIn,
+    setLoggedIn,
+    selectedPage,
+    setSelectedPage,
   } = context;
+  const nav = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [login, setLogin] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isSocketConnected, setSocketConnected] = useState(false);
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl2);
+  const location = useLocation();
 
   const handleClose = () => setLogin(false);
 
@@ -85,7 +89,9 @@ function NavBar() {
 
   const handleLogout = () => {
     setLoginState(false);
+    setLoggedIn(false);
     localStorage.removeItem("token");
+    nav("/");
   };
 
   const stringAvatar = (name) => {
@@ -122,6 +128,8 @@ function NavBar() {
     checkMe();
   }, [loginState]);
 
+  useEffect(() => {}, [window.innerWidth]);
+
   return (
     <div>
       <Login showCmd={login} handleClose={handleClose} />
@@ -153,20 +161,35 @@ function NavBar() {
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">
+                  <a
+                    className={`nav-link ${
+                      location.pathname === "/" ? "active" : ""
+                    }`}
+                    aria-current="page"
+                    href="/"
+                  >
                     How it works?
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/messages">
-                    Messages
-                  </a>
-                </li>
+
                 <li className="nav-item">
                   <a className="nav-link" href="/">
                     Pricing
                   </a>
                 </li>
+
+                {loggedIn && (
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        location.pathname === "/messages" ? "active" : ""
+                      }`}
+                      href="/messages"
+                    >
+                      Messages
+                    </a>
+                  </li>
+                )}
               </ul>
               {!loggedIn && (
                 <button
@@ -250,7 +273,6 @@ function NavBar() {
                         <MenuItem onClick={handleClose}>
                           <span className="menu-title">No Notifications</span>
                         </MenuItem>
-                        <Divider />
                       </Menu>
                     ) : (
                       <Menu
@@ -295,26 +317,22 @@ function NavBar() {
                           vertical: "bottom",
                         }}
                       >
-                        <MenuItem onClick={handleClose}>
-                          <ListItemIcon>
-                            <Settings fontSize="small" />
-                          </ListItemIcon>
-                          <span className="menu-title">Setting</span>
-                          Settings
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem
-                          onClick={handleLogout}
-                          sx={{ color: "black" }}
-                        >
-                          <ListItemIcon>
-                            <Logout
-                              sx={{ color: "#ff7730" }}
-                              fontSize="small"
-                            />
-                          </ListItemIcon>
-                          <span className="Logout">Logout</span>
-                        </MenuItem>
+                        {notification.map((noti, index) => (
+                          <MenuItem
+                            onClick={() => {
+                              setSelectedChat(noti.chat);
+                              setNotification(
+                                notification.filter((n) => n !== noti)
+                              );
+                              nav("/messages");
+                            }}
+                            key={index}
+                          >
+                            <span className="menu-title">
+                              New Message From {noti?.sender.profile_name}
+                            </span>
+                          </MenuItem>
+                        ))}
                       </Menu>
                     )}
                   </div>
@@ -394,29 +412,36 @@ function NavBar() {
       )}
       {window.innerWidth <= 768 && (
         <BottomNavigation
+          sx={{ height: "80px", borderRadius: 0 }}
+          showLabels
           value={selectedPage}
           onChange={(event, newValue) => {
             setSelectedPage(newValue);
           }}
         >
           <BottomNavigationAction
-            label="Home"
+            label="HOME"
             value="home"
-            icon={<HomeIcon />}
+            icon={<HomeIcon sx={{ width: 40, height: 40 }} />}
+            onClick={() => nav("/")}
           />
           <BottomNavigationAction
-            label="Buy"
-            value="buy"
-            icon={<PaidRoundedIcon />}
+            label="CATALOG"
+            value="catalog"
+            icon={<CarRentalRoundedIcon sx={{ width: 40, height: 40 }} />}
           />
           <BottomNavigationAction
-            label="Rent"
-            value="rent"
-            icon={<CarRentalRoundedIcon />}
+            label="MESSAGES"
+            onClick={() => nav("/messages")}
+            value="message"
+            icon={<PaidRoundedIcon sx={{ width: 40, height: 40 }} />}
           />
-          {loggedIn && (
+
+          {loggedIn ? (
             <BottomNavigationAction
               value="account"
+              label="ACCOUNT"
+              onClick={handleClick}
               icon={
                 <Avatar
                   sx={{ width: 10, height: 10 }}
@@ -424,14 +449,66 @@ function NavBar() {
                 />
               }
             />
-          )}
-          {!loggedIn && (
+          ) : (
             <BottomNavigationAction
               value="account"
-              label="Account"
-              icon={<AccountCircleIcon />}
+              label="LOGIN"
+              onClick={() => setLogin(true)}
+              icon={<LoginIcon sx={{ width: 40, height: 40 }} />}
             />
           )}
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleCloseAccount}
+            onClick={handleCloseAccount}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                top: "630px !important",
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  bottom: -10,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  color: "black",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              <span className="menu-title">Setting</span>
+              Settings
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
+              <ListItemIcon>
+                <Logout sx={{ color: "#ff7730" }} fontSize="small" />
+              </ListItemIcon>
+              <span className="Logout">Logout</span>
+            </MenuItem>
+          </Menu>
         </BottomNavigation>
       )}
     </div>

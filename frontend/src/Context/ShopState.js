@@ -4,6 +4,7 @@ import shopContext from "./shopContext";
 
 const ShopState = (props) => {
   const [loginState, setLoginState] = useState(false);
+  const [selectedPage, setSelectedPage] = useState("home");
   const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState({});
   const [messages, setMessages] = useState([]);
@@ -12,6 +13,7 @@ const ShopState = (props) => {
   const [socket, setSocket] = useState();
   const [isTyping, setIsTyping] = useState(false);
   const [isSocketConnected, setSocketConnected] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const isSameUser = (messages, m, i) => {
     return i > 0 && messages[i - 1].sender._id === m.sender._id;
@@ -44,6 +46,10 @@ const ShopState = (props) => {
         setIsTyping,
         isSocketConnected,
         setSocketConnected,
+        loggedIn,
+        setLoggedIn,
+        selectedPage,
+        setSelectedPage,
       }}
     >
       {props.children}

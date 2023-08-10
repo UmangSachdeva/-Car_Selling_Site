@@ -69,6 +69,7 @@ function ChatHeads() {
         chats?.map((item, index) => {
           const chatWith =
             item.users[0]._id === user._id ? item.users[1] : item.users[0];
+
           return (
             <div
               className={`chat-head-container ${

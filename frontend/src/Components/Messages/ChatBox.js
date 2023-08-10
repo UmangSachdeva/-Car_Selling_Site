@@ -20,6 +20,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
     isSocketConnected,
     isTyping,
     socket,
+    user,
   } = context;
   const [typing, setTyping] = useState(false);
   const [timeout, setTimeoutTyping] = useState();
@@ -108,8 +109,15 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       {selectedChat ? (
         <>
           <div className="chat-topic-head">
-            <p>Chat Topic</p>
-            <span>Umang Sachdeva | Delhi, India</span>
+            <p style={{ textTransform: "capitalize" }}>
+              {selectedChat.chatName}
+            </p>
+            <span>
+              {selectedChat.users[0]._id === user._id
+                ? selectedChat.users[1].profile_name
+                : selectedChat.users[0].profile_name}{" "}
+              | Delhi, India
+            </span>
           </div>
           <SingleMessage messages={messages} isTyping={isTyping} />
           <form id="form" action="" onSubmit={sendMessage} className="chat-box">
