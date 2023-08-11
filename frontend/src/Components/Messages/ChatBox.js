@@ -1,23 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { Input, FormControl, TextField } from "@mui/material";
+import send from "../../Resources/send.png";
+import io from "socket.io-client";
 
-import { io } from "socket.io-client";
 import shopContext from "../../Context/shopContext";
 import SingleMessage from "./SingleMessage";
 
-let socket;
-let selectedChatCompare;
-
 function ChatBox({ username, setUsername, room, setRoom }) {
-  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const context = useContext(shopContext);
-  const [fetchAgain, setFetchAgain] = useState(false);
-  const [isSocketConnected, setSocketConnected] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const { selectedChat, user } = context;
+
+  const {
+    selectedChat,
+    fetchAgain,
+    setFetchAgain,
+    messages,
+    setMessages,
+    isSocketConnected,
+    isTyping,
+    socket,
+    user,
+  } = context;
   const [typing, setTyping] = useState(false);
   const [timeout, setTimeoutTyping] = useState();
 
@@ -29,7 +33,8 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     if (!typing) {
       setTyping(true);
-      socket.emit("typing", selectedChat);
+      console.log("typing emitted");
+      socket.emit("typing", selectedChat._id);
     }
 
     let lastTypingTime = new Date().getTime();
@@ -42,7 +47,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        socket.emit("stop-typing", selectedChat);
+        socket.emit("stop-typing", selectedChat._id);
         setTyping(false);
       }
     }, 3000);
@@ -50,19 +55,18 @@ function ChatBox({ username, setUsername, room, setRoom }) {
   };
 
   const fetchMessages = () => {
+    if (!selectedChat) return;
+
     try {
       axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/message/64cfc76e6d39e1dfe14a69a3`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        )
+        .get(`${process.env.REACT_APP_BASE_URL}/message/${selectedChat._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         .then((results) => {
           setMessages(results.data.data);
-          socket.emit("join-chat", "64cfc76e6d39e1dfe14a69a3");
+          socket.emit("join-chat", selectedChat._id);
         });
     } catch (err) {
       toast.error(`${err.response.data.message}`);
@@ -77,7 +81,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
         `${process.env.REACT_APP_BASE_URL}/message`,
         {
           message: message,
-          chatId: selectedChat,
+          chatId: selectedChat._id,
         },
         {
           headers: {
@@ -87,6 +91,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       )
       .then((res) => {
         setMessage("");
+        setFetchAgain(!fetchAgain);
         setMessages([...messages, res.data.data]);
         socket.emit("new-message", res.data.data);
       })
@@ -96,53 +101,53 @@ function ChatBox({ username, setUsername, room, setRoom }) {
   };
 
   useEffect(() => {
-    socket = io.connect(process.env.REACT_APP_SOCKET_URL);
-    const userData = JSON.parse(localStorage.getItem("user"));
-    socket.emit("setup", userData);
-
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop-typing", () => setIsTyping(false));
-    socket.on("connected", () => {
-      setSocketConnected(true);
-    });
-  }, []);
-
-  useEffect(() => {
     fetchMessages();
-
-    selectedChatCompare = selectedChat;
   }, [selectedChat]);
-
-  useEffect(() => {
-    socket.on("message-received", (newMessageReceived) => {
-      if (
-        !selectedChatCompare ||
-        selectedChatCompare !== newMessageReceived.chat._id
-      ) {
-        setFetchAgain(!fetchAgain);
-      } else {
-        setMessages([...messages, newMessageReceived]);
-      }
-    });
-  });
 
   return (
     <>
-      <div className="chat-topic-head">
-        <p>Chat Topic</p>
-        <span>Umang Sachdeva | Delhi, India</span>
-      </div>
-      <SingleMessage messages={messages} isTyping={isTyping} />
-
-      <form id="form" action="" onSubmit={sendMessage}>
-        <input
-          id="input"
-          autocomplete="off"
-          value={message}
-          onChange={typingHandler}
-        />
-        <button>Send</button>
-      </form>
+      <>
+        {selectedChat ? (
+          <>
+            <div className="chat-topic-head">
+              <p style={{ textTransform: "capitalize" }}>
+                {selectedChat.chatName}
+              </p>
+              <span>
+                {selectedChat.users[0]._id === user._id
+                  ? selectedChat.users[1].profile_name
+                  : selectedChat.users[0].profile_name}{" "}
+                | Delhi, India
+              </span>
+            </div>
+            <SingleMessage messages={messages} isTyping={isTyping} />
+            <form
+              id="form"
+              action=""
+              onSubmit={sendMessage}
+              className="chat-box"
+            >
+              <input
+                id="input"
+                autocomplete="off"
+                value={message}
+                placeholder="Message..."
+                className="chat-box-input"
+                onChange={typingHandler}
+              />
+              <button className="send-btn">
+                <img src={send} alt="" />
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="alternate-text-container">
+            <p className="alternate-text">
+              Click On Chat Head to start conversation
+            </p>
+          </div>
+        )}
+      </>
     </>
   );
 }

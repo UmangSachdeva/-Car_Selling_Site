@@ -33,24 +33,26 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("user connected");
   socket.on("setup", (userData) => {
     socket.join(userData?._id);
-    console.log("user with id " + userData?._id);
+    
 
     socket.emit("connected");
   });
 
-  socket.on("typing", (room) => socket.in(room).emit("typing"));
-  socket.on("stop-typing", (room) => socket.in(room).emit("stop-typing"));
+  socket.on("typing", (room) => {
+    socket.in(room).emit("typing");
+  });
+  socket.on("stop-typing", (room) => {
+    socket.in(room).emit("stop-typing");
+  });
 
   socket.on("join-chat", (room) => {
     socket.join(room);
   });
 
   socket.on("new-message", (newMessageReceived) => {
-    console.log("message recieved");
-    console.log(newMessageReceived);
+   
     let chat = newMessageReceived.chat;
 
     if (!chat.users) return console.log(`chat.users not defined`);

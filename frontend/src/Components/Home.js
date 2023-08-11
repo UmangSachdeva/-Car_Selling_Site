@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "../Styles/Home.css";
 
 import Header from "./Header";
 import Carosoul from "./Carosoul";
 import Banner from "./Banner";
+import shopContext from "../Context/shopContext";
 
 function Home() {
+  const context = useContext(shopContext);
+  const { setSelectedPage } = context;
+
+  useEffect(() => {
+    setSelectedPage("home");
+  }, []);
+
   return (
     <div>
       <div className="home-body">

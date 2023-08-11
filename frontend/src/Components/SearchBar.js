@@ -89,11 +89,14 @@ function SearchBar() {
       {window.innerWidth <= 768 && (
         <>
           <div className="search-container-mobile">
-            <div className="search-type-mobile">
-              <div className="for-car-mobile active-type">Car</div>
-              <div className="for-bus-mobile">Bus</div>
-            </div>
             <div className="search-input-mobile">
+              <select className="location-dropdown-search" name="" id="">
+                <option value="delhi">Delhi</option>
+                <option value="haryana">Haryana</option>
+                <option value="manipur">Manipur</option>
+                <option value="uttar_pradesh">Uttar Pradesh</option>
+              </select>
+              <div className="vl"></div>
               <input
                 type="text"
                 name="search"

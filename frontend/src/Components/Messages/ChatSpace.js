@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ChatBox from "./ChatBox";
 import ChatHeads from "./ChatHeads";
+import shopContext from "../../Context/shopContext";
 
 function ChatSpace() {
+  const context = useContext(shopContext);
+  const { setSelectedPage } = context;
+
+  useEffect(() => {
+    setSelectedPage("message");
+  }, []);
+
   return (
     <div className="chat-container">
       <div className="chathead-container">
