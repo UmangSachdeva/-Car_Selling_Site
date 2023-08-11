@@ -24,17 +24,11 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-schema.pre(/find^/, function (next) {
-  this.populate({ path: "users latestMessages" });
+// schema.pre("save", function (next) {
+//   this.populate({ path: "users latestMessage chat" });
 
-  next();
-});
-
-schema.pre("save", function (next) {
-  this.populate({ path: "users latestMessage chat" });
-
-  next();
-});
+//   next();
+// });
 
 const Chat = mongoose.model("chat", schema);
 

@@ -12,7 +12,9 @@ exports.getChat = async (req, res, next) => {
     let chat = await Chat.find({
       isGroupChat: false,
       $and: [{ users: req.user.id }, { users: userId }],
-    });
+    })
+      .populate({ path: "users" })
+      .populate("latestMessage");
 
     chat = await User.populate(chat, {
       path: "latestMessage.sender",
@@ -40,10 +42,13 @@ exports.getChats = async (req, res, next) => {
   try {
     const chat = await Chat.find({
       users: { $elemMatch: { $eq: req.user.id } },
-    }).sort({ updatedAt: -1 });
+    })
+      .populate("users", "-password -passwordConfirm -role -__v")
+      .populate("latestMessages")
+      .sort({ updatedAt: -1 });
 
     const user = await User.populate(chat, {
-      path: "latestMessage.sender",
+      path: "latestMessages.sender",
       select: "profile_name email _id",
     });
 

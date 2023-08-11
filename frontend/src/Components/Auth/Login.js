@@ -9,6 +9,7 @@ import shopContext from "../../Context/shopContext";
 function Login({ showCmd, handleClose }) {
   const context = useContext(shopContext);
   const { setLoginState } = context;
+  const [login, setLogin] = useState(true);
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
@@ -44,10 +45,12 @@ function Login({ showCmd, handleClose }) {
 
   const handleToggle = (target) => {
     if (target === "signup") {
+      setLogin(false);
       document
         .getElementById("container")
         .classList.remove("right-panel-active");
     } else {
+      setLogin(true);
       document.getElementById("container").classList.add("right-panel-active");
     }
   };
@@ -106,165 +109,343 @@ function Login({ showCmd, handleClose }) {
 
   return (
     <div>
-      <Modal
-        open={showCmd}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        closeAfterTransition
-      >
-        <Box sx={style}>
-          <div className="close-container" onClick={handleClose}>
-            <div className="leftright signup close-symbol"></div>
-            <div className="rightleft signup close-symbol"></div>
-            <label className="close">close</label>
-          </div>
-          <div className="container" id="container">
-            <div className="right-content content_login form-container sign-in-container">
-              <form action="" className="login__form">
-                <h2 className="heading">
-                  Welcome Back,
-                  <br /> Log In
-                </h2>
-
-                <input
-                  value={loginDetails.email}
-                  className="form__input"
-                  type="email"
-                  name="email"
-                  id=""
-                  onChange={handleInput}
-                  placeholder="Email"
-                  required
-                />
-                <input
-                  value={loginDetails.password}
-                  className="form__input"
-                  type="password"
-                  name="password"
-                  onChange={handleInput}
-                  id=""
-                  minlength="8"
-                  placeholder="Password"
-                  required
-                />
-
-                <div className="extra-links input__box">
-                  <a href="/#">forgot password?</a>
-                  <a href="/#" onClick={() => handleToggle("login")}>
-                    Signup ?
-                  </a>
-                </div>
-
-                <button
-                  type="submit"
-                  className="form__submit"
-                  onClick={(e) => handleSubmit(e, "login")}
-                >
-                  Log In
-                </button>
-              </form>
+      {window.innerWidth > 768 && (
+        <Modal
+          open={showCmd}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          closeAfterTransition
+        >
+          <Box sx={style}>
+            <div className="close-container" onClick={handleClose}>
+              <div className="leftright signup close-symbol"></div>
+              <div className="rightleft signup close-symbol"></div>
+              <label className="close">close</label>
             </div>
-            <div className="left-content content_signup form-container sign-up-container">
-              <form action="" className="login__form">
-                <h2 className="heading">
-                  Start your journey,
-                  <br /> Sign up
-                </h2>
-                <div className="input__box">
+            <div className="container" id="container">
+              <div className="right-content content_login form-container sign-in-container">
+                <form action="" className="login__form">
+                  <h2 className="heading">
+                    Welcome Back,
+                    <br /> Log In
+                  </h2>
+
                   <input
-                    type="text"
-                    value={signupDetails.f_name}
-                    name="f_name"
+                    value={loginDetails.email}
                     className="form__input"
-                    placeholder="First Name"
-                    onChange={handleInputSignup}
+                    type="email"
+                    name="email"
+                    id=""
+                    onChange={handleInput}
+                    placeholder="Email"
                     required
                   />
                   <input
-                    type="text"
-                    value={signupDetails.l_name}
+                    value={loginDetails.password}
                     className="form__input"
-                    name="l_name"
-                    onChange={handleInputSignup}
-                    placeholder="Last Name"
+                    type="password"
+                    name="password"
+                    onChange={handleInput}
+                    id=""
+                    minlength="8"
+                    placeholder="Password"
+                    required
                   />
-                </div>
 
-                <input
-                  value={signupDetails.email}
-                  className="form__input"
-                  type="email"
-                  name="email"
-                  id=""
-                  onChange={handleInputSignup}
-                  placeholder="Email"
-                  required
-                />
+                  <div className="extra-links input__box">
+                    <a href="/#">forgot password?</a>
+                    <a href="/#" onClick={() => handleToggle("login")}>
+                      Signup ?
+                    </a>
+                  </div>
 
-                <input
-                  value={signupDetails.profile_name}
-                  className="form__input"
-                  type="text"
-                  name="profile_name"
-                  id=""
-                  onChange={handleInputSignup}
-                  placeholder="Username"
-                  required
-                />
-                <input
-                  value={signupDetails.password}
-                  className="form__input"
-                  type="password"
-                  name="password"
-                  onChange={handleInputSignup}
-                  id=""
-                  minlength="8"
-                  placeholder="Password"
-                  required
-                />
+                  <button
+                    type="submit"
+                    className="form__submit"
+                    onClick={(e) => handleSubmit(e, "login")}
+                  >
+                    Log In
+                  </button>
+                </form>
+              </div>
+              <div className="left-content content_signup form-container sign-up-container">
+                <form action="" className="login__form">
+                  <h2 className="heading">
+                    Start your journey,
+                    <br /> Sign up
+                  </h2>
+                  <div className="input__box">
+                    <input
+                      type="text"
+                      value={signupDetails.f_name}
+                      name="f_name"
+                      className="form__input"
+                      placeholder="First Name"
+                      onChange={handleInputSignup}
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={signupDetails.l_name}
+                      className="form__input"
+                      name="l_name"
+                      onChange={handleInputSignup}
+                      placeholder="Last Name"
+                    />
+                  </div>
 
-                <input
-                  value={loginDetails.passwordConfirm}
-                  className="form__input"
-                  type="password"
-                  name="passwordConfirm"
-                  onChange={handleInputSignup}
-                  id=""
-                  minlength="8"
-                  placeholder="Confirm Password"
-                  required
-                />
+                  <input
+                    value={signupDetails.email}
+                    className="form__input"
+                    type="email"
+                    name="email"
+                    id=""
+                    onChange={handleInputSignup}
+                    placeholder="Email"
+                    required
+                  />
 
-                <div className="extra-links input__box">
-                  <a href="/#" onClick={() => handleToggle("signup")}>
-                    Log in?
-                  </a>
-                </div>
+                  <input
+                    value={signupDetails.profile_name}
+                    className="form__input"
+                    type="text"
+                    name="profile_name"
+                    id=""
+                    onChange={handleInputSignup}
+                    placeholder="Username"
+                    required
+                  />
+                  <input
+                    value={signupDetails.password}
+                    className="form__input"
+                    type="password"
+                    name="password"
+                    onChange={handleInputSignup}
+                    id=""
+                    minlength="8"
+                    placeholder="Password"
+                    required
+                  />
 
-                <button
-                  type="submit"
-                  className="form__submit"
-                  onClick={handleSubmitSignup}
-                >
-                  Sign up
-                </button>
-              </form>
-            </div>
-            <div className="overlay-container">
-              <div className="overlay">
-                <div className="left-content overlay-panel content_login overlay-left">
-                  <img src={signupPic} alt="" />
-                </div>
+                  <input
+                    value={loginDetails.passwordConfirm}
+                    className="form__input"
+                    type="password"
+                    name="passwordConfirm"
+                    onChange={handleInputSignup}
+                    id=""
+                    minlength="8"
+                    placeholder="Confirm Password"
+                    required
+                  />
 
-                <div className="right-content overlay-panel content_signup overlay-right">
-                  <img src={loginPic} alt="" />
+                  <div className="extra-links input__box">
+                    <a href="/#" onClick={() => handleToggle("signup")}>
+                      Log in?
+                    </a>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="form__submit"
+                    onClick={handleSubmitSignup}
+                  >
+                    Sign up
+                  </button>
+                </form>
+              </div>
+              <div className="overlay-container">
+                <div className="overlay">
+                  <div className="left-content overlay-panel content_login overlay-left">
+                    <img src={signupPic} alt="" />
+                  </div>
+
+                  <div className="right-content overlay-panel content_signup overlay-right">
+                    <img src={loginPic} alt="" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Box>
-      </Modal>
+          </Box>
+        </Modal>
+      )}
+      {window.innerWidth < 768 && (
+        <Modal
+          open={showCmd}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          closeAfterTransition
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              width: "97%",
+              height: "fit-content",
+              bgcolor: "#FFFCF5",
+              boxShadow: 24,
+              borderRadius: "28px 28px 0px 0px",
+            }}
+          >
+            <div className="close-container" onClick={handleClose}>
+              <div
+                className="leftright signup close-symbol"
+                style={{ backgroundColor: "#FFC107" }}
+              ></div>
+              <div
+                className="rightleft signup close-symbol"
+                style={{ backgroundColor: "#FFC107" }}
+              ></div>
+              <label className="close">close</label>
+            </div>
+
+            <div className="container" id="container">
+              {login ? (
+                <div className="">
+                  <form
+                    action=""
+                    className="login__form"
+                    style={{ padding: "17px" }}
+                  >
+                    <h2 className="heading">
+                      Welcome Back,
+                      <br /> Log In
+                    </h2>
+
+                    <input
+                      value={loginDetails.email}
+                      className="form__input"
+                      type="email"
+                      name="email"
+                      id=""
+                      onChange={handleInput}
+                      placeholder="Email"
+                      required
+                    />
+                    <input
+                      value={loginDetails.password}
+                      className="form__input"
+                      type="password"
+                      name="password"
+                      onChange={handleInput}
+                      id=""
+                      minlength="8"
+                      placeholder="Password"
+                      required
+                    />
+
+                    <div className="extra-links input__box">
+                      <a href="/#">forgot password?</a>
+                      <a href="/#" onClick={() => setLogin(false)}>
+                        Signup ?
+                      </a>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="form__submit"
+                      onClick={(e) => handleSubmit(e, "login")}
+                    >
+                      Log In
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div>
+                  <form action="" className="login__form">
+                    <h2 className="heading">
+                      Start your journey,
+                      <br /> Sign up
+                    </h2>
+                    <div className="input__box">
+                      <input
+                        type="text"
+                        value={signupDetails.f_name}
+                        name="f_name"
+                        className="form__input"
+                        placeholder="First Name"
+                        onChange={handleInputSignup}
+                        required
+                      />
+                      <input
+                        type="text"
+                        value={signupDetails.l_name}
+                        className="form__input"
+                        name="l_name"
+                        onChange={handleInputSignup}
+                        placeholder="Last Name"
+                      />
+                    </div>
+
+                    <input
+                      value={signupDetails.email}
+                      className="form__input"
+                      type="email"
+                      name="email"
+                      id=""
+                      onChange={handleInputSignup}
+                      placeholder="Email"
+                      required
+                    />
+
+                    <input
+                      value={signupDetails.profile_name}
+                      className="form__input"
+                      type="text"
+                      name="profile_name"
+                      id=""
+                      onChange={handleInputSignup}
+                      placeholder="Username"
+                      required
+                    />
+                    <input
+                      value={signupDetails.password}
+                      className="form__input"
+                      type="password"
+                      name="password"
+                      onChange={handleInputSignup}
+                      id=""
+                      minlength="8"
+                      placeholder="Password"
+                      required
+                    />
+
+                    <input
+                      value={loginDetails.passwordConfirm}
+                      className="form__input"
+                      type="password"
+                      name="passwordConfirm"
+                      onChange={handleInputSignup}
+                      id=""
+                      minlength="8"
+                      placeholder="Confirm Password"
+                      required
+                    />
+
+                    <div className="extra-links input__box">
+                      <a href="/#" onClick={() => setLogin(true)}>
+                        Log in?
+                      </a>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="form__submit"
+                      onClick={handleSubmitSignup}
+                    >
+                      Sign up
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          </Box>
+        </Modal>
+      )}
     </div>
   );
 }

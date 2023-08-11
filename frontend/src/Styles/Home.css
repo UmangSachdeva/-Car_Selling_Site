@@ -4,6 +4,17 @@ body {
 }
 
 /* NavBar */
+.navbar-expand-lg .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  justify-content: space-between !important;
+}
+
+.profile-part {
+  display: flex;
+  padding: 0 20px;
+}
+
 .menu-title {
   color: rgb(90, 90, 90)
 }
@@ -76,4 +87,16 @@ body {
     position: relative;
     right: 45px;
   }
+}
+
+@media screen and (max-width: 460px) {
+  /* .css-iu2xr-MuiDrawer-docked {
+    width: 100% !important;
+  }
+
+  .css-iu2xr-MuiDrawer-docked .MuiDrawer-paper {
+    z-index: 3;
+    position: relative;
+    width: 100% !important;
+  } */
 }
