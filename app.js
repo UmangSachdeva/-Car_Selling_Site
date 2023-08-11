@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./Routes/authRoutes");
 const chatRoutes = require("./Routes/chatRoutes");
 const messageRoutes = require("./Routes/messageRoutes");
+const path = require("path");
 
 app.use(bodyParser.json());
 app.use(cors());
