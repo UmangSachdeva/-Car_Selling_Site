@@ -8,10 +8,13 @@ dotenv.config({ path: "./config.env" });
 const port = process.env.PORT;
 
 mongoose
-  .connect(process.env.MONGODBURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    process.env.MONGODBPRODUCTION.replace("<PASSWORD>", process.env.PASSWORD),
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connected to DB 👋");
   });
@@ -35,7 +38,6 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData?._id);
-    
 
     socket.emit("connected");
   });
@@ -52,7 +54,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new-message", (newMessageReceived) => {
-   
     let chat = newMessageReceived.chat;
 
     if (!chat.users) return console.log(`chat.users not defined`);
