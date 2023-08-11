@@ -411,105 +411,116 @@ function NavBar() {
         </nav>
       )}
       {window.innerWidth <= 768 && (
-        <BottomNavigation
-          sx={{ height: "80px", borderRadius: 0 }}
-          showLabels
-          value={selectedPage}
-          onChange={(event, newValue) => {
-            setSelectedPage(newValue);
-          }}
-        >
-          <BottomNavigationAction
-            label="HOME"
-            value="home"
-            icon={<HomeIcon sx={{ width: 40, height: 40 }} />}
-            onClick={() => nav("/")}
-          />
-          <BottomNavigationAction
-            label="CATALOG"
-            value="catalog"
-            icon={<CarRentalRoundedIcon sx={{ width: 40, height: 40 }} />}
-          />
-          <BottomNavigationAction
-            label="MESSAGES"
-            onClick={() => nav("/messages")}
-            value="message"
-            icon={<PaidRoundedIcon sx={{ width: 40, height: 40 }} />}
-          />
-
-          {loggedIn ? (
-            <BottomNavigationAction
-              value="account"
-              label="ACCOUNT"
-              onClick={handleClick}
-              icon={
-                <Avatar
-                  sx={{ width: 10, height: 10 }}
-                  {...stringAvatar(loggedIn.profile_name)}
-                />
-              }
-            />
-          ) : (
-            <BottomNavigationAction
-              value="account"
-              label="LOGIN"
-              onClick={() => setLogin(true)}
-              icon={<LoginIcon sx={{ width: 40, height: 40 }} />}
-            />
-          )}
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleCloseAccount}
-            onClick={handleCloseAccount}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                top: "630px !important",
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  bottom: -10,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  color: "black",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
+        <>
+          <div className="application-name">
+            <div
+              className="heading font-type-1"
+              s
+              style={{ fontWeight: 700, fontSize: 44 }}
+            >
+              CAR CENTRAL
+            </div>
+          </div>
+          <BottomNavigation
+            sx={{ height: "80px", borderRadius: 0 }}
+            showLabels
+            value={selectedPage}
+            onChange={(event, newValue) => {
+              setSelectedPage(newValue);
             }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              <span className="menu-title">Setting</span>
-              Settings
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
-              <ListItemIcon>
-                <Logout sx={{ color: "#ff7730" }} fontSize="small" />
-              </ListItemIcon>
-              <span className="Logout">Logout</span>
-            </MenuItem>
-          </Menu>
-        </BottomNavigation>
+            <BottomNavigationAction
+              label="HOME"
+              value="home"
+              icon={<HomeIcon sx={{ width: 40, height: 40 }} />}
+              onClick={() => nav("/")}
+            />
+            <BottomNavigationAction
+              label="CATALOG"
+              value="catalog"
+              icon={<CarRentalRoundedIcon sx={{ width: 40, height: 40 }} />}
+            />
+            <BottomNavigationAction
+              label="MESSAGES"
+              onClick={() => nav("/messages")}
+              value="message"
+              icon={<PaidRoundedIcon sx={{ width: 40, height: 40 }} />}
+            />
+
+            {loggedIn ? (
+              <BottomNavigationAction
+                value="account"
+                label="ACCOUNT"
+                onClick={handleClick}
+                icon={
+                  <Avatar
+                    sx={{ width: 10, height: 10 }}
+                    {...stringAvatar(loggedIn.profile_name)}
+                  />
+                }
+              />
+            ) : (
+              <BottomNavigationAction
+                value="account"
+                label="LOGIN"
+                onClick={() => setLogin(true)}
+                icon={<LoginIcon sx={{ width: 40, height: 40 }} />}
+              />
+            )}
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleCloseAccount}
+              onClick={handleCloseAccount}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  top: "630px !important",
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    bottom: -10,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    color: "black",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                <span className="menu-title">Setting</span>
+                Settings
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
+                <ListItemIcon>
+                  <Logout sx={{ color: "#ff7730" }} fontSize="small" />
+                </ListItemIcon>
+                <span className="Logout">Logout</span>
+              </MenuItem>
+            </Menu>
+          </BottomNavigation>
+        </>
       )}
     </div>
   );

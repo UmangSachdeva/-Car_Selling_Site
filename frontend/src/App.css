@@ -64,7 +64,7 @@ body {
 
 .search-container-mobile {
   width: 80%;
-  height: 23vh;
+  height: 17vh;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -111,15 +111,36 @@ body {
 .search-input-mobile {
   height: 7vh;
   display: flex;
-  background: #212529;
-  border-radius: 0 10px 10px 10px;
+  /* background: #212529; */
+  border-radius: 10px;
+  box-shadow: 2px 4px 9px 0px rgba(0, 0, 0, 0.25);
 }
 
 input#keyword {
   width: 100%;
   padding: 0 23px;
-  border: 1px solid black;
-  border-radius: 0 0 0 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+.search-input-mobile .btn-dark {
+  border-radius: 10px;
+  width: 27%;
+  font-size: 27px;
+}
+
+.location-dropdown-search {
+  border-radius: 10px;
+  border: none;
+  width: 34%;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.vl {
+  border-left: 2px solid #808080;
+  height: 60%;
+  margin: auto;
 }
 
 .MuiBottomNavigationAction-root.Mui-selected .MuiBottomNavigationAction-label {
@@ -1081,6 +1102,10 @@ label.close {
   color: #4c4c4c;
 }
 
+.custom-design {
+  display: none
+}
+
 @keyframes bounce1 {
 
   0%,
@@ -1164,8 +1189,79 @@ label.close {
 }
 
 @media (max-width: 426px) {
+  .custom-design {
+    display: block;
+  }
+
+  .receiver {
+    border-radius: 10px 10px 10px 0;
+  }
+
+  .sender {
+
+    border-radius: 10px 10px 0 10px;
+
+  }
+
+  .chathead-container {
+    padding: 0;
+    width: 28%;
+  }
+
+  .chatspace-container {
+    width: 75%;
+    border: none;
+    position: fixed;
+    right: 0;
+    top: 88px;
+    bottom: 80px;
+    border-left: 1px solid #404040;
+  }
+
+  .chat-topic-head {
+    background: white;
+    border-top: 0;
+    text-align: center;
+  }
+
+  .chat-topic-head p {
+    font-size: 16px;
+  }
+
+  #messages {
+    padding: 0;
+  }
+
+  .chat-topic-head span {
+    font-size: 14px;
+  }
+
+  .message-box {
+    font-size: 12px;
+    max-width: 80%;
+  }
+
+  .time-stamp {
+    font-size: 9px
+  }
+
+  .chat-head-container {
+    padding: 0;
+  }
+
   .css-1kdhf16-MuiPaper-root-MuiPopover-paper-MuiMenu-paper:before {
     bottom: -10px;
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+  }
+
+  .chat-container {
+    height: 75vh;
+    padding: 0;
   }
 
   .login__form {

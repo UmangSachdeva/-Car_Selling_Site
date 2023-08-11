@@ -88,3 +88,15 @@ body {
     right: 45px;
   }
 }
+
+@media screen and (max-width: 460px) {
+  /* .css-iu2xr-MuiDrawer-docked {
+    width: 100% !important;
+  }
+
+  .css-iu2xr-MuiDrawer-docked .MuiDrawer-paper {
+    z-index: 3;
+    position: relative;
+    width: 100% !important;
+  } */
+}

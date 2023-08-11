@@ -106,41 +106,48 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
   return (
     <>
-      {selectedChat ? (
-        <>
-          <div className="chat-topic-head">
-            <p style={{ textTransform: "capitalize" }}>
-              {selectedChat.chatName}
+      <>
+        {selectedChat ? (
+          <>
+            <div className="chat-topic-head">
+              <p style={{ textTransform: "capitalize" }}>
+                {selectedChat.chatName}
+              </p>
+              <span>
+                {selectedChat.users[0]._id === user._id
+                  ? selectedChat.users[1].profile_name
+                  : selectedChat.users[0].profile_name}{" "}
+                | Delhi, India
+              </span>
+            </div>
+            <SingleMessage messages={messages} isTyping={isTyping} />
+            <form
+              id="form"
+              action=""
+              onSubmit={sendMessage}
+              className="chat-box"
+            >
+              <input
+                id="input"
+                autocomplete="off"
+                value={message}
+                placeholder="Message..."
+                className="chat-box-input"
+                onChange={typingHandler}
+              />
+              <button className="send-btn">
+                <img src={send} alt="" />
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="alternate-text-container">
+            <p className="alternate-text">
+              Click On Chat Head to start conversation
             </p>
-            <span>
-              {selectedChat.users[0]._id === user._id
-                ? selectedChat.users[1].profile_name
-                : selectedChat.users[0].profile_name}{" "}
-              | Delhi, India
-            </span>
           </div>
-          <SingleMessage messages={messages} isTyping={isTyping} />
-          <form id="form" action="" onSubmit={sendMessage} className="chat-box">
-            <input
-              id="input"
-              autocomplete="off"
-              value={message}
-              placeholder="Message..."
-              className="chat-box-input"
-              onChange={typingHandler}
-            />
-            <button className="send-btn">
-              <img src={send} alt="" />
-            </button>
-          </form>
-        </>
-      ) : (
-        <div className="alternate-text-container">
-          <p className="alternate-text">
-            Click On Chat Head to start conversation
-          </p>
-        </div>
-      )}
+        )}
+      </>
     </>
   );
 }
