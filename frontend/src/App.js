@@ -64,10 +64,6 @@ function App() {
         setMessages([...messages, newMessageReceived]);
       }
     });
-
-    return () => {
-      socket.off("message-received");
-    };
   });
 
   return (
