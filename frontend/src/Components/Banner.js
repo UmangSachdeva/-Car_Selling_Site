@@ -29,13 +29,13 @@ function Banner() {
         </div>
         <div className="image">
           <LazyLoad offset={150}>
-            <img loading="lazy" src={logo4} alt="" />{" "}
+            <img loading="lazy" src={logo4} alt="" />
           </LazyLoad>
         </div>
         <div className="image">
           {" "}
           <LazyLoad offset={150}>
-            <img loading="lazy" src={logo5} alt="" />{" "}
+            <img loading="lazy" src={logo5} alt="" />
           </LazyLoad>
         </div>
         <div className="image">
@@ -45,7 +45,7 @@ function Banner() {
         </div>
         <div className="image">
           <LazyLoad offset={150}>
-            <img loading="lazy" src={logo7} alt="" />{" "}
+            <img loading="lazy" src={logo7} alt="" />
           </LazyLoad>
         </div>
       </div>
