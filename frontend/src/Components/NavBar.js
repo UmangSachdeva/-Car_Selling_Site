@@ -415,8 +415,7 @@ function NavBar() {
           <div className="application-name">
             <div
               className="heading font-type-1"
-              s
-              style={{ fontWeight: 700, fontSize: 44 }}
+              style={{ fontWeight: 700, fontSize: 28, marginTop: "14px" }}
             >
               CAR CENTRAL
             </div>

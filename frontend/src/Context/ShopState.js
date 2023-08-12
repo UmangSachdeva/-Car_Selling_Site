@@ -14,6 +14,7 @@ const ShopState = (props) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isSocketConnected, setSocketConnected] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const isSameUser = (messages, m, i) => {
     return i > 0 && messages[i - 1].sender._id === m.sender._id;
@@ -50,6 +51,8 @@ const ShopState = (props) => {
         setLoggedIn,
         selectedPage,
         setSelectedPage,
+        loading,
+        setLoading,
       }}
     >
       {props.children}

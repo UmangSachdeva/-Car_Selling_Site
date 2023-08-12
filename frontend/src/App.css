@@ -1206,6 +1206,8 @@ label.close {
   .chathead-container {
     padding: 0;
     width: 28%;
+    border: none;
+    background-color: transparent;
   }
 
   .chatspace-container {
@@ -1213,7 +1215,7 @@ label.close {
     border: none;
     position: fixed;
     right: 0;
-    top: 88px;
+    top: 60px;
     bottom: 80px;
     border-left: 1px solid #404040;
   }

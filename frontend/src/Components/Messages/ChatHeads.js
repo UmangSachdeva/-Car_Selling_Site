@@ -3,10 +3,7 @@ import axios from "axios";
 import { styled, useTheme } from "@mui/material/styles";
 import { toast } from "react-hot-toast";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
 import MuiDrawer from "@mui/material/Drawer";
 import {
   Avatar,
@@ -17,6 +14,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Skeleton,
 } from "@mui/material";
 import shopContext from "../../Context/shopContext";
 
@@ -26,7 +24,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
-  minHeight: "76px",
+  minHeight: "60px",
   color: "grey",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
@@ -40,7 +38,7 @@ const closedMixin = (theme) => ({
   }),
   overflowX: "hidden",
   width: "26%",
-  top: "88px",
+  top: "60px",
   paddingBottom: "60px",
   zIndex: 0,
   [theme.breakpoints.up("sm")]: {
@@ -50,7 +48,7 @@ const closedMixin = (theme) => ({
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  top: "88px",
+  top: "60px",
   zIndex: 1,
   paddingBottom: "60px",
   transition: theme.transitions.create("width", {
@@ -82,7 +80,8 @@ const Drawer = styled(MuiDrawer, {
 function ChatHeads() {
   const [chats, setChats] = useState();
   const [user, setUser] = useState();
-  const { selectedChat, setSelectedChat, fetchAgain } = useContext(shopContext);
+  const { selectedChat, setSelectedChat, fetchAgain, loading, setLoading } =
+    useContext(shopContext);
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
@@ -94,14 +93,17 @@ function ChatHeads() {
   };
 
   const fetchChats = () => {
+    setLoading(true);
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/chats`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {
         setChats(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         toast.error("Cannot Fetch Chats");
       });
   };
@@ -114,8 +116,8 @@ function ChatHeads() {
         fontSize: 30,
         bgcolor: stringToColor(name),
         "@media (max-width: 460px)": {
-          width: 40,
-          height: 40,
+          width: 45,
+          height: 45,
           fontSize: 20,
         },
       },
@@ -156,7 +158,27 @@ function ChatHeads() {
       {window.innerWidth > 786 && (
         <div>
           <h3 className="chat-head-heading">Messages</h3>
-          {user &&
+          {loading && (
+            <div className={`chat-head-container `}>
+              <div className="user-avatar">
+                <Skeleton variant="circular" width={80} height={80} />
+              </div>
+              <div className="user-details" style={{ width: "100%" }}>
+                <span className="user-name">
+                  <Skeleton variant="h4" sx={{ width: "100%" }} />
+                </span>
+
+                <span className="spec-unit">
+                  <Skeleton variant="text" sx={{ width: "100%" }} />
+                </span>
+
+                <p className="last_message">
+                  <Skeleton variant="text" sx={{ width: "100%" }} />
+                </p>
+              </div>
+            </div>
+          )}
+          {!loading &&
             chats?.map((item, index) => {
               const chatWith =
                 item.users[0]._id === user._id ? item.users[1] : item.users[0];
@@ -198,7 +220,12 @@ function ChatHeads() {
       {window.innerWidth < 786 && (
         <>
           <Drawer variant="permanent" open={open}>
-            <DrawerHeader sx={{ justifyContent: open ? "flex-end" : "center" }}>
+            <DrawerHeader
+              sx={{
+                justifyContent: open ? "flex-end" : "center",
+                minHeight: "60px",
+              }}
+            >
               {open ? (
                 <IconButton onClick={handleDrawerClose}>
                   <ChevronLeftIcon sx={{ color: "black" }} />
@@ -220,7 +247,52 @@ function ChatHeads() {
             </DrawerHeader>
             <Divider />
             <List>
-              {user &&
+              {loading && (
+                <ListItem
+                  disablePadding
+                  sx={{
+                    display: "block",
+                  }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div className="user-avatar">
+                        <Skeleton variant="circular" width={45} height={45} />
+                      </div>
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{
+                        opacity: open ? 1 : 0,
+                        color: "black",
+                      }}
+                    >
+                      <div className="user-details">
+                        <span className="user-name">
+                          <Skeleton variant="h4" sx={{ width: "100%" }} />
+                        </span>
+
+                        <span className="spec-unit">
+                          {" "}
+                          <Skeleton variant="text" sx={{ width: "100%" }} />
+                        </span>
+                      </div>
+                    </ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              )}
+              {!loading &&
+                user &&
                 chats?.map((item, index) => {
                   const chatWith =
                     item.users[0]._id === user._id

@@ -1,11 +1,12 @@
 import React, { useContext, useRef, useEffect } from "react";
 import shopContext from "../../Context/shopContext";
+import { Skeleton } from "@mui/material";
 import { formatDistanceToNow, subDays } from "date-fns";
 
 function SingleMessage() {
   const scrollContainerRef = useRef(null);
   const context = useContext(shopContext);
-  const { user, isSameUser, isTyping, messages } = context;
+  const { user, isSameUser, isTyping, messages, loading, setLoading } = context;
 
   const scrollToBottom = () => {
     scrollContainerRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,7 +20,27 @@ function SingleMessage() {
   return (
     <div className="message-container">
       <ul id="messages">
-        {messages &&
+        {loading && (
+          <>
+            <li className={`message-box sender `} style={{ minWidth: "20%" }}>
+              <span>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </span>
+            </li>
+            <li
+              className={`message-box receiver`}
+              style={{
+                minWidth: "20%",
+              }}
+            >
+              <span>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              </span>
+            </li>
+          </>
+        )}
+        {!loading &&
+          messages &&
           messages.map((msg, index) => {
             return (
               <li
