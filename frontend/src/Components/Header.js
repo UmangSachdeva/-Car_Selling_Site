@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import SearchBar from "./SearchBar";
+import LazyLoad from "react-lazy-load";
 import aventedor from "../Resources/aventedor.png";
 import image1 from "../Resources/image1.jpg";
 import image2 from "../Resources/image2.jpg";
+import aventedorCompress from "../Resources/compress/aventedor.png";
+import image1Compress from "../Resources/compress/image1.jpg";
+import image2Compress from "../Resources/compress/image2.jpg";
 import arrow from "../Resources/arrow.png";
 import car from "../Resources/car.jpg";
 import suv from "../Resources/suv.jpg";
@@ -18,7 +22,9 @@ function Header() {
       <SearchBar />
 
       <div className="header-image">
-        <img src={aventedor} alt="" />
+        <LazyLoad offset={150}>
+          <img src={aventedor} loading="lazy" alt="" />
+        </LazyLoad>
 
         <ScrollAnimation animateIn="animate__fadeInRight">
           <div className="colored-road"></div>
@@ -46,13 +52,17 @@ function Header() {
           animateOut="animate__fadeOutRight"
         >
           <div className="image-container">
-            <img src={image1} alt="" />
+            <LazyLoad offset={150}>
+              <img loading="lazy" src={image1} alt="" />
+            </LazyLoad>
           </div>
         </ScrollAnimation>
       </section>
       <div className="banner-details d-flex justify-content-between">
         <div className="image-container-banner">
-          <img src={image2} alt="" className="w-100" />
+          <LazyLoad offset={150}>
+            <img loading="lazy" src={image2} alt="" className="w-100" />
+          </LazyLoad>
         </div>
 
         <span className="align-self-center our-numbers">
@@ -62,7 +72,9 @@ function Header() {
         </span>
 
         <div className="arrow align-self-end">
-          <img src={arrow} alt="" />
+          <LazyLoad offset={150}>
+            <img loading="lazy" src={arrow} alt="" />
+          </LazyLoad>
         </div>
 
         <div className="details-number d-flex justify-content-evenly justify-content-evenly w-50 align-self-end">

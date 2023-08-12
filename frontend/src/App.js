@@ -1,8 +1,7 @@
-import Home from "./Components/Home";
+import { useContext, useEffect, lazy, Suspense } from "react";
 import "./App.css";
+import shopContext from "./Context/shopContext";
 import "animate.css";
-import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,9 +10,12 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import io from "socket.io-client";
-import { useContext, useEffect } from "react";
-import shopContext from "./Context/shopContext";
-import ChatSpace from "./Components/Messages/ChatSpace";
+
+const NavBar = lazy(() => import("./Components/NavBar"));
+const AppLoader = lazy(() => import("./Components/AppLoader"));
+const Footer = lazy(() => import("./Components/Footer"));
+const ChatSpace = lazy(() => import("./Components/Messages/ChatSpace"));
+const Home = lazy(() => import("./Components/Home"));
 
 let socket;
 
@@ -69,14 +71,14 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-
-      <Routes>
-        <Route element={<Home />} path="/"></Route>
-        {user && <Route element={<ChatSpace />} path="/messages"></Route>}
-      </Routes>
-      {location.pathname !== "/messages" && <Footer />}
-
-      <Toaster position="bottom-right" reverseOrder={false} />
+      <Suspense fallback={<AppLoader />}>
+        <Routes>
+          <Route element={<Home />} path="/"></Route>
+          {user && <Route element={<ChatSpace />} path="/messages"></Route>}
+        </Routes>
+        {location.pathname !== "/messages" && <Footer />}
+        <Toaster position="bottom-right" reverseOrder={false} />
+      </Suspense>
     </div>
   );
 }

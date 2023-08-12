@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "../App.css";
 import "slick-carousel/slick/slick.css";
+import LazyLoad from "react-lazy-load";
 import "slick-carousel/slick/slick-theme.css";
 import img from "../Resources/car-rover.png";
 import img2 from "../Resources/car-bmw.png";
@@ -145,18 +146,22 @@ function Carosoul() {
         </h2>
         <Slider {...settings} ref={sliderRef}>
           {/* <div className="image-container">
-            <img src={img} alt="Slide 1" />
+            <img loading="lazy"src={img} alt="Slide 1" />
           </div>
           <div className="image-container">
-            <img src={img2} alt="Slide 2" />
+            <img loading="lazy"src={img2} alt="Slide 2" />
           </div>
           <div className="image-container">
-            <img src={img3} alt="Slide 3" style={{ width: "85%" }} />
+            <img loading="lazy"src={img3} alt="Slide 3" style={{ width: "85%" }} />
           </div> */}
           {slides.map((slide, index) => (
             <div className="slide-container">
               <div key={slide.id} className="image-container">
-                <img src={slide.image} alt={`Slide ${slide.id}`} />
+                <img
+                  loading="lazy"
+                  src={slide.image}
+                  alt={`Slide ${slide.id}`}
+                />
               </div>
 
               <div className={`specifications-container`}>

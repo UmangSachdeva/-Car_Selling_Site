@@ -12,6 +12,10 @@ body {
   pointer-events: none;
 }
 
+.font-type-1 {
+  font-family: "Fjalla One", sans-serif;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -60,6 +64,304 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Home */
+body {
+  font-family: "Red Hat Display", sans-serif;
+  background-color: #ffe79e19;
+}
+
+/* NavBar */
+.navbar-expand-lg .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  justify-content: space-between !important;
+}
+
+.profile-part {
+  display: flex;
+  padding: 0 20px;
+}
+
+.menu-title {
+  color: rgb(90, 90, 90)
+}
+
+.Logout {
+  color: #ff7730
+}
+
+.login-info {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 50px;
+  font-weight: 600;
+}
+
+
+
+.collapse {
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.btn-navbar {
+  width: 120px;
+  height: 46px;
+  font-size: 16px;
+}
+
+.heading {
+  font-size: 85px;
+  font-weight: 500;
+}
+
+.heading-2 {
+  font-size: 70px;
+  font-weight: 400;
+}
+
+/* Responsive design */
+/* Laptop large -- 1440px */
+@media (min-width: 1440px) {
+  .navbar-brand {
+    position: relative;
+    left: 132px;
+  }
+
+  .collapse {
+    margin-left: 22%;
+  }
+
+  .btn-navbar {
+    position: relative;
+    right: 85px;
+  }
+}
+
+/* Laptop small -- 1024px */
+@media (min-width: 989px) and (max-width: 1025px) {
+  .collapse {
+    margin-left: 10%;
+  }
+
+  .btn-navbar {
+    position: relative;
+    right: 45px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  /* .css-iu2xr-MuiDrawer-docked {
+    width: 100% !important;
+  }
+
+  .css-iu2xr-MuiDrawer-docked .MuiDrawer-paper {
+    z-index: 3;
+    position: relative;
+    width: 100% !important;
+  } */
+}
+
+/* Header */
+.colored-road {
+  height: 200px;
+  background: #ffc107;
+  width: 102%;
+  bottom: -48px;
+  position: absolute;
+  z-index: 2;
+  transform: rotate(-3deg);
+}
+
+.information {
+  overflow: hidden;
+}
+
+.header-image img {
+  z-index: 3;
+  position: relative;
+}
+
+.header-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.information .image-container {
+  margin-top: 15%;
+}
+
+.information .image-container img {
+  position: relative;
+  left: 25%;
+}
+
+.information .text {
+  padding: 10%;
+}
+
+.banner-details .image-container-banner {
+  width: 20%
+}
+
+.figure {
+  font-size: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.arrow {
+  margin-bottom: 54px;
+  rotate: -33deg;
+}
+
+.our-numbers {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.vehicle-selector {
+  margin: 170px auto;
+}
+
+.vehicle-selector .row {
+  padding: 10px 10%;
+}
+
+/* Card */
+.card {
+  min-height: 400px;
+  border-radius: 30px;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(225deg, rgba(1, 175, 248, 0) 10.2%, rgba(0, 43, 60, 0) 10.21%, rgba(0, 21, 30, 0.294) 41.73%, rgba(0, 6, 8, 0.5) 74.84%, rgba(0, 0, 0, 0.81) 93.7%);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  border-radius: 30px;
+  /* add a transition effect */
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-heading {
+  font-size: 45px;
+  font-weight: 700;
+  color: white;
+  text-align: left;
+  padding: 79px;
+  z-index: 3;
+}
+
+/* Search Box */
+.search-container {
+  display: inline-block;
+  margin: 22px auto;
+}
+
+.selection-box-container,
+.search-box-container {
+  padding: 10px;
+  width: fit-content;
+  display: flex;
+  min-width: 250px;
+  min-height: 68px;
+  background-color: white;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 11px 20px 20px 3px #62626233;
+}
+
+.search-box-container {
+  padding: 10px 30px;
+}
+
+.search-box-container {
+  width: 1000px;
+  height: 120px;
+}
+
+.active-btn {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+
+}
+
+.selection-box,
+.search-box {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.for-bus,
+.for-car {
+  padding: 5px;
+  transition: 0.5s;
+}
+
+.border-right {
+  border-right: 2px solid gray;
+}
+
+.btn-search .btn {
+  width: 100%;
+  float: right;
+  border-radius: 10px;
+  height: 79px;
+  font-size: 20px;
+}
+
+.btn-search {
+  width: 29% !important;
+}
+
+.select-boxes {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+}
+
+.subheading {
+  font-size: 17px;
+}
+
+.select-container .form-select {
+  border: none;
+  font-size: 19px;
+  padding: 10px 0px;
+  color: gray;
+  --bs-form-select-bg-img: none;
+  margin: 0px !important;
+  cursor: pointer;
+}
+
+.select-container .form-select:focus {
+  box-shadow: none;
+
 }
 
 .search-container-mobile {
