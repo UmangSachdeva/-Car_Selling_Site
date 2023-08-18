@@ -31,7 +31,7 @@ function Header() {
           <SearchBar />
 
           <div className="header-image">
-            <img src={aventedorCompress} alt="" />
+            <img fetchpriority="high" src={aventedorCompress} alt="" />
             <ScrollAnimation animateIn="animate__fadeInRight">
               <div className="colored-road"></div>
             </ScrollAnimation>
