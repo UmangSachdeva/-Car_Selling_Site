@@ -1,12 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "../Styles/Home.css";
 
 import Header from "./Header";
+import gsap from "gsap";
 import Carosoul from "./Carosoul";
 import Banner from "./Banner";
 import shopContext from "../Context/shopContext";
-
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 function Home() {
+  gsap.registerPlugin(ScrollTrigger);
+  const ref = useRef(null);
   const context = useContext(shopContext);
   const { setSelectedPage } = context;
 
@@ -15,18 +18,18 @@ function Home() {
   }, []);
 
   return (
-    <div>
-      <div className="home-body">
-        <h1 className="heading font-type-1">
-          Rent Your <br /> Dream Car
-        </h1>
+    <div ref={ref}>
+      <div id="page1">
+        <Header />
       </div>
 
-      <Header />
+      <div id="page2">
+        <Carosoul />
+      </div>
 
-      <Carosoul />
-
-      <Banner />
+      <div id="page3">
+        <Banner />
+      </div>
     </div>
   );
 }

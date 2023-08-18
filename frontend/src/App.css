@@ -600,6 +600,7 @@ input#keyword {
 }
 
 .image-container {
+  align-items: center;
   height: 720px;
   width: 920px;
   display: flex;

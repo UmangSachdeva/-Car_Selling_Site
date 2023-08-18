@@ -2,26 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "../App.css";
 import "slick-carousel/slick/slick.css";
-import LazyLoad from "react-lazy-load";
 import "slick-carousel/slick/slick-theme.css";
 import img from "../Resources/car-rover.png";
+import imgCompress from "../Resources/compress/car-rover-min.png";
 import img2 from "../Resources/car-bmw.png";
+import img2Compress from "../Resources/compress/car-bmw-min.png";
 import img3 from "../Resources/car-jeep.png";
+import img3Compress from "../Resources/compress/car-jeep-min.png";
 import SpeedIcon from "@mui/icons-material/Speed";
 import AirlineSeatReclineExtraIcon from "@mui/icons-material/AirlineSeatReclineExtra";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import { useInView } from "react-intersection-observer";
 import ScrollAnimation from "react-animate-on-scroll";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function Carosoul() {
   const [activeSlide, setActiveSlide] = useState(0);
   const sliderRef = useRef();
-
-  const { ref: intersectionRef, inView } = useInView({
-    triggerOnce: true, // Only trigger once when the element comes into view
-  });
 
   const settings = {
     infinite: true,
@@ -93,6 +91,7 @@ function Carosoul() {
     {
       id: 1,
       image: img,
+      alt: imgCompress,
       background: "linear-gradient(0deg, #a4a9a3, #e2e7e1, transparent)",
       speed: "221",
       transmission: "8",
@@ -103,6 +102,7 @@ function Carosoul() {
     {
       id: 2,
       image: img2,
+      alt: img2Compress,
       speed: "260",
       transmission: "6",
       seats: "4",
@@ -114,6 +114,7 @@ function Carosoul() {
     {
       id: 3,
       image: img3,
+      alt: img3Compress,
       speed: "200",
       transmission: "6",
       seats: "4",
@@ -145,22 +146,13 @@ function Carosoul() {
           Pick Your Dream Car Today
         </h2>
         <Slider {...settings} ref={sliderRef}>
-          {/* <div className="image-container">
-            <img loading="lazy"src={img} alt="Slide 1" />
-          </div>
-          <div className="image-container">
-            <img loading="lazy"src={img2} alt="Slide 2" />
-          </div>
-          <div className="image-container">
-            <img loading="lazy"src={img3} alt="Slide 3" style={{ width: "85%" }} />
-          </div> */}
           {slides.map((slide, index) => (
             <div className="slide-container">
               <div key={slide.id} className="image-container">
-                <img
-                  loading="lazy"
+                <LazyLoadImage
                   src={slide.image}
-                  alt={`Slide ${slide.id}`}
+                  placeholderSrc={slide.alt}
+                  effect="blur"
                 />
               </div>
 
