@@ -1,11 +1,11 @@
 import React from "react";
-import logo1 from "../Resources/car-logo-1.png";
-import logo2 from "../Resources/car-logo-2.png";
-import logo3 from "../Resources/car-logo-3.png";
-import logo4 from "../Resources/car-logo-4.png";
-import logo5 from "../Resources/car-logo-5.png";
-import logo6 from "../Resources/car-logo-6.png";
-import logo7 from "../Resources/car-logo-7.png";
+import logo1 from "../Resources/compress/car-logo-1-min.png";
+import logo2 from "../Resources/compress/car-logo-2-min.png";
+import logo3 from "../Resources/compress/car-logo-3-min.png";
+import logo4 from "../Resources/compress/car-logo-4-min.png";
+import logo5 from "../Resources/compress/car-logo-5-min.png";
+import logo6 from "../Resources/compress/car-logo-6-min.png";
+import logo7 from "../Resources/compress/car-logo-7-min.png";
 import LazyLoad from "react-lazy-load";
 
 function Banner() {

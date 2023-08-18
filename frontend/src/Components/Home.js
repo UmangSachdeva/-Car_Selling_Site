@@ -2,13 +2,10 @@ import React, { useContext, useEffect, useRef } from "react";
 import "../Styles/Home.css";
 
 import Header from "./Header";
-import gsap from "gsap";
 import Carosoul from "./Carosoul";
 import Banner from "./Banner";
 import shopContext from "../Context/shopContext";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 function Home() {
-  gsap.registerPlugin(ScrollTrigger);
   const ref = useRef(null);
   const context = useContext(shopContext);
   const { setSelectedPage } = context;
