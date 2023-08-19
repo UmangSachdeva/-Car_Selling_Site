@@ -1,5 +1,5 @@
 import { React, useContext, useState } from "react";
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, Slide, Collapse } from "@mui/material";
 import signupPic from "../../Resources/signup.gif";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -280,172 +280,176 @@ function Login({ showCmd, handleClose }) {
           aria-describedby="modal-modal-description"
           closeAfterTransition
         >
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 0,
-              left: "50%",
-              transform: "translate(-50%, 0)",
-              width: "97%",
-              height: "fit-content",
-              bgcolor: "#FFFCF5",
-              boxShadow: 24,
-              borderRadius: "28px 28px 0px 0px",
-            }}
-          >
-            <div className="close-container" onClick={handleClose}>
-              <div
-                className="leftright signup close-symbol"
-                style={{ backgroundColor: "#FFC107" }}
-              ></div>
-              <div
-                className="rightleft signup close-symbol"
-                style={{ backgroundColor: "#FFC107" }}
-              ></div>
-              <label className="close">close</label>
-            </div>
+          <Slide direction="up" in={showCmd}>
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: "6px",
+                transform: "translate(-50%, 0)",
+                width: "97%",
+                height: "fit-content",
+                bgcolor: "#FFFCF5",
+                boxShadow: 24,
+                borderRadius: "28px 28px 0px 0px",
+              }}
+            >
+              <div className="close-container" onClick={handleClose}>
+                <div
+                  className="leftright signup close-symbol"
+                  style={{ backgroundColor: "#FFC107" }}
+                ></div>
+                <div
+                  className="rightleft signup close-symbol"
+                  style={{ backgroundColor: "#FFC107" }}
+                ></div>
+                <label className="close">close</label>
+              </div>
 
-            <div className="container" id="container">
-              {login ? (
-                <div className="">
-                  <form
-                    action=""
-                    className="login__form"
-                    style={{ padding: "17px" }}
-                  >
-                    <h2 className="heading">
-                      Welcome Back,
-                      <br /> Log In
-                    </h2>
+              <div className="container" id="container">
+                {login ? (
+                  <Collapse in={login}>
+                    <div className="">
+                      <form
+                        action=""
+                        className="login__form"
+                        style={{ padding: "17px" }}
+                      >
+                        <h2 className="heading">
+                          Welcome Back,
+                          <br /> Log In
+                        </h2>
 
-                    <input
-                      value={loginDetails.email}
-                      className="form__input"
-                      type="email"
-                      name="email"
-                      id=""
-                      onChange={handleInput}
-                      placeholder="Email"
-                      required
-                    />
-                    <input
-                      value={loginDetails.password}
-                      className="form__input"
-                      type="password"
-                      name="password"
-                      onChange={handleInput}
-                      id=""
-                      minlength="8"
-                      placeholder="Password"
-                      required
-                    />
+                        <input
+                          value={loginDetails.email}
+                          className="form__input"
+                          type="email"
+                          name="email"
+                          id=""
+                          onChange={handleInput}
+                          placeholder="Email"
+                          required
+                        />
+                        <input
+                          value={loginDetails.password}
+                          className="form__input"
+                          type="password"
+                          name="password"
+                          onChange={handleInput}
+                          id=""
+                          minlength="8"
+                          placeholder="Password"
+                          required
+                        />
 
-                    <div className="extra-links input__box">
-                      <a href="/#">forgot password?</a>
-                      <a href="/#" onClick={() => setLogin(false)}>
-                        Signup ?
-                      </a>
+                        <div className="extra-links input__box">
+                          <a href="/#">forgot password?</a>
+                          <a href="/#" onClick={() => setLogin(false)}>
+                            Signup ?
+                          </a>
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="form__submit"
+                          onClick={(e) => handleSubmit(e, "login")}
+                        >
+                          Log In
+                        </button>
+                      </form>
                     </div>
+                  </Collapse>
+                ) : (
+                  <div>
+                    <form action="" className="login__form">
+                      <h2 className="heading">
+                        Start your journey,
+                        <br /> Sign up
+                      </h2>
+                      <div className="input__box">
+                        <input
+                          type="text"
+                          value={signupDetails.f_name}
+                          name="f_name"
+                          className="form__input"
+                          placeholder="First Name"
+                          onChange={handleInputSignup}
+                          required
+                        />
+                        <input
+                          type="text"
+                          value={signupDetails.l_name}
+                          className="form__input"
+                          name="l_name"
+                          onChange={handleInputSignup}
+                          placeholder="Last Name"
+                        />
+                      </div>
 
-                    <button
-                      type="submit"
-                      className="form__submit"
-                      onClick={(e) => handleSubmit(e, "login")}
-                    >
-                      Log In
-                    </button>
-                  </form>
-                </div>
-              ) : (
-                <div>
-                  <form action="" className="login__form">
-                    <h2 className="heading">
-                      Start your journey,
-                      <br /> Sign up
-                    </h2>
-                    <div className="input__box">
                       <input
-                        type="text"
-                        value={signupDetails.f_name}
-                        name="f_name"
+                        value={signupDetails.email}
                         className="form__input"
-                        placeholder="First Name"
+                        type="email"
+                        name="email"
+                        id=""
                         onChange={handleInputSignup}
+                        placeholder="Email"
+                        required
+                      />
+
+                      <input
+                        value={signupDetails.profile_name}
+                        className="form__input"
+                        type="text"
+                        name="profile_name"
+                        id=""
+                        onChange={handleInputSignup}
+                        placeholder="Username"
                         required
                       />
                       <input
-                        type="text"
-                        value={signupDetails.l_name}
+                        value={signupDetails.password}
                         className="form__input"
-                        name="l_name"
+                        type="password"
+                        name="password"
                         onChange={handleInputSignup}
-                        placeholder="Last Name"
+                        id=""
+                        minlength="8"
+                        placeholder="Password"
+                        required
                       />
-                    </div>
 
-                    <input
-                      value={signupDetails.email}
-                      className="form__input"
-                      type="email"
-                      name="email"
-                      id=""
-                      onChange={handleInputSignup}
-                      placeholder="Email"
-                      required
-                    />
+                      <input
+                        value={loginDetails.passwordConfirm}
+                        className="form__input"
+                        type="password"
+                        name="passwordConfirm"
+                        onChange={handleInputSignup}
+                        id=""
+                        minlength="8"
+                        placeholder="Confirm Password"
+                        required
+                      />
 
-                    <input
-                      value={signupDetails.profile_name}
-                      className="form__input"
-                      type="text"
-                      name="profile_name"
-                      id=""
-                      onChange={handleInputSignup}
-                      placeholder="Username"
-                      required
-                    />
-                    <input
-                      value={signupDetails.password}
-                      className="form__input"
-                      type="password"
-                      name="password"
-                      onChange={handleInputSignup}
-                      id=""
-                      minlength="8"
-                      placeholder="Password"
-                      required
-                    />
+                      <div className="extra-links input__box">
+                        <a href="/#" onClick={() => setLogin(true)}>
+                          Log in?
+                        </a>
+                      </div>
 
-                    <input
-                      value={loginDetails.passwordConfirm}
-                      className="form__input"
-                      type="password"
-                      name="passwordConfirm"
-                      onChange={handleInputSignup}
-                      id=""
-                      minlength="8"
-                      placeholder="Confirm Password"
-                      required
-                    />
-
-                    <div className="extra-links input__box">
-                      <a href="/#" onClick={() => setLogin(true)}>
-                        Log in?
-                      </a>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="form__submit"
-                      onClick={handleSubmitSignup}
-                    >
-                      Sign up
-                    </button>
-                  </form>
-                </div>
-              )}
-            </div>
-          </Box>
+                      <button
+                        type="submit"
+                        className="form__submit"
+                        onClick={handleSubmitSignup}
+                      >
+                        Sign up
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            </Box>
+          </Slide>
         </Modal>
       )}
     </div>

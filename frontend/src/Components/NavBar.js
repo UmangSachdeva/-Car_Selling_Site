@@ -415,7 +415,13 @@ function NavBar() {
           <div className="application-name">
             <div
               className="heading font-type-1"
-              style={{ fontWeight: 700, fontSize: 28, marginTop: "14px" }}
+              style={{
+                fontWeight: 700,
+                fontSize: 28,
+                marginTop: "14px",
+                position: `${location.pathname === "/messages" ? "fixed" : ""}`,
+                width: "100%",
+              }}
             >
               CAR CENTRAL
             </div>
@@ -475,7 +481,8 @@ function NavBar() {
               PaperProps={{
                 elevation: 0,
                 sx: {
-                  top: "630px !important",
+                  bottom: "74px !important",
+                  top: "auto !important",
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                   mt: 1.5,
