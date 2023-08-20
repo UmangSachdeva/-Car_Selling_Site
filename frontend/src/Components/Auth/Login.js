@@ -1,6 +1,7 @@
 import { React, useContext, useState } from "react";
 import { Modal, Box, Slide, Collapse } from "@mui/material";
 import signupPic from "../../Resources/signup.gif";
+import loginPic from "../../Resources/login.gif";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import shopContext from "../../Context/shopContext";
@@ -261,10 +262,7 @@ function Login({ showCmd, handleClose }) {
                   </div>
 
                   <div className="right-content overlay-panel content_signup overlay-right">
-                    <img
-                      src="https://res.cloudinary.com/dzoujuxn4/image/upload/v1692355624/login_wctrwl.gif"
-                      alt=""
-                    />
+                    <img src={loginPic} alt="" />
                   </div>
                 </div>
               </div>

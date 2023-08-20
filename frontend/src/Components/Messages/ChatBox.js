@@ -91,7 +91,6 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       )
       .then((res) => {
         setMessage("");
-        setFetchAgain(!fetchAgain);
         setMessages([...messages, res.data.data]);
         socket.emit("new-message", res.data.data);
       })
