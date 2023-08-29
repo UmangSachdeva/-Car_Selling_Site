@@ -35,6 +35,8 @@ const io = new Server(server, {
   },
 });
 
+io.set("origins", "*:*");
+
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData?._id);
