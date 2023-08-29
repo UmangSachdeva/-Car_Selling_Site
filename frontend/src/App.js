@@ -16,6 +16,7 @@ const AppLoader = lazy(() => import("./Components/AppLoader"));
 const Footer = lazy(() => import("./Components/Footer"));
 const ChatSpace = lazy(() => import("./Components/Messages/ChatSpace"));
 const Home = lazy(() => import("./Components/Home"));
+const ProductPage = lazy(() => import("./Components/Product/ProductPage"));
 
 let socket;
 
@@ -75,6 +76,7 @@ function App() {
         <Routes>
           <Route element={<Home />} path="/"></Route>
           {user && <Route element={<ChatSpace />} path="/messages"></Route>}
+          <Route path="/car-space" element={<ProductPage />} />
         </Routes>
         {location.pathname !== "/messages" && <Footer />}
         <Toaster position="bottom-right" reverseOrder={false} />

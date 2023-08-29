@@ -15,7 +15,7 @@ function Home() {
   }, []);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} style={{ overflow: "hidden" }}>
       <div id="page1">
         <Header />
       </div>

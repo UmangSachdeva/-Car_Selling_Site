@@ -173,8 +173,8 @@ function NavBar() {
                 </li>
 
                 <li className="nav-item">
-                  <a className="nav-link" href="/">
-                    Pricing
+                  <a className="nav-link" href="/car-space">
+                    Car List
                   </a>
                 </li>
 
