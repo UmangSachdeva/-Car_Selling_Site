@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FilterOptions from "./FilterOptions";
 import ProductList from "./ProductList";
+import { motion } from "framer-motion";
 
 function ProductPage() {
   const [isSticky, setIsSticky] = useState(false);
@@ -36,7 +37,11 @@ function ProductPage() {
     };
   }, []);
   return (
-    <div>
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.6, -0.05, 0.01, 0.99] }}
+    >
       <div className="product-search-container">
         <div className="search-component">
           <select name="" id="">
@@ -61,7 +66,7 @@ function ProductPage() {
           <ProductList />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

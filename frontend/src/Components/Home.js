@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import "../Styles/Home.css";
+import { motion } from "framer-motion";
 
 import Header from "./Header";
 import Carosoul from "./Carosoul";
@@ -15,7 +16,13 @@ function Home() {
   }, []);
 
   return (
-    <div ref={ref} style={{ overflow: "hidden" }}>
+    <motion.div
+      ref={ref}
+      style={{ overflow: "hidden" }}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.6, -0.05, 0.01, 0.99] }}
+    >
       <div id="page1">
         <Header />
       </div>
@@ -27,7 +34,7 @@ function Home() {
       <div id="page3">
         <Banner />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

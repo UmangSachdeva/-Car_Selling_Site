@@ -114,7 +114,7 @@ function Carosoul() {
     {
       id: 3,
       image: img3,
-      alt: img3Compress,
+      alt: img3,
       speed: "200",
       transmission: "6",
       seats: "4",

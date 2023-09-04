@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import SearchBar from "./SearchBar";
 import LazyLoad from "react-lazy-load";
 import aventedor from "../Resources/aventedor.png";
@@ -13,6 +14,7 @@ import van from "../Resources/van.webp";
 import "../Styles/Header.css";
 import Card from "./Card";
 import ScrollAnimation from "react-animate-on-scroll";
+import { fadeIn } from "./Utils/motion";
 
 function Header() {
   return (
@@ -39,8 +41,8 @@ function Header() {
           className="information d-flex justify-content-between align-items-center"
           id="page2"
         >
-          <ScrollAnimation animateIn="animate__fadeInDown ">
-            <div className="text">
+          <ScrollAnimation animateIn="animate__fadeInRight" animateOnce>
+            <div className="text" variants={fadeIn("top")}>
               <h1 className="heading-2 font-type-1">PREMIUM CAR RENTAL</h1>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -55,10 +57,8 @@ function Header() {
               </button>
             </div>
           </ScrollAnimation>
-          <ScrollAnimation
-            animateIn="animate__fadeInRight"
-            animateOut="animate__fadeOutRight"
-          >
+
+          <ScrollAnimation animateIn="animate__fadeInRight" animateOnce>
             <div className="image-container">
               <LazyLoad offset={150}>
                 <img loading="lazy" src={image1} alt="" />
@@ -92,7 +92,7 @@ function Header() {
           <div className="details-number d-flex justify-content-evenly justify-content-evenly w-50 align-self-end">
             <ScrollAnimation
               animateIn="animate__fadeInDown"
-              animateOut="animate__fadeOutUp"
+              animateOnce
             >
               <div className="number">
                 <h3 className="font-type-1 figure">45M+</h3>
@@ -101,7 +101,7 @@ function Header() {
             </ScrollAnimation>
             <ScrollAnimation
               animateIn="animate__fadeInDown animate__delay-2s"
-              animateOut="animate__fadeOutUp"
+              animateOnce
             >
               <div className="number">
                 <h3 className="font-type-1 figure">5M+</h3>
@@ -110,7 +110,7 @@ function Header() {
             </ScrollAnimation>
             <ScrollAnimation
               animateIn="animate__fadeInDown animate__delay-3s"
-              animateOut="animate__fadeOutUp"
+              animateOnce
             >
               <div className="number">
                 <h3 className="font-type-1 figure">300</h3>
@@ -123,7 +123,7 @@ function Header() {
         <section className="vehicle-selector " id="page4">
           <ScrollAnimation
             animateIn="animate__fadeInDown"
-            animateOut="animate__fadeOutUp"
+            animateOnce
           >
             <h1 className="heading-2 my-5 font-type-1">
               WIDE RANGE OF <br /> VEHICLES

@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import io from "socket.io-client";
+import ProductDetails from "./Components/Product/ProductDetails";
+import { AnimatePresence } from "framer-motion";
 
 const NavBar = lazy(() => import("./Components/NavBar"));
 const AppLoader = lazy(() => import("./Components/AppLoader"));
@@ -17,6 +19,11 @@ const Footer = lazy(() => import("./Components/Footer"));
 const ChatSpace = lazy(() => import("./Components/Messages/ChatSpace"));
 const Home = lazy(() => import("./Components/Home"));
 const ProductPage = lazy(() => import("./Components/Product/ProductPage"));
+// import NavBar from "./Components/NavBar";
+// import Footer from "./Components/Footer";
+// import ChatSpace from "./Components/Messages/ChatSpace";
+// import Home from "./Components/Home";
+// import ProductPage from "./Components/Product/ProductPage";
 
 let socket;
 
@@ -74,13 +81,19 @@ function App() {
     <div className="App">
       <NavBar />
       <Suspense fallback={<AppLoader />}>
-        <Routes>
-          <Route element={<Home />} path="/"></Route>
-          {user && <Route element={<ChatSpace />} path="/messages"></Route>}
-          <Route path="/car-space" element={<ProductPage />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route element={<Home />} path="/"></Route>
+            {user && <Route element={<ChatSpace />} path="/messages"></Route>}
+            <Route path="/car-space" element={<ProductPage />} />
+            <Route
+              path="/car-space/aston-martin"
+              element={<ProductDetails />}
+            />
+          </Routes>
+        </AnimatePresence>
         {location.pathname !== "/messages" && <Footer />}
-        <Toaster position="bottom-right" reverseOrder={false} />
+        
       </Suspense>
     </div>
   );
