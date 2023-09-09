@@ -8,13 +8,16 @@
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.14.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
+    "autoprefixer": "^10.4.15",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.12.12",
+    "postcss": "^8.4.29",
     "react": "^18.2.0",
     "react-animate-on-scroll": "^2.1.7",
     "react-dom": "^18.2.0",
@@ -24,6 +27,7 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-owl-carousel": "^2.3.3",
     "react-parallax-tilt": "^1.7.163",
+    "react-redux": "^8.1.2",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "react-scroll-parallax": "^3.4.2",
@@ -57,5 +61,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
   }
 }

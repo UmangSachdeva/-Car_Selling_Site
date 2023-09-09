@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  BottomNavigation,
-  BottomNavigationAction,
   Avatar,
   MenuItem,
   Menu,
@@ -10,7 +8,6 @@ import {
   IconButton,
   Divider,
   Badge,
-  listClasses,
 } from "@mui/material";
 import { Toaster } from "react-hot-toast";
 
@@ -24,6 +21,8 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 // import CarRentalRoundedIcon from "@mui/icons-material/CarRentalOutlined";
 // import LoginIcon from "@mui/icons-material/Login";
 import Login from "./Auth/Login";
+import { useDispatch } from "react-redux";
+import { addAuth } from "../Features/Auth/authSlice";
 import axios from "axios";
 import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
@@ -53,6 +52,7 @@ function NavBar() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => setLogin(false);
 
@@ -94,6 +94,7 @@ function NavBar() {
   const handleLogout = () => {
     setLoginState(false);
     setLoggedIn(false);
+    dispatch(addAuth({}));
     localStorage.removeItem("token");
     nav("/");
   };
@@ -116,6 +117,7 @@ function NavBar() {
           },
         })
         .then((res) => {
+          dispatch(addAuth(res.data.user));
           setLoggedIn(res.data.user);
         });
     } else {
@@ -198,7 +200,7 @@ function NavBar() {
               <button
                 onClick={() => setLogin(true)}
                 type="button"
-                className="btn btn-warning btn-navbar"
+                className="btn btn-warning btn-navbar bg-theme-yellow"
               >
                 Get Started
               </button>

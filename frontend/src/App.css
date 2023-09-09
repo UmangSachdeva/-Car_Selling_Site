@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
   height: 100%;
@@ -1847,7 +1851,7 @@ label.close {
 
 /* Product Details page */
 
-/* ------------ */
+/* -----Carousel------- */
 .vertical.carousel .carousel-item {
   overflow: hidden;
 }
@@ -1952,6 +1956,7 @@ label.close {
   box-shadow: 4px 5px 6px 0px #565454
 }
 
+
 .section-head {
   line-height: 43px;
   text-align: left;
@@ -1971,6 +1976,217 @@ label.close {
   font-weight: 500;
 }
 
+.product_details_body {
+  padding: 35px 65px;
+}
+
+/* Product -> Details Section*/
+.section-body {
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  gap: 70px;
+  justify-content: space-evenly;
+  padding: 55px;
+  margin: 50px 0;
+}
+
+:root {
+  --card-height: 60vh;
+  --card-width: 100%;
+}
+
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+
+.card-container {
+  background-color: white;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  cursor: pointer;
+}
+
+.card-container .card-img img {
+  z-index: 4;
+  filter: drop-shadow(13px 7px 8px rgba(0, 0, 0, 0.388));
+  max-width: 200px;
+  height: 200px;
+  object-fit: contain;
+  position: relative;
+}
+
+.card-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.card-head span {
+  color: rgba(255, 241, 200, 0.58);
+  -webkit-text-stroke: 0.1px black;
+  font-family: 'Alfa Slab One', cursive;
+  letter-spacing: 6px;
+  font-size: 36px;
+  font-style: italic;
+  top: 16px;
+  position: relative;
+  font-weight: bold;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.card-body .description {
+  color: black;
+}
+
+.card-container {
+  flex-direction: column;
+}
+
+.card-container::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(var(--rotate), #FFC107 43%, #000);
+  ;
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
+}
+
+.card-container::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  /* background-image: linear-gradient(var(--rotate), #5ddcff, #3c67e3 43%, #4e00c2); */
+  opacity: 1;
+  transition: opacity .5s;
+  animation: spin 4s linear infinite;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  z-index: 2;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 600;
+  display: flex;
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  color: var(--bs-card-color);
+  align-items: center;
+}
+
+.card-container svg {
+  z-index: 0;
+  opacity: 1;
+  position: absolute;
+  top: 11px;
+  width: 295px;
+}
+
+.card-head span {
+  text-transform: uppercase;
+}
+
+.more-details {
+  text-align: left;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.bdr {
+  border: 2px solid;
+  color: #BFBFBF;
+  padding: ma;
+  margin: 18px 0;
+}
+
+.detail-head {
+  color: #808080;
+  font-family: Inter;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.more-details .value {
+  color: #000;
+  font-family: Inter;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.more-details .unit {
+  color: #FFC107;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+a {
+  color: #212534;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 266px;
+  border-radius: 10px;
+  border: 2px solid;
+}
+
+.feedback-input {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+}
+
+.input-box {
+  display: flex;
+}
 
 @keyframes shine {
   0% {

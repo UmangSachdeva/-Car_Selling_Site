@@ -149,11 +149,7 @@ function Carosoul() {
           {slides.map((slide, index) => (
             <div className="slide-container">
               <div key={slide.id} className="image-container">
-                <LazyLoadImage
-                  src={slide.image}
-                  placeholderSrc={slide.alt}
-                  effect="blur"
-                />
+                <LazyLoadImage src={slide.image} placeholderSrc={slide.alt} />
               </div>
 
               <div className={`specifications-container`}>

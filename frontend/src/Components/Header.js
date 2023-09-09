@@ -30,7 +30,12 @@ function Header() {
           <SearchBar />
 
           <div className="header-image">
-            <img fetchpriority="high" src={aventedorCompress} alt="" />
+            <img
+              fetchpriority="high"
+              src={aventedorCompress}
+              alt=""
+              className="m-auto"
+            />
             <ScrollAnimation animateIn="animate__fadeInRight">
               <div className="colored-road"></div>
             </ScrollAnimation>
@@ -38,7 +43,7 @@ function Header() {
         </div>
 
         <section
-          className="information d-flex justify-content-between align-items-center"
+          className="information flex justify-between items-center"
           id="page2"
         >
           <ScrollAnimation animateIn="animate__fadeInRight" animateOnce>
@@ -52,7 +57,7 @@ function Header() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Accusantium, cumque!
               </p>
-              <button type="button" class="btn btn-dark float-start">
+              <button type="button" class="btn btn-dark float-left bg-zinc-800">
                 See all our Cars
               </button>
             </div>
@@ -67,33 +72,27 @@ function Header() {
           </ScrollAnimation>
         </section>
 
-        <div
-          className="banner-details d-flex justify-content-between"
-          id="page3"
-        >
+        <div className="banner-details d-flex justify-between" id="page3">
           <div className="image-container-banner">
             <LazyLoad offset={150}>
               <img loading="lazy" src={image2} alt="" className="w-100" />
             </LazyLoad>
           </div>
 
-          <span className="align-self-center our-numbers">
+          <span className="self-center our-numbers">
             <ScrollAnimation animateIn="animate__pulse">
               OUR NUMBERS{" "}
             </ScrollAnimation>
           </span>
 
-          <div className="arrow align-self-end">
+          <div className="arrow self-end">
             <LazyLoad offset={150}>
               <img loading="lazy" src={arrow} alt="" />
             </LazyLoad>
           </div>
 
-          <div className="details-number d-flex justify-content-evenly justify-content-evenly w-50 align-self-end">
-            <ScrollAnimation
-              animateIn="animate__fadeInDown"
-              animateOnce
-            >
+          <div className="details-number flex justify-evenly w-50 self-end">
+            <ScrollAnimation animateIn="animate__fadeInDown" animateOnce>
               <div className="number">
                 <h3 className="font-type-1 figure">45M+</h3>
                 <span>Total Capital raised</span>
@@ -121,10 +120,7 @@ function Header() {
         </div>
 
         <section className="vehicle-selector " id="page4">
-          <ScrollAnimation
-            animateIn="animate__fadeInDown"
-            animateOnce
-          >
+          <ScrollAnimation animateIn="animate__fadeInDown" animateOnce>
             <h1 className="heading-2 my-5 font-type-1">
               WIDE RANGE OF <br /> VEHICLES
             </h1>

@@ -1,6 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ProductCarousel from "./ProductCarousel";
+import Details from "./Details";
+import Feedback from "./Feedback";
+import ProductBanner from "./ProductBanner";
 
 const images = [
   "https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/BMW-2-Series-Gran-Coupe-271220221147.jpg",
@@ -18,13 +21,13 @@ function ProductDetails() {
     >
       <ProductCarousel images={images} />
 
-      <section>
-        <div className="section-head">
-          <span className="section-sub">know you car</span>
+      <div className="product_details_body">
+        <Details />
 
-          <p className="section-main">details.</p>
-        </div>
-      </section>
+        <Feedback />
+
+        <ProductBanner />
+      </div>
     </motion.div>
   );
 }

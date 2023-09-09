@@ -78,7 +78,7 @@ function SearchBar() {
                 </div>
               </div>
               <div className="btn-search">
-                <button type="button" className="btn btn-dark">
+                <button type="button" className="btn btn-dark bg-zinc-800">
                   <i className="bi bi-search"></i>
                 </button>
               </div>
