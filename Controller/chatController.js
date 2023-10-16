@@ -1,5 +1,7 @@
 const Chat = require("../Schema/Chat");
 const User = require("../Schema/User");
+const catchAsync = require("../Utils/catchAsync");
+const AppError = require("../Utils/AppError");
 
 exports.getChat = async (req, res, next) => {
   try {
@@ -38,22 +40,18 @@ exports.getChat = async (req, res, next) => {
   }
 };
 
-exports.getChats = async (req, res, next) => {
-  try {
-    const chat = await Chat.find({
-      users: { $elemMatch: { $eq: req.user.id } },
-    })
-      .populate("users", "-password -passwordConfirm -role -__v")
-      .populate("latestMessages")
-      .sort({ updatedAt: -1 });
+exports.getChats = catchAsync(async (req, res, next) => {
+  const chat = await Chat.find({
+    users: { $elemMatch: { $eq: req.user.id } },
+  })
+    .populate("users", "-password -passwordConfirm -role -__v")
+    .populate("latestMessages")
+    .sort({ updatedAt: -1 });
 
-    const user = await User.populate(chat, {
-      path: "latestMessages.sender",
-      select: "profile_name email _id",
-    });
+  const user = await User.populate(chat, {
+    path: "latestMessages.sender",
+    select: "profile_name email _id",
+  });
 
-    res.status(200).json({ status: "success", data: user });
-  } catch (err) {
-    res.status(500).json({ status: "fail", error: err.message, err });
-  }
-};
+  res.status(200).json({ status: "success", data: user });
+});

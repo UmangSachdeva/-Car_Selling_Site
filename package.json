@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server:dev": "NODE_ENV=development nodemon server.js",
+    "server:prod": "NODE_ENV=production nodemon server.js",
     "build": "npm install && npm install --prfix frontend && npm run build --prefix frontend"
   },
   "author": "",
@@ -21,7 +22,11 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.1",
+    "mongoose-slug-generator": "^1.0.4",
+    "nanoid": "^3.3.6",
+    "slugify": "^1.6.6",
     "socket.io": "^4.7.2",
+    "uuid": "^9.0.0",
     "validator": "^13.9.0",
     "xss-clean": "^0.1.4"
   }

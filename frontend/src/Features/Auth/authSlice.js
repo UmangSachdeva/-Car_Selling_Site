@@ -16,9 +16,12 @@ export const authSlice = createSlice({
 
       state.auth = auth;
     },
+    removeAuth: (state, action) => {
+      state.auth = initialState;
+    },
   },
 });
 
-export const { addAuth } = authSlice.actions;
+export const { addAuth, removeAuth } = authSlice.actions;
 
 export default authSlice.reducer;

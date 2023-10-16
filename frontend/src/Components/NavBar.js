@@ -22,7 +22,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 // import LoginIcon from "@mui/icons-material/Login";
 import Login from "./Auth/Login";
 import { useDispatch } from "react-redux";
-import { addAuth } from "../Features/Auth/authSlice";
+import { addAuth, removeAuth } from "../Features/Auth/authSlice";
 import axios from "axios";
 import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
@@ -94,7 +94,7 @@ function NavBar() {
   const handleLogout = () => {
     setLoginState(false);
     setLoggedIn(false);
-    dispatch(addAuth({}));
+    dispatch(removeAuth({}));
     localStorage.removeItem("token");
     nav("/");
   };
