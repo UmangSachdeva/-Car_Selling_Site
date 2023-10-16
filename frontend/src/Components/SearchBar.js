@@ -39,7 +39,7 @@ function SearchBar() {
                 <span className="subheading">Pick Up & Return Location</span>
                 <div className="select-container">
                   <select
-                    className="form-select form-select-lg mb-3"
+                    className="mb-3 form-select form-select-lg"
                     aria-label=".form-select-lg example"
                   >
                     <option defaultValue>Select Pick Up and Return</option>
@@ -53,7 +53,7 @@ function SearchBar() {
                 <span className="subheading">Start Date</span>
                 <div className="select-container">
                   <select
-                    className="form-select form-select-lg mb-3"
+                    className="mb-3 form-select form-select-lg"
                     aria-label=".form-select-lg example"
                   >
                     <option defaultValue>Select a starting Date</option>
@@ -67,7 +67,7 @@ function SearchBar() {
                 <span className="subheading">End Date</span>
                 <div className="select-container">
                   <select
-                    className="form-select form-select-lg mb-3"
+                    className="mb-3 form-select form-select-lg"
                     aria-label=".form-select-lg example"
                   >
                     <option defaultValue>Select a Ending Date</option>
@@ -89,7 +89,7 @@ function SearchBar() {
       {window.innerWidth <= 768 && (
         <>
           <div className="search-container-mobile">
-            <div className="search-input-mobile">
+            <div className="search-input-mobile ">
               <select className="location-dropdown-search" name="" id="">
                 <option value="delhi">Delhi</option>
                 <option value="haryana">Haryana</option>
@@ -105,7 +105,7 @@ function SearchBar() {
               />
               <button
                 type="button"
-                className="btn btn-dark search-button-mobile"
+                className="btn btn-dark search-button-mobile bg-zinc-800"
               >
                 {" "}
                 <i className="bi bi-search"></i>

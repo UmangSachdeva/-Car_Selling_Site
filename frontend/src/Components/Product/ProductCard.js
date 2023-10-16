@@ -64,7 +64,7 @@ function ProductCard({ index }) {
               style={{ textDecoration: "none" }}
             >
               <div className="card-action">
-                <button>Rent Now</button>
+                <button className="mobile:text-lg">Rent Now</button>
                 <div className="shine"></div>
               </div>
             </Link>

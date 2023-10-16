@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      mobile: "350px",
+    },
     extend: {
       colors: {
         "light-yellow": "rgba(255, 241, 200, 0.58)",
@@ -10,4 +13,5 @@ module.exports = {
     },
   },
   plugins: [],
+  important: true,
 };

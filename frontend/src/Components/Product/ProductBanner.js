@@ -4,7 +4,7 @@ import { Avatar, AvatarGroup } from "@mui/material";
 function ProductBanner() {
   return (
     <div>
-      <div className="flex w-fit m-auto p-12 shadow-lg rounded gap-4 items-center">
+      <div className="flex items-center gap-4 p-12 m-auto rounded shadow-lg w-fit mobile:flex-col">
         <div>
           <AvatarGroup
             max={3}
@@ -43,7 +43,7 @@ function ProductBanner() {
           <p className="capitalize text-[45px] italic font-semibold">
             Book your dream car now
           </p>
-          <span className="w-full text-2xl font-thin italic">
+          <span className="w-full text-2xl italic font-thin">
             Trusted by over 25000+ customers.
           </span>
           <br />

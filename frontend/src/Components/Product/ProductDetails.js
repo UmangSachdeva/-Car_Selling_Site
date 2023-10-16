@@ -21,7 +21,7 @@ function ProductDetails() {
     >
       <ProductCarousel images={images} />
 
-      <div className="product_details_body">
+      <div className="product_details_body mobile:px-2">
         <Details />
 
         <Feedback />

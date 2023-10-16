@@ -44,8 +44,8 @@ function Feedback() {
         <p className="section-main">Ratings.</p>
       </div>
 
-      <div className="feedback-input w-full py-5 border-b-2 border-black">
-        <div className="input-box gap-4 w-full">
+      <div className="w-full py-5 border-b-2 border-black feedback-input mobile:flex-col mobile:gap-4">
+        <div className="w-full gap-4 input-box">
           {user?.f_name ? (
             <Avatar {...stringAvatar(user.f_name + " " + user.l_name)} />
           ) : (
@@ -54,14 +54,14 @@ function Feedback() {
             </Avatar>
           )}
           <input
-            className="rounded border-2 border-gray-700 w-full text-lg p-2"
+            className="w-full p-2 text-lg border-2 border-gray-700 rounded"
             type="text"
             placeholder="Write a review..."
             name=""
             id=""
           />
         </div>
-        <div className="w-full justify-center gap-2">
+        <div className="justify-center w-full gap-2">
           <Rating
             name="size-large"
             defaultValue={2}
@@ -70,13 +70,13 @@ function Feedback() {
           />
         </div>
 
-        <button className="w-[30%] bg-zinc-800 rounded text-white hover:bg-zinc-700 duration-500 hover:drop-shadow-2xl">
+        <button className="w-[30%] bg-zinc-800 rounded text-white hover:bg-zinc-700 duration-500 hover:drop-shadow-2xl mobile:w-full p-4">
           Give Feedback
         </button>
       </div>
 
       {userDummy?.map((usr, index) => (
-        <div className="text-left w-fit py-4" key={index}>
+        <div className="py-4 text-left w-fit" key={index}>
           <div>
             <div className="flex gap-3 align-middle">
               <Avatar {...stringAvatar(usr)} sx={{ width: 45, height: 45 }} />
@@ -91,12 +91,12 @@ function Feedback() {
                       readOnly
                     />
                   </span>
-                  <span className="italic text-sm">24 Jun 2022</span>
+                  <span className="text-sm italic">24 Jun 2022</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-light-yellow p-4 ">
+          <div className="p-4 bg-light-yellow ">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum,
             qui? Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Blanditiis pariatur officiis excepturi, eos labore soluta amet

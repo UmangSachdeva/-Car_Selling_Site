@@ -149,7 +149,7 @@ function NavBar() {
       )}
       <Login showCmd={login} handleClose={handleClose} />
       {!isMobile && (
-        <nav className="navbar navbar-expand bg-transparent">
+        <nav className="bg-transparent navbar navbar-expand">
           <div className="container-fluid">
             <motion.div
               className="navbar-brand font-type-1"
@@ -411,7 +411,7 @@ function NavBar() {
       )}
       {isMobile && (
         <>
-          <div className="application-name">
+          <div className="my-4 application-name">
             <div
               className="heading font-type-1"
               style={{
@@ -422,7 +422,12 @@ function NavBar() {
                 width: "100%",
               }}
             >
-              <img style={{ width: "50%" }} src={logo} alt="" />
+              <img
+                style={{ width: "50%" }}
+                src={logo}
+                alt=""
+                className="m-auto"
+              />
             </div>
           </div>
           {/* <BottomNavigation
