@@ -530,7 +530,7 @@ function NavBar() {
               </MenuItem>
             </Menu>
           </BottomNavigation> */}
-          <div className="navigation">
+          <div className="z-40 navigation">
             <ul>
               <li
                 className={`list ${activeLink === 1 ? "active" : ""}`}

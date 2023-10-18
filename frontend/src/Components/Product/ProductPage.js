@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import FilterOptions from "./FilterOptions";
 import ProductList from "./ProductList";
+import FilterMobile from "./FilterMobile";
 import { motion } from "framer-motion";
 
 function ProductPage() {
   const [isSticky, setIsSticky] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const debounce = (func, delay) => {
     let timeoutId;
@@ -64,6 +66,27 @@ function ProductPage() {
           </button>
         </div>
       </div>
+
+      <div className="flex items-center justify-between px-12 py-8 mobile:py-6 mobile:px-4">
+        <p className="text-xl font-bold">
+          20 - 1000 Results for <span className="text-theme-yellow">“car”</span>
+        </p>
+
+        {window.innerWidth < 450 ? (
+          <button
+            className="flex items-center gap-1 p-2 border border-black rounded"
+            onClick={() => setOpen(!open)}
+          >
+            <ion-icon name="filter-outline"></ion-icon> Filters
+          </button>
+        ) : (
+          <button className="flex items-center gap-1 p-2 border border-black rounded">
+            <ion-icon name="filter-outline"></ion-icon> Sort
+          </button>
+        )}
+      </div>
+
+      <FilterMobile open={open} />
 
       <div className="mobile:px-4 product-listing-container">
         <div
