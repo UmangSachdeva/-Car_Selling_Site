@@ -2,16 +2,12 @@ import { useContext, useEffect, lazy, Suspense } from "react";
 import "./App.css";
 import shopContext from "./Context/shopContext";
 import "animate.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { Routes, Route, useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import ProductDetails from "./Components/Product/ProductDetails";
 import { AnimatePresence } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { addMessages } from "./Features/messages/messageSlice";
 
 const NavBar = lazy(() => import("./Components/NavBar"));
 const AppLoader = lazy(() => import("./Components/AppLoader"));
@@ -29,6 +25,7 @@ let socket;
 
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const context = useContext(shopContext);
   const {
     user,
@@ -46,16 +43,18 @@ function App() {
 
   useEffect(() => {
     socket = io(process.env.REACT_APP_SOCKET_URL);
-    console.log(process.env.REACT_APP_SOCKET_URL);
+
     setSocket(socket);
     const userData = JSON.parse(localStorage.getItem("user"));
     socket.emit("setup", userData);
 
     socket.on("typing", () => {
-      console.log("typing start");
+      console.log("typing recieved");
       setIsTyping(true);
     });
+
     socket.on("stop-typing", () => setIsTyping(false));
+
     socket.on("connected", () => {
       console.log("socket connected");
       setSocketConnected(true);
@@ -64,17 +63,23 @@ function App() {
 
   useEffect(() => {
     socket.on("message-received", (newMessageReceived) => {
+      console.log("message recieved");
       if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
         if (!notification.includes(newMessageReceived)) {
           setNotification([newMessageReceived, ...notification]);
           setFetchAgain(!fetchAgain);
+        } else {
+          setFetchAgain(!fetchAgain);
         }
-        setFetchAgain(!fetchAgain);
       } else {
-        setFetchAgain(!fetchAgain);
+        // setFetchAgain(!fetchAgain);
+        dispatch(addMessages(newMessageReceived));
         setMessages([...messages, newMessageReceived]);
       }
     });
+    return () => {
+      socket.off("message-received");
+    };
   });
 
   return (
@@ -86,14 +91,10 @@ function App() {
             <Route element={<Home />} path="/"></Route>
             {user && <Route element={<ChatSpace />} path="/messages"></Route>}
             <Route path="/car-space" element={<ProductPage />} />
-            <Route
-              path="/car-space/aston-martin"
-              element={<ProductDetails />}
-            />
+            <Route path="/car-space/:id" element={<ProductDetails />} />
           </Routes>
         </AnimatePresence>
         {location.pathname !== "/messages" && <Footer />}
-        
       </Suspense>
     </div>
   );

@@ -2,11 +2,14 @@ import React, { useContext, useRef, useEffect } from "react";
 import shopContext from "../../Context/shopContext";
 import { Skeleton } from "@mui/material";
 import { formatDistanceToNow, subDays } from "date-fns";
+import { useSelector } from "react-redux";
 
 function SingleMessage() {
   const scrollContainerRef = useRef(null);
   const context = useContext(shopContext);
-  const { user, isSameUser, isTyping, messages, loading, setLoading } = context;
+  const messages = useSelector((state) => state?.messageRed?.messages);
+
+  const { user, isSameUser, isTyping, loading, setLoading } = context;
 
   const scrollToBottom = () => {
     scrollContainerRef.current?.scrollIntoView({ behavior: "smooth" });

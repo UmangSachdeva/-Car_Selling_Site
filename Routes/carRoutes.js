@@ -9,6 +9,9 @@ router
   .get(carController.getAllCars)
   .post(authController.verifyMe, carController.createCar);
 
-router.route("/:id").patch(carController.updateCar);
+router
+  .route("/:id")
+  .patch(carController.updateCar)
+  .get(carController.getCarBySlug);
 
 module.exports = router;

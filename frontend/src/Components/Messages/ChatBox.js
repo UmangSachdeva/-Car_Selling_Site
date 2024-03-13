@@ -6,10 +6,14 @@ import io from "socket.io-client";
 
 import shopContext from "../../Context/shopContext";
 import SingleMessage from "./SingleMessage";
+import { useDispatch } from "react-redux";
+import { setMessagesGlobal } from "../../Features/messages/messageSlice";
+import { CircularProgress } from "@mui/material";
 
 function ChatBox({ username, setUsername, room, setRoom }) {
   const [message, setMessage] = useState("");
   const context = useContext(shopContext);
+  const [messageLoading, setMessageLoading] = useState(false);
 
   const {
     selectedChat,
@@ -22,6 +26,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
     socket,
     user,
   } = context;
+  const dispatch = useDispatch();
   const [typing, setTyping] = useState(false);
   const [timeout, setTimeoutTyping] = useState();
 
@@ -66,6 +71,8 @@ function ChatBox({ username, setUsername, room, setRoom }) {
         })
         .then((results) => {
           setMessages(results.data.data);
+          console.log("Messages", results.data.data);
+          dispatch(setMessagesGlobal(results.data.data));
           socket.emit("join-chat", selectedChat._id);
         });
     } catch (err) {
@@ -75,6 +82,8 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+
+    setMessageLoading(true);
 
     axios
       .post(
@@ -92,10 +101,14 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       .then((res) => {
         setMessage("");
         setMessages([...messages, res.data.data]);
+        dispatch(setMessagesGlobal([...messages, res.data.data]));
         socket.emit("new-message", res.data.data);
       })
       .catch((err) => {
         toast.error(`Cannot send the message`);
+      })
+      .finally(() => {
+        setMessageLoading(false);
       });
   };
 
@@ -135,7 +148,11 @@ function ChatBox({ username, setUsername, room, setRoom }) {
                 onChange={typingHandler}
               />
               <button className="send-btn">
-                <img src={send} alt="" />
+                {messageLoading ? (
+                  <CircularProgress className="w-[30px] h-[30px] text-black" />
+                ) : (
+                  <img src={send} alt="" />
+                )}
               </button>
             </form>
           </>

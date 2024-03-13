@@ -3,7 +3,7 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-function ProductCarousel({ images }) {
+function ProductCarousel({ images, data }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -25,7 +25,7 @@ function ProductCarousel({ images }) {
       data-bs-ride="false"
     >
       <div class="carousel-indicators">
-        {images.map((item, index) => (
+        {images?.map((item, index) => (
           <button
             type="button"
             data-bs-target="#carouselExampleCaptions"
@@ -41,11 +41,15 @@ function ProductCarousel({ images }) {
         <button>Bargin</button>
       </div>
       <div class="carousel-caption d-none d-md-block">
-        <h5>Aston Martin | 240 Sports</h5>
-        <p>Rent Now at $20,000/day</p>
+        <h5>
+          {data?.name} | {data?.model}
+        </h5>
+        <p>
+          Rent Now at ${data?.price}/{data?.price_per}
+        </p>
       </div>
       <div class="carousel-inner">
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <div class={`carousel-item ${index === 0 ? "active" : ""}`}>
             <img src={image} class="d-block w-100" alt="..." />
           </div>

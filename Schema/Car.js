@@ -79,6 +79,7 @@ const schema = new mongoose.Schema(
         validate: [validator.isURL, "Please upload a valid url"],
       },
     ],
+
     clutch: {
       description: {
         required: [true, "Enter the details for clutch"],
@@ -105,6 +106,49 @@ const schema = new mongoose.Schema(
         required: [true, "Enter the details for gearbox"],
         type: String,
         maxLength: [80, "Maximum characters should be 80"],
+      },
+    },
+    total_ratings: {
+      type: Number,
+    },
+    avg_ratings: {
+      type: Number,
+      max: [5, "Number cannot exceed 5"],
+      min: [1, "Number cannot go below 1"],
+      default: 5,
+    },
+    features: {
+      speed: {
+        value: {
+          type: Number,
+        },
+        unit: {
+          type: String,
+        },
+      },
+      engine: {
+        value: {
+          type: Number,
+        },
+        unit: {
+          type: String,
+        },
+      },
+      torq: {
+        value: {
+          type: Number,
+        },
+        unit: {
+          type: String,
+        },
+      },
+      seating: {
+        value: {
+          type: Number,
+        },
+        unit: {
+          type: String,
+        },
       },
     },
   },

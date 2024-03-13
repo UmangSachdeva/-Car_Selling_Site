@@ -9,21 +9,18 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { fadeIn } from "../Utils/motion";
 
-function ProductCard({ index }) {
+function ProductCard({ index, data }) {
   return (
     <motion.div variants={fadeIn("right", "spring", 0.5 * index, 0.75)}>
-      <Tilt
-        className="parallax-effect product-card"
-        options={{ max: 20, speed: 200 }}
-      >
-        <div className="product-carousel">
-          <img src={carImg} alt="" />
+      <div className="transition-transform cursor-pointer parallax-effect product-card hover:outline hover:outline-black hover:scale-105">
+        <div className="w-[367px] h-[247px] product-carousel">
+          <img src={data.images[0]} className="w-full h-full" alt="" />
         </div>
         <div className="product-card-body">
           <div className="product-card-heading">
             <div className="card-heading-text">
-              <p>Aston Martin 233 fx</p>
-              <span>Petrol</span>
+              <p className="capitalize">{data?.name}</p>
+              <span className="capitalize">{data.type}</span>
             </div>
             <div className="card-action"></div>
           </div>
@@ -31,36 +28,55 @@ function ProductCard({ index }) {
           <div className="card-features">
             <div className="feature1">
               <img src={speed} alt="" />
-              <span>233kph</span>
+              <span>
+                {data?.features?.speed?.value}
+                {data?.features?.speed?.unit}
+              </span>
             </div>
             <div className="feature1">
               <img src={engine} alt="" />
-              <span>1200cc</span>
+              <span>
+                {" "}
+                {data?.features?.engine?.value}
+                {data?.features?.engine?.unit}
+              </span>
             </div>
             <div className="feature1">
               <img src={brake} alt="" />
-              <span>233kph</span>
+              <span>
+                {data?.features?.torq?.value}
+                {data?.features?.torq?.unit}
+              </span>
             </div>
             <div className="feature1">
               <img src={speed} alt="" />
-              <span>233kph</span>
+              <span className="capitalize">
+                {data?.features?.seating?.value} {data?.features?.seating?.unit}
+              </span>
             </div>
           </div>
 
-          <div className="card-ratings-action">
+          <div>
+            <p>
+              <span className="text-semibold ">Available for </span>
+              {data?.days?.min} - {data?.days?.max} days
+            </p>
+          </div>
+
+          <div className="flex gap-2 card-ratings-action">
             <div className="card-rating inner-element">
               <img src={star} alt="" />
-              <span>4.8</span>
+              <span>{data?.avg_ratings}</span>
             </div>
             <div className="card-price">
-              {" "}
-              <span>Price</span>{" "}
+              <span>Price</span>
               <p style={{ fontSize: "20px", marginTop: "0" }}>
-                $20 <span>/day</span>
-              </p>{" "}
+                ${data?.price} <span>/{data?.price_per}</span>
+              </p>
             </div>
             <Link
-              to="/car-space/aston-martin"
+              to={`/car-space/${data?.slug}`}
+              className="mt-[5px]"
               style={{ textDecoration: "none" }}
             >
               <div className="card-action">
@@ -70,7 +86,7 @@ function ProductCard({ index }) {
             </Link>
           </div>
         </div>
-      </Tilt>
+      </div>
     </motion.div>
   );
 }

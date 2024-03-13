@@ -5,7 +5,7 @@ import gearbox from "../../Resources/gearbox.png";
 import tyre from "../../Resources/tyre.png";
 import { Tilt } from "react-tilt";
 
-function DetailsCard({ cardFor }) {
+function DetailsCard({ cardFor, description }) {
   return (
     <Tilt
       className="parallax-effect detail-card"
@@ -56,10 +56,7 @@ function DetailsCard({ cardFor }) {
         </div>
 
         <div className="card-body">
-          <p className="description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            nostrum?
-          </p>
+          <p className="description">{description}</p>
         </div>
       </div>
     </Tilt>

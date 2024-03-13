@@ -7,14 +7,16 @@ dotenv.config({ path: "./config.env" });
 
 const port = process.env.PORT;
 
+const DATABASE =
+  process.env.NODE_ENV == "production"
+    ? process.env.MONGODBPRODUCTION.replace("<PASSWORD>", process.env.PASSWORD)
+    : process.env.MONGODBURI;
+
 mongoose
-  .connect(
-    process.env.MONGODBPRODUCTION.replace("<PASSWORD>", process.env.PASSWORD),
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to DB 👋");
   });
@@ -62,6 +64,7 @@ io.on("connection", (socket) => {
       if (user._id === newMessageReceived.sender._id) return;
 
       socket.in(user._id).emit("message-received", newMessageReceived);
+      console.log("message emmited");
     });
   });
 

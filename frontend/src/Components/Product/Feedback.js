@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Rating } from "@mui/material";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { getReviews } from "../../api/reviews/getReviews";
 
 const stringToColor = (string) => {
   let hash = 0;
@@ -33,9 +35,22 @@ const stringAvatar = (name) => {
   };
 };
 
-function Feedback() {
+function Feedback({ data }) {
   const user = useSelector((state) => state.auth.user);
-  const userDummy = ["jeetha lal", "champak lal", "tappu"];
+  const reviews = useSelector((state) => state.reviewsRed.reviews);
+
+  const dispatch = useDispatch();
+
+  const getReviewsFn = async () => {
+    const reviews = await getReviews(data);
+    console.log(reviews?.dat?.data?.cars);
+    dispatch(reviews?.data?.data?.cars);
+  };
+
+  useEffect(() => {
+    getReviewsFn();
+  }, []);
+
   return (
     <section style={{ padding: "60px 0" }}>
       <div className="section-head">
@@ -75,18 +90,23 @@ function Feedback() {
         </button>
       </div>
 
-      {userDummy?.map((usr, index) => (
+      {reviews?.map((usr, index) => (
         <div className="py-4 text-left w-fit" key={index}>
           <div>
             <div className="flex gap-3 align-middle">
-              <Avatar {...stringAvatar(usr)} sx={{ width: 45, height: 45 }} />
+              <Avatar
+                {...stringAvatar(usr?.userId?.f_name)}
+                sx={{ width: 45, height: 45 }}
+              />
               <div>
-                <span className="text-lg capitalize">{usr}</span>
+                <span className="text-lg capitalize">
+                  {usr?.userId?.f_name}
+                </span>
                 <div className="flex gap-2">
                   <span>
                     <Rating
                       name="size-large"
-                      defaultValue={5}
+                      defaultValue={usr?.rating}
                       size="small"
                       readOnly
                     />
@@ -96,19 +116,7 @@ function Feedback() {
               </div>
             </div>
           </div>
-          <div className="p-4 bg-light-yellow ">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum,
-            qui? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Blanditiis pariatur officiis excepturi, eos labore soluta amet
-            perferendis ipsam quidem maxime voluptas a reiciendis consequuntur
-            ab quasi dignissimos, consectetur culpa veritatis beatae dicta
-            cupiditate. Quam obcaecati ducimus odio nobis expedita, doloribus
-            omnis ut unde quae harum adipisci aliquam deleniti exercitationem
-            magnam corporis odit consequuntur modi at vel. Magni labore fuga
-            aperiam architecto molestias porro nemo consequatur soluta dolore?
-            Soluta odit, aperiam laudantium deserunt facere, similique
-            recusandae quasi dicta repellendus nihil dolorum.
-          </div>
+          <div className="p-4 bg-light-yellow ">{usr?.message}</div>
         </div>
       ))}
     </section>

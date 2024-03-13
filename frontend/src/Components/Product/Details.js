@@ -1,7 +1,7 @@
 import React from "react";
 import DetailsCard from "./DetailsCard";
 
-function Details() {
+function Details({ data }) {
   return (
     <section>
       <div className="section-head">
@@ -11,10 +11,13 @@ function Details() {
       </div>
 
       <div className="section-body mobile:flex-wrap">
-        <DetailsCard cardFor="engine" />
-        <DetailsCard cardFor="tyre" />
-        <DetailsCard cardFor="gearbox" />
-        <DetailsCard cardFor="clutch" />
+        <DetailsCard description={data?.engine?.description} cardFor="engine" />
+        <DetailsCard description={data?.tyre?.description} cardFor="tyre" />
+        <DetailsCard
+          description={data?.gearbox?.description}
+          cardFor="gearbox"
+        />
+        <DetailsCard description={data?.clutch?.description} cardFor="clutch" />
       </div>
 
       <div className="more-details mobile:flex-wrap mobile:gap-4">

@@ -3,10 +3,15 @@ import FilterOptions from "./FilterOptions";
 import ProductList from "./ProductList";
 import FilterMobile from "./FilterMobile";
 import { motion } from "framer-motion";
+import { connectSeller } from "../../api/product/connectVendor";
 
 function ProductPage() {
   const [isSticky, setIsSticky] = useState(false);
   const [open, setOpen] = useState(false);
+
+  // const handleBargain = async () => {
+  //   await connectSeller();
+  // };
 
   const debounce = (func, delay) => {
     let timeoutId;

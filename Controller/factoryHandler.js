@@ -16,7 +16,7 @@ exports.createOne = (Model) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const features = new ApiFeatures(Model.find({}), req.query);
+    const features = new ApiFeatures(Model.find({}), req.query).sort();
 
     const cars = await features.query;
 
@@ -38,5 +38,24 @@ exports.updateOne = (Model) =>
 
     res.status(204).json({
       status: "success",
+    });
+  });
+
+exports.getOne = (Model, populateOptions) =>
+  catchAsync(async (req, res, next) => {
+    let query = Model.findById(req.params.id);
+    if (populateOptions) query = query.populate(populateOptions);
+
+    const doc = await query;
+
+    if (!doc) {
+      next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(200).json({
+      status: "Success",
+      data: {
+        data: doc,
+      },
     });
   });
