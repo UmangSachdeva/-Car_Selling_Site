@@ -15,6 +15,7 @@ const Footer = lazy(() => import("./Components/Footer"));
 const ChatSpace = lazy(() => import("./Components/Messages/ChatSpace"));
 const Home = lazy(() => import("./Components/Home"));
 const ProductPage = lazy(() => import("./Components/Product/ProductPage"));
+const ListingForm = lazy(() => import("./Components/ListingForm/ListingForm"));
 // import NavBar from "./Components/NavBar";
 // import Footer from "./Components/Footer";
 // import ChatSpace from "./Components/Messages/ChatSpace";
@@ -92,6 +93,7 @@ function App() {
             {user && <Route element={<ChatSpace />} path="/messages"></Route>}
             <Route path="/car-space" element={<ProductPage />} />
             <Route path="/car-space/:id" element={<ProductDetails />} />
+            <Route path="/list-your-car" element={<ListingForm />} />
           </Routes>
         </AnimatePresence>
         {location.pathname !== "/messages" && <Footer />}

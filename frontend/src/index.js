@@ -7,6 +7,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import ShopState from "./Context/ShopState";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./theme/themeProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +16,9 @@ root.render(
     <ShopState>
       <Provider store={store}>
         <Router>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
         </Router>
       </Provider>
     </ShopState>

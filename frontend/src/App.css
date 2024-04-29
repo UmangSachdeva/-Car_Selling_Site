@@ -41,9 +41,9 @@ body {
   color: #61dafb;
 }
 
-.MuiButtonBase-root {
+/* .MuiButtonBase-root {
   color: white !important;
-}
+} */
 
 #root {
   height: auto;
