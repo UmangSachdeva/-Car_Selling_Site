@@ -7,8 +7,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        "light-yellow": "rgba(255, 241, 200, 0.58)",
-        "theme-yellow": "#FFC107",
+        "light-yellow": "#eeeeee",
+        "theme-yellow": "#FFD369",
+        "dark-black": "#222831",
+        "light-black": "#393e46",
       },
     },
   },

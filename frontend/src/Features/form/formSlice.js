@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import useMultipleFileUpload from "../../hooks/useMultipleFileUpload";
 
 const initialState = {
   form: {
     images: [],
+    progress: [],
   },
 };
 
@@ -11,9 +13,26 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     addImage: (state, action) => {
-      const prevImages = [...state.form.images, ...action.payload] || [];
+      state.form.images.push(action.payload);
+    },
+    addProgress: (state, action) => {
+      const currData = [...state.form.progress];
 
-      state.form.images = prevImages;
+      currData.push(action.payload);
+
+      state.form.progress = currData;
+    },
+
+    updateProgress: (state, action) => {
+      const currData = [...state.form.progress];
+
+      const updatedData = currData.map((upload) =>
+        upload.file === action.payload.file
+          ? { ...upload, progress: action.payload.progress, ...action.payload }
+          : upload
+      );
+
+      state.form.progress = updatedData;
     },
     removeImage: (state, action) => {
       const filteredImages = state.form.images.filter(
@@ -25,6 +44,7 @@ export const formSlice = createSlice({
   },
 });
 
-export const { addImage, removeImage } = formSlice.actions;
+export const { addImage, removeImage, addProgress, updateProgress } =
+  formSlice.actions;
 
 export default formSlice.reducer;

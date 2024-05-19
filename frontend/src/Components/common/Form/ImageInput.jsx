@@ -3,16 +3,33 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addImage } from "../../../Features/form/formSlice";
+import {
+  addImage,
+  addProgress,
+  updateProgress,
+} from "../../../Features/form/formSlice";
+import useMultipleFileUpload from "../../../hooks/useMultipleFileUpload";
 
 function ImageInput({ name }) {
   const { register } = useFormContext();
   const dispatch = useDispatch();
+  const { uploadFiles } = useMultipleFileUpload();
 
-  const onDrop = useCallback((acceptedFiles) => {
-    // Add images
-    dispatch(addImage(acceptedFiles));
+  const onDrop = useCallback(async (acceptedFiles) => {
+    // Upload File
+
     console.log(acceptedFiles);
+    const result = await uploadFiles(acceptedFiles[0]);
+    // Add images
+    console.log(result);
+    dispatch(
+      updateProgress({
+        file: acceptedFiles[0].name,
+        progress: 100,
+        file_url: result.result.secure_url,
+      })
+    );
+    dispatch(addImage(result.result.secure_url));
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

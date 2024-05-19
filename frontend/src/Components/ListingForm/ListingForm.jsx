@@ -19,7 +19,7 @@ const CustomStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   "& .QontoStepIcon-completedIcon": {
     color: "white",
     zIndex: 1,
-    backgroundColor: ""
+    backgroundColor: "",
     fontSize: 18,
   },
   "& .QontoStepIcon-circle": {

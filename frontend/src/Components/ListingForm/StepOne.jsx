@@ -3,12 +3,28 @@ import ImageInput from "../common/Form/ImageInput";
 import PreviewImages from "./PreviewImages";
 import Dropdown from "../common/Form/Dropdown";
 import Input from "../common/Form/Input";
+import { useSelector } from "react-redux";
+import { Publish } from "@mui/icons-material";
 
 function StepOne() {
+  const images = useSelector((state) => state?.formRed?.form?.progress);
+
   return (
     <div className="flex gap-4">
       <div className="flex flex-col items-start justify-center gap-4">
-        <ImageInput name="example-image" />
+        {images.length > 3 ? (
+          <ImageInput name="example-image" />
+        ) : (
+          <div className="relative z-10 flex flex-col items-center gap-2 rounded-full ">
+            <div className="p-4 bg-theme-yellow animate-bounce w-[50px] h-[50px] rounded-full flex justify-center items-center">
+              <Publish className="" />
+            </div>
+
+            <p className="text-lg font-bold text-dark-black">
+              Drop the files here ...
+            </p>
+          </div>
+        )}
         <PreviewImages />
       </div>
       <div className="flex flex-col w-full gap-4">
