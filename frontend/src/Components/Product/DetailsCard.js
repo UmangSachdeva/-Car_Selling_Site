@@ -8,7 +8,7 @@ import { Tilt } from "react-tilt";
 function DetailsCard({ cardFor, description }) {
   return (
     <Tilt
-      className="parallax-effect detail-card"
+      className="w-full parallax-effect detail-card"
       options={{ max: 20, speed: 200, axis: "x" }}
     >
       <div className="card-container">

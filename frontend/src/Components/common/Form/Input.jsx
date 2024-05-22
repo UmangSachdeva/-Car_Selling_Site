@@ -1,12 +1,22 @@
 import { ThemeProvider } from "@emotion/react";
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, get, useFormContext } from "react-hook-form";
 import { theme } from "../../../theme/themeProvider";
 import styled from "@emotion/styled";
 
 function Input(props) {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  console.log(props.name);
+
+  const error = get(errors, props.name);
+
+  console.log(error);
+  console.log(errors);
 
   return (
     <div {...props.container}>
@@ -14,7 +24,6 @@ function Input(props) {
         <Controller
           control={control}
           name={props.name}
-          rules={{ required: !props.noValidate }}
           render={({
             field: { onChange, onBlur, value, name, ref },
             fieldState: { invalid, isTouched, isDirty, error },

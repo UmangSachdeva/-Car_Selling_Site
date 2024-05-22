@@ -3,11 +3,7 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import {
-  addImage,
-  addProgress,
-  updateProgress,
-} from "../../../Features/form/formSlice";
+import { addImage, updateProgress } from "../../../Features/form/formSlice";
 import useMultipleFileUpload from "../../../hooks/useMultipleFileUpload";
 
 function ImageInput({ name }) {
@@ -18,10 +14,9 @@ function ImageInput({ name }) {
   const onDrop = useCallback(async (acceptedFiles) => {
     // Upload File
 
-    console.log(acceptedFiles);
     const result = await uploadFiles(acceptedFiles[0]);
     // Add images
-    console.log(result);
+
     dispatch(
       updateProgress({
         file: acceptedFiles[0].name,

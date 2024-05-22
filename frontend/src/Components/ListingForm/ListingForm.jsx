@@ -7,6 +7,10 @@ import styled from "@emotion/styled";
 import { Check } from "@mui/icons-material";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import { addForm } from "../../api/product/submitProduct";
+import { useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { listingSchema } from "../Utils/formValidationSchema";
 
 const CustomStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
@@ -59,12 +63,16 @@ const steps = ["Company Details", "Car Location Details", "Car Details"];
 
 function ListingForm() {
   const [step, setStep] = useState(1);
+  const image = useSelector((state) => state?.formRed?.form?.images);
 
-  const handleNextStep = (data) => {
+  const handleNextStep = async (data) => {
+    await listingSchema.validate(data)
     if (step < steps.length) {
       setStep((prev) => prev + 1);
     } else {
-      console.log(data);
+      // console.log(image);
+      addForm({ ...data, images: image });
+      // console.log({ ...data, images: image });
     }
   };
 
@@ -105,7 +113,11 @@ function ListingForm() {
             );
           })}
         </Stepper>
-        <Form onSubmit={handleNextStep} className="flex flex-col w-full gap-4">
+        <Form
+          resolver={yupResolver(listingSchema)}
+          onSubmit={handleNextStep}
+          className="flex flex-col w-full gap-4"
+        >
           {step == 1 && <StepOne title="Company Details" />}
           {step == 2 && <StepTwo title="Car Location" />}
           {step == 3 && <StepThree title="Car Details" />}

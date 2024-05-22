@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../common/Form/Input";
 import Dropdown from "../common/Form/Dropdown";
 import RichTextEditor from "../common/Form/RichTextEditor";
+import SpecialCards from "./SpecialCards";
 
 function StepThree() {
   return (
@@ -13,6 +14,7 @@ function StepThree() {
         <Input label="Fuel Type" name="fuel_type" />
         <Input label="Seating Capacity" name="seating_capacity" />
         <RichTextEditor name="features" />
+        <SpecialCards />
       </div>
     </div>
   );

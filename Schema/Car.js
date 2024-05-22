@@ -14,16 +14,17 @@ const schema = new mongoose.Schema(
     company_name: {
       type: String,
     },
-    type: {
+    car_type: {
       type: String,
       enum: [
-        "suv",
-        "van",
-        "hatchback",
-        "convertable",
-        "luxary",
-        "race",
-        "modified",
+        "SUV",
+        "Van",
+        "Sedan",
+        "Truck",
+        "Hatchback",
+        "Sports Car",
+        "Hypercar",
+        "Luxary",
       ],
       required: [true, "Car Type is required"],
     },

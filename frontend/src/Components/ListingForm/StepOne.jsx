@@ -3,29 +3,61 @@ import ImageInput from "../common/Form/ImageInput";
 import PreviewImages from "./PreviewImages";
 import Dropdown from "../common/Form/Dropdown";
 import Input from "../common/Form/Input";
-import { useSelector } from "react-redux";
-import { Publish } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { Delete, Publish, UploadFile } from "@mui/icons-material";
+import { Img } from "react-image";
+import { CircularProgress } from "@mui/material";
+import { removeImage } from "../../Features/form/formSlice";
+
+const limit = 3;
 
 function StepOne() {
   const images = useSelector((state) => state?.formRed?.form?.progress);
+  const dispatch = useDispatch();
+
+  const deleteImage = (index) => {
+    dispatch(removeImage(index));
+  };
 
   return (
     <div className="flex gap-4">
       <div className="flex flex-col items-start justify-center gap-4">
-        {images.length > 3 ? (
-          <ImageInput name="example-image" />
+        {images.length <= limit ? (
+          <ImageInput limit={limit} name="example-image" />
         ) : (
-          <div className="relative z-10 flex flex-col items-center gap-2 rounded-full ">
-            <div className="p-4 bg-theme-yellow animate-bounce w-[50px] h-[50px] rounded-full flex justify-center items-center">
-              <Publish className="" />
-            </div>
-
-            <p className="text-lg font-bold text-dark-black">
-              Drop the files here ...
-            </p>
-          </div>
+          <>
+            {!images[limit]?.file_url ? (
+              <div className="h-[350px] w-[350px] border border-light-black rounded-lg relative group cursor-pointer flex items-center text-2xl text-light-black font-semibold justify-center">
+                {images[limit]?.progress < 100 ? (
+                  <p className="w-full text-center">
+                    {images[limit]?.progress}
+                  </p>
+                ) : (
+                  <CircularProgress className="text-center text-light-black" />
+                )}
+              </div>
+            ) : (
+              <div
+                className="w-[350px] h-[350px] bg-light-black rounded-lg relative group cursor-pointer flex items-center justify-center"
+                key={images[1]?.file}
+              >
+                <div onClick={() => deleteImage(limit)}>
+                  <Delete className="absolute top-0 left-0 right-0 z-10 h-full m-auto text-white transition-opacity opacity-0 group-hover:opacity-100" />
+                  <Img
+                    loader={
+                      <CircularProgress className="text-center text-white" />
+                    }
+                    className="z-20 object-contain w-full h-[350px] rounded-lg group-hover:brightness-50"
+                    alt="img"
+                    src={images[limit]?.file_url}
+                  />
+                </div>
+              </div>
+            )}
+          </>
         )}
-        <PreviewImages />
+
+        <PreviewImages limit={limit} />
       </div>
       <div className="flex flex-col w-full gap-4">
         <Input label="Name" name="name" />
@@ -60,13 +92,7 @@ function StepOne() {
             name="price"
           />
           <Dropdown
-            options={[
-              "per day",
-              "per week",
-              "per month",
-              "per year",
-              "per hour",
-            ]}
+            options={["day", "month", "week", "hour"]}
             name="price_per"
             label="Price Per"
             className="w-full text-left"

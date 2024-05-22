@@ -1,10 +1,25 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
-function Form({ children, ...props }) {
-  const methods = useForm();
+function Form({ children, resolver, ...props }) {
+  const getResolver = () => {
+    if (resolver) {
+      return {
+        resolver: resolver,
+      };
+    } else {
+      return {
+        mode: "onChange",
+      };
+    }
+  };
+
+  const methods = useForm({
+    resolver: resolver,
+  });
+
   const onSubmitRequest = methods.handleSubmit((data) => {
-    console.log(data);
     props.onSubmit(data);
   });
 
@@ -19,6 +34,8 @@ function Form({ children, ...props }) {
       >
         {children}
       </form>
+
+      <DevTool control={methods.control} />
     </FormProvider>
   );
 }

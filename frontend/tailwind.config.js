@@ -6,6 +6,10 @@ module.exports = {
       mobile: { max: "450px" },
     },
     extend: {
+      backgroundImage: (theme) => ({
+        "gradient-black":
+          "linear-gradient(180deg, rgba(255,255,255,0) 35%, rgba(0,0,0,1) 95%);",
+      }),
       colors: {
         "light-yellow": "#eeeeee",
         "theme-yellow": "#FFD369",

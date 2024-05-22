@@ -40,7 +40,7 @@ function ProductCarousel({ images, data }) {
         <button>Rent now</button>
         <button>Bargin</button>
       </div>
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption d-none d-md-block z-10">
         <h5>
           {data?.name} | {data?.model}
         </h5>
@@ -50,7 +50,8 @@ function ProductCarousel({ images, data }) {
       </div>
       <div class="carousel-inner">
         {images?.map((image, index) => (
-          <div class={`carousel-item ${index === 0 ? "active" : ""}`}>
+          <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
+            <div className="absolute top-0 left-0 right-0 h-full m-auto text-white transition-opacity opacity-100 z-4 bg-gradient-black"></div>
             <img src={image} class="d-block w-100" alt="..." />
           </div>
         ))}

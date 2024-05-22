@@ -10,7 +10,7 @@ function Details({ data }) {
         <p className="section-main">details.</p>
       </div>
 
-      <div className="section-body mobile:flex-wrap">
+      <div className="gap-1 section-body mobile:flex-wrap">
         <DetailsCard description={data?.engine?.description} cardFor="engine" />
         <DetailsCard description={data?.tyre?.description} cardFor="tyre" />
         <DetailsCard

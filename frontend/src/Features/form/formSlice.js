@@ -35,11 +35,15 @@ export const formSlice = createSlice({
       state.form.progress = updatedData;
     },
     removeImage: (state, action) => {
-      const filteredImages = state.form.images.filter(
+      const filteredImages = state.form.progress.filter(
+        (img, index) => index !== action.payload
+      );
+      const filteredImagesObj = state.form.images.filter(
         (img, index) => index !== action.payload
       );
 
-      state.form.images = filteredImages;
+      state.form.progress = filteredImages;
+      state.form.images = filteredImagesObj;
     },
   },
 });

@@ -6,6 +6,8 @@ exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const newCar = await Model.create({ ...req.body, posted_by: req.user.id });
 
+    console.log(newCar);
+
     res.status(201).json({
       status: "success",
       data: {
