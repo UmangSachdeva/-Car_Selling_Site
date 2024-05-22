@@ -24,9 +24,13 @@ const schema = new mongoose.Schema(
         "Hatchback",
         "Sports Car",
         "Hypercar",
-        "Luxary",
+        "Luxury",
       ],
       required: [true, "Car Type is required"],
+    },
+    pricing_type: {
+      type: String,
+      required: [true, "Pricing type is required"],
     },
     price: {
       type: Number,
@@ -81,6 +85,10 @@ const schema = new mongoose.Schema(
       },
     ],
 
+    car_description: {
+      type: String,
+      required: [true, "Description of car is required"],
+    },
     clutch: {
       description: {
         required: [true, "Enter the details for clutch"],
