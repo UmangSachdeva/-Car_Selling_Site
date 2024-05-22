@@ -8,6 +8,7 @@ import Autosuggest from "react-autosuggest";
 
 import "leaflet/dist/leaflet.css";
 import { Autocomplete, TextField } from "@mui/material";
+import { get, useFormContext } from "react-hook-form";
 const center = {
   lat: 51.505,
   lng: -0.09,
@@ -16,11 +17,15 @@ const center = {
 let searchTimeout;
 
 function StepTwo() {
+  const { setValue, register, getValues, formState: { errors } } = useFormContext();
+
   const [position, setPosition] = useState(center); // Default position
   const markerRef = useRef(null);
   const [address, setAddress] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState("");
+
+  const errorInput = get(errors, "location.address")
 
   const RecenterAutomatically = () => {
     const map = useMap();
@@ -29,6 +34,8 @@ function StepTwo() {
     }, [position]);
     return null;
   };
+
+  console.log(errors)
 
   const eventHandlers = useMemo(
     () => ({
@@ -47,7 +54,7 @@ function StepTwo() {
 
     searchTimeout = setTimeout(async () => {
       try {
-        console.log(value);
+
         const response = await axios.get(
           `https://geocode.maps.co/search?q=${value}&api_key=${process.env.REACT_APP_LOCATION_API}`
         );
@@ -61,6 +68,9 @@ function StepTwo() {
   };
 
   const handleInputSelect = (value) => {
+
+    setValue("location.cordinates", [value?.lat || center.lat, value?.lon || center?.lng])
+    setValue("location.address", value?.display_name)
     setPosition({
       lat: value?.lat || center.lat,
       lng: value?.lon || center?.lng,
@@ -68,9 +78,17 @@ function StepTwo() {
     setAddress(value?.display_name);
   };
 
+  useEffect(() => {
+    if (!getValues("location")) {
+      setValue("location", {})
+    }
+  }, [])
+
   return (
     <div className="flex flex-col gap-4">
       <div>
+        <p className="text-xs text-left capitalize text-[#d32f2f] mx-[14px] mt-[3px]">{errorInput?.message}</p>
+        <input {...register("location")} type="text" className="hidden" name="location" />
         {error && <div style={{ color: "red" }}>{error}</div>}
         <Autocomplete
           className="text-dark-black"

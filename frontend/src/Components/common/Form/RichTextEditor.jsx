@@ -2,7 +2,7 @@ import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { makeStyles } from "@mui/styles";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, get } from "react-hook-form";
 
 const useStyles = makeStyles({
   editor: {
@@ -45,11 +45,16 @@ function RichTextEditor({ name, ...props }) {
     formState: { errors },
   } = useFormContext();
 
+  const error = get(errors, name)
+
+  console.log(errors);
+
   const classes = useStyles();
 
   return (
     <>
-      {errors && <p className="font-semibold text-red-500">Required</p>}
+      {error && <p className="text-xs text-left capitalize text-[#d32f2f] mx-[14px] mt-[3px]">{error?.message}</p>}
+
       <div className={classes.editor}>
         <Controller
           name={name}
@@ -65,7 +70,7 @@ function RichTextEditor({ name, ...props }) {
               theme="snow"
               value={value}
               onChange={(e) => {
-                console.log(e);
+
                 onChange(e);
               }}
               modules={{
@@ -99,7 +104,7 @@ function RichTextEditor({ name, ...props }) {
                 "image",
                 "video",
               ]}
-              placeholder="Type something..."
+              placeholder="Write Description of your car"
             />
           )}
         />

@@ -7,17 +7,18 @@ function Form({ children, resolver, ...props }) {
     if (resolver) {
       return {
         resolver: resolver,
+        mode: "onChange",
+        reValidateMode: "onChange"
       };
     } else {
       return {
         mode: "onChange",
+        reValidateMode: "onChange"
       };
     }
   };
 
-  const methods = useForm({
-    resolver: resolver,
-  });
+  const methods = useForm(getResolver());
 
   const onSubmitRequest = methods.handleSubmit((data) => {
     props.onSubmit(data);

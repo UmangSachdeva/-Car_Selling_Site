@@ -27,9 +27,17 @@ function ImageInput({ name }) {
     dispatch(addImage(result.result.secure_url));
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    onDrop, accept: {
+      "image/png": [],
+      "image/jpg": [],
+      "image/jpeg": [],
+    }
+  });
   return (
     <div className="p-4 border-2 border-dashed rounded-lg border-light-black w-[350px] h-[350px]">
+      {isDragReject && (<p className="text-[#d32f2f]">*Only .png, .jpg and .jpeg are allowed</p>)}
+
       <div
         {...getRootProps()}
         className="flex items-center justify-center w-full h-full transition-transform"

@@ -37,6 +37,8 @@ function Dropdown({ options, ...props }) {
               name={name}
               inputRef={ref}
               className="text-left text-dark-black"
+              helperText={error?.message}
+
               {...props}
             >
               {options.map((opt) => (
@@ -45,6 +47,7 @@ function Dropdown({ options, ...props }) {
                 </MenuItem>
               ))}
             </Select>
+            <p className="text-xs text-left capitalize text-[#d32f2f] mx-[14px] mt-[3px]">{error?.message}</p>
           </FormControl>
         )}
       />

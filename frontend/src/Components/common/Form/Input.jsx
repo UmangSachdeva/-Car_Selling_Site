@@ -8,15 +8,9 @@ import styled from "@emotion/styled";
 function Input(props) {
   const {
     control,
-    formState: { errors },
+
   } = useFormContext();
 
-  console.log(props.name);
-
-  const error = get(errors, props.name);
-
-  console.log(error);
-  console.log(errors);
 
   return (
     <div {...props.container}>
@@ -36,6 +30,7 @@ function Input(props) {
               error={error}
               id="outlined-basic"
               label="Outlined"
+              helperText={error?.message}
               onChange={onChange}
               variant="outlined"
               {...props}

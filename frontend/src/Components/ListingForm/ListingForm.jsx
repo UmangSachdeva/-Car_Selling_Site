@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Form from "../common/Form/Form";
+import { useNavigate } from "react-router-dom"
 import MultiStep from "react-multistep";
 import StepOne from "./StepOne";
 import { Button, Step, StepLabel, Stepper, Typography } from "@mui/material";
@@ -36,7 +37,7 @@ const CustomStepIconRoot = styled("div")(({ theme, ownerState }) => ({
 
 function CustomStepIcon(props) {
   const { active, completed, className } = props;
-  console.log(props);
+
 
   return (
     <CustomStepIconRoot ownerState={{ active }} className={className}>
@@ -62,16 +63,21 @@ function CustomStepIcon(props) {
 const steps = ["Company Details", "Car Location Details", "Car Details"];
 
 function ListingForm() {
+  const nav = useNavigate();
   const [step, setStep] = useState(1);
   const image = useSelector((state) => state?.formRed?.form?.images);
 
   const handleNextStep = async (data) => {
-    await listingSchema.validate(data)
+
     if (step < steps.length) {
       setStep((prev) => prev + 1);
     } else {
       // console.log(image);
-      addForm({ ...data, images: image });
+
+
+      await addForm({ ...data, images: image });
+
+      nav("/car-space")
       // console.log({ ...data, images: image });
     }
   };
@@ -81,6 +87,18 @@ function ListingForm() {
       setStep((prev) => prev - 1);
     }
   };
+
+  const getSchema = () => {
+    if (step == 1) {
+      return listingSchema.stepOne;
+    } else if (step == 2) {
+      return listingSchema.stepTwo;
+    } else if (step == 3) {
+      return listingSchema.stepThree;
+    }
+  };
+
+
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-4 p-4 py-10">
@@ -114,7 +132,7 @@ function ListingForm() {
           })}
         </Stepper>
         <Form
-          resolver={yupResolver(listingSchema)}
+          resolver={yupResolver(getSchema())}
           onSubmit={handleNextStep}
           className="flex flex-col w-full gap-4"
         >

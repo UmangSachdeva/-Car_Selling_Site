@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageInput from "../common/Form/ImageInput";
 import PreviewImages from "./PreviewImages";
 import Dropdown from "../common/Form/Dropdown";
@@ -8,20 +8,33 @@ import { Delete, Publish, UploadFile } from "@mui/icons-material";
 import { Img } from "react-image";
 import { CircularProgress } from "@mui/material";
 import { removeImage } from "../../Features/form/formSlice";
+import { get, useFormContext } from "react-hook-form";
 
 const limit = 3;
 
 function StepOne() {
+  const { setValue, formState: { errors } } = useFormContext();
+  const imageArr = useSelector((state) => state?.formRed?.form?.images)
   const images = useSelector((state) => state?.formRed?.form?.progress);
   const dispatch = useDispatch();
+
+  const error = get(errors, "images")
 
   const deleteImage = (index) => {
     dispatch(removeImage(index));
   };
 
+  useEffect(() => {
+    setValue("images", imageArr)
+  }, [imageArr])
+
+  console.log(errors);
+
   return (
     <div className="flex gap-4">
       <div className="flex flex-col items-start justify-center gap-4">
+        <p className="text-xs text-left capitalize text-[#d32f2f] mx-[14px] mt-[3px]">{error?.message}</p>
+
         {images.length <= limit ? (
           <ImageInput limit={limit} name="example-image" />
         ) : (
@@ -72,7 +85,7 @@ function StepOne() {
             "Hatchback",
             "Sports Car",
             "Hypercar",
-            "Luxary",
+            "Luxury",
           ]}
           label="Car type"
           name="car_type"

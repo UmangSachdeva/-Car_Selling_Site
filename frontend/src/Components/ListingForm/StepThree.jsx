@@ -9,11 +9,25 @@ function StepThree() {
     <div>
       {" "}
       <div className="flex flex-col w-full gap-4">
-        <Input label="Milage" name="milage" />
-        <Input label="Transmission" name="transmission" />
-        <Input label="Fuel Type" name="fuel_type" />
-        <Input label="Seating Capacity" name="seating_capacity" />
-        <RichTextEditor name="features" />
+        <div className="flex w-full gap-2">
+          <Input label="Speed" name="features.speed.value" type="number" className="w-full" container={{ className: "w-full" }} />
+          <Input label="Unit" name="features.speed.unit" className="w-full" container={{ className: "w-full" }} />
+        </div>
+        <div className="flex w-full gap-2">
+          <Input label="Engine" name="features.engine.value" type="number" className="w-full" container={{ className: "w-full" }} />
+          <Input label="Unit" name="features.engine.unit" className="w-full" container={{ className: "w-full" }} />
+        </div>
+        <div className="flex w-full gap-2">
+          <Input label="Torq" name="features.torq.value" type="number" className="w-full" container={{ className: "w-full" }} />
+          <Input label="Unit" name="features.torq.unit" className="w-full" container={{ className: "w-full" }} />
+        </div>
+        <div className="flex w-full gap-2">
+          <Input label="Seating Capaciy" name="features.seating.value" type="number" className="w-full" container={{ className: "w-full" }} />
+          <Input label="Unit" name="features.seating.unit" className="w-full" container={{ className: "w-full" }} />
+        </div>
+
+
+        <RichTextEditor name="car_description" />
         <SpecialCards />
       </div>
     </div>

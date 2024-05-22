@@ -55,14 +55,17 @@ function SpecialCards() {
               <Controller
                 control={control}
                 name={card.name + ".description"}
-                render={({ field: { onChange, value } }) => {
+                render={({ field: { onChange, value }, fieldState: { invalid, isTouched, isDirty, error } }) => {
                   return (
-                    <textarea
-                      value={value}
-                      onChange={onChange}
-                      className="w-full h-full p-2 text-sm text-black capitalize border border-dashed rounded-lg placeholder:text-sm placeholder: border-light-black placeholder:italics"
-                      placeholder="write something.."
-                    />
+                    <div div className="flex flex-col w-full h-full gap-2">
+                      <p className="text-xs text-left capitalize text-[#d32f2f] mx-[14px] mt-[3px]">{error?.message}</p>
+                      <textarea
+                        value={value}
+                        onChange={onChange}
+                        className="w-full h-full p-2 text-base text-black capitalize border border-dashed rounded-lg placeholder:text-sm placeholder: border-light-black placeholder:italics"
+                        placeholder="write something.."
+                      />
+                    </div>
                   );
                 }}
               />
