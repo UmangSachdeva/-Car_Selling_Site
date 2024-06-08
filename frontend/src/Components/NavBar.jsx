@@ -111,7 +111,7 @@ function NavBar() {
   const checkMe = () => {
     if (localStorage.getItem("token")) {
       axios
-        .get(`${process.env.REACT_APP_BASE_URL}/auth/me`, {
+        .get(`${import.meta.env.VITE_APP_BASE_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -126,7 +126,7 @@ function NavBar() {
   };
 
   useEffect(() => {
-    socket = io.connect(process.env.REACT_APP_SOCKET_URL);
+    socket = io.connect(import.meta.env.VITE_APP_SOCKET_URL);
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 

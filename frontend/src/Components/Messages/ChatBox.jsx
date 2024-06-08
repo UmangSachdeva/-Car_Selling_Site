@@ -64,11 +64,14 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     try {
       axios
-        .get(`${process.env.REACT_APP_BASE_URL}/message/${selectedChat._id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+        .get(
+          `${import.meta.env.VITE_APP_BASE_URL}/message/${selectedChat._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((results) => {
           setMessages(results.data.data);
           console.log("Messages", results.data.data);
@@ -87,7 +90,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     axios
       .post(
-        `${process.env.REACT_APP_BASE_URL}/message`,
+        `${import.meta.env.VITE_APP_BASE_URL}/message`,
         {
           message: message,
           chatId: selectedChat._id,

@@ -43,7 +43,7 @@ function App() {
   } = context;
 
   useEffect(() => {
-    socket = io(process.env.REACT_APP_SOCKET_URL);
+    socket = io(import.meta.env.VITE_APP_SOCKET_URL);
 
     setSocket(socket);
     const userData = JSON.parse(localStorage.getItem("user"));

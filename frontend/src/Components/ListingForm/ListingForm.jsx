@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "../common/Form/Form";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import MultiStep from "react-multistep";
 import StepOne from "./StepOne";
 import { Button, Step, StepLabel, Stepper, Typography } from "@mui/material";
@@ -38,7 +38,6 @@ const CustomStepIconRoot = styled("div")(({ theme, ownerState }) => ({
 function CustomStepIcon(props) {
   const { active, completed, className } = props;
 
-
   return (
     <CustomStepIconRoot ownerState={{ active }} className={className}>
       {completed ? (
@@ -68,16 +67,14 @@ function ListingForm() {
   const image = useSelector((state) => state?.formRed?.form?.images);
 
   const handleNextStep = async (data) => {
-
     if (step < steps.length) {
       setStep((prev) => prev + 1);
     } else {
       // console.log(image);
 
-
       await addForm({ ...data, images: image });
 
-      nav("/car-space")
+      nav("/car-space");
       // console.log({ ...data, images: image });
     }
   };
@@ -97,8 +94,6 @@ function ListingForm() {
       return listingSchema.stepThree;
     }
   };
-
-
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-4 p-4 py-10">

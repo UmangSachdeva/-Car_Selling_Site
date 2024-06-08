@@ -95,7 +95,7 @@ function ChatHeads() {
   const fetchChats = () => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/chats`, {
+      .get(`${import.meta.env.VITE_APP_BASE_URL}/chats`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {

@@ -59,7 +59,7 @@ function Login({ showCmd, handleClose }) {
     e.preventDefault();
     const toastIdSignup = toast.loading("Signing you in....");
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/signup`, signupDetails)
+      .post(`${import.meta.env.VITE_APP_BASE_URL}/auth/signup`, signupDetails)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -90,7 +90,7 @@ function Login({ showCmd, handleClose }) {
     e.preventDefault();
 
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, loginDetails)
+      .post(`${import.meta.env.VITE_APP_BASE_URL}/auth/login`, loginDetails)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
