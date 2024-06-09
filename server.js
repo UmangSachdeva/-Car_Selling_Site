@@ -9,10 +9,7 @@ const port = process.env.PORT;
 
 const DATABASE =
   process.env.NODE_ENV == "production"
-    ? process.env.MONGODBPRODUCTION.replace(
-        "<PASSWORD>",
-        process.env.PASSWORD
-      )
+    ? process.env.MONGODBPRODUCTION.replace("<PASSWORD>", process.env.PASSWORD)
     : process.env.MONGODBURI;
 
 mongoose
@@ -25,6 +22,7 @@ mongoose
   });
 
 app.get("/", (req, res) => {
+  console.log(__dirname);
   res.sendFile(__dirname + "/index.html");
 });
 
