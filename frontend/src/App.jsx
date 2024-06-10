@@ -63,6 +63,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log("listening for messages...");
     socket.on("message-received", (newMessageReceived) => {
       console.log("message recieved");
       if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {

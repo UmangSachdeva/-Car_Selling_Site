@@ -104,6 +104,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
       .then((res) => {
         setMessage("");
         setMessages([...messages, res.data.data]);
+        console.log("New message", res.data.data);
         dispatch(setMessagesGlobal([...messages, res.data.data]));
         socket.emit("new-message", res.data.data);
       })
