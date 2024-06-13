@@ -6,8 +6,6 @@ exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const newCar = await Model.create({ ...req.body, posted_by: req.user.id });
 
-    console.log(newCar);
-
     res.status(201).json({
       status: "success",
       data: {
@@ -16,9 +14,15 @@ exports.createOne = (Model) =>
     });
   });
 
-exports.getAll = (Model) =>
+exports.getAll = (Model, props) =>
   catchAsync(async (req, res, next) => {
-    const features = new ApiFeatures(Model.find({}), req.query).sort();
+    console.log("req.query", req.params);
+
+    const features = new ApiFeatures(Model.find({}), req.query)
+      .sort()
+      .filter()
+      .search(props);
+    // .pagiantion();
 
     const cars = await features.query;
 

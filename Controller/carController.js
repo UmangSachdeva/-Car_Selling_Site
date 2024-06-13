@@ -36,7 +36,7 @@ exports.uploadFile = catchAsync(async (req, res) => {
 
 exports.createCar = factory.createOne(Car);
 
-exports.getAllCars = factory.getAll(Car);
+exports.getAllCars = factory.getAll(Car, ["name", "model"]);
 
 exports.updateCar = factory.updateOne(Car);
 

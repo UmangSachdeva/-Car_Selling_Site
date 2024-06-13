@@ -1689,9 +1689,7 @@ label.close {
   width: 30%;
 }
 
-.filter-options-container div {
-  min-height: 94vh;
-  border: 1px solid;
+.filter-options-container #filter-box {
   margin: 30px 20px;
   position: sticky;
   top: 20px;

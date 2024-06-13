@@ -5,14 +5,25 @@ class ApiFeatures {
   }
 
   filter() {
-    const excluded = ["limit", "sort", "page", "field"];
+    const excluded = ["limit", "sort", "page", "field", "search"];
 
     const queryObj = { ...this.queryString };
+    console.log(queryObj);
+
     excluded.map((el) => delete queryObj[el]);
 
-    let queryStr = JSON.stringify(queryStr);
-    queryStr.replace(/\b(gte || gt || lte || lt)\b /g, (match) => `$${match}`);
+    console.log(queryObj);
 
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt|eq)\b/g, (match) => {
+      return `$${match}`;
+    });
+    queryStr = queryStr.replace(/~/g, () => {
+      return `.`;
+    });
+    console.log("queryStr", queryStr);
+
+    console.log(JSON.parse(queryStr));
     this.query = this.query.find(JSON.parse(queryStr));
 
     return this;
@@ -26,6 +37,8 @@ class ApiFeatures {
       this.query = this.query.sort("-createdAt");
     }
 
+    console.log(this.queryString);
+
     return this;
   }
 
@@ -36,6 +49,22 @@ class ApiFeatures {
 
     this.query = this.query.skip(skip).limit(limit);
 
+    return this;
+  }
+
+  search(searchFields) {
+    if (this.queryString.search) {
+      const keyword = this.queryString.search.replace("+", " ") || "";
+      const fields = [...searchFields];
+
+      const qs = fields.map((fl) => {
+        const obj = {};
+        obj[fl] = { $regex: `${keyword}`, $options: "i" };
+        return obj;
+      });
+
+      this.query = this.query.find({ $or: qs });
+    }
     return this;
   }
 }
