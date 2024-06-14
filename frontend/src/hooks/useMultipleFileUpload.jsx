@@ -12,13 +12,13 @@ const useMultipleFileUpload = () => {
     dispatch(addProgress({ file: file.name, progress: 0 }));
 
     const formData = new FormData();
-    console.log(file);
+
     formData.append("image", file);
 
     try {
       const response = await axiosPrivate.post("/cars/upload", formData, {
         onUploadProgress: (progressEvent) => {
-          console.log(progressEvent);
+    
           const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );

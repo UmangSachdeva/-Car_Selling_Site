@@ -3,7 +3,6 @@ import FilterOptions from "./FilterOptions";
 import ProductList from "./ProductList";
 import FilterMobile from "./FilterMobile";
 import { motion } from "framer-motion";
-import { connectSeller } from "../../api/product/connectVendor";
 import { useDispatch, useSelector } from "react-redux";
 import { Chip } from "@mui/material";
 import { setProductQuery } from "../../Features/product/productSlice";
@@ -39,7 +38,6 @@ function ProductPage() {
     newQuery = Object.keys(newQuery).filter((objectKey) => {
       objectKey != "car_type";
     });
-    console.log(newQuery);
 
     dispatch(
       setProductQuery({

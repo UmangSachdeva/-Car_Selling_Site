@@ -47,7 +47,7 @@ function RichTextEditor({ name, ...props }) {
 
   const error = get(errors, name)
 
-  console.log(errors);
+
 
   const classes = useStyles();
 

@@ -65,7 +65,7 @@ function NavBar() {
     setAnchorEl2(event.currentTarget);
   };
   const handleCloseAccount = () => {
-    console.log("Clicked");
+ 
     setAnchorEl(null);
   };
   const handleCloseAccount2 = () => {
@@ -97,6 +97,7 @@ function NavBar() {
     setLoggedIn(false);
     dispatch(removeAuth({}));
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     nav("/");
   };
 
@@ -111,17 +112,16 @@ function NavBar() {
 
   const checkMe = () => {
 
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
       axiosPrivate
         .get(`/auth/me`)
         .then((res) => {
-          console.log(res.data.user);
+       
           dispatch(addAuth(res.data.user));
           setLoggedIn(res.data.user);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     } else {
       setLoggedIn(false);

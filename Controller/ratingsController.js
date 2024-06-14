@@ -18,7 +18,7 @@ exports.addReview = catchAsync(async (req, res, next) => {
 
   const post = await Cars.findOne({ slug: req.params.id });
 
-  console.log(req.user)
+
 
   const ratings = await Ratings.find({ $and: [{ postId: post._id }, { userId: req.user.id }] })
   if (ratings.length != 0) {

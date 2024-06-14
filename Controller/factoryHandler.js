@@ -16,7 +16,7 @@ exports.createOne = (Model) =>
 
 exports.getAll = (Model, props) =>
   catchAsync(async (req, res, next) => {
-    console.log("req.query", req.params);
+
 
     const features = new ApiFeatures(Model.find({}), req.query)
       .sort()

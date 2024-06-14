@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actions from "../api";
+import axiosPrivate from "../../axios_config/axiosPrivate";
 
 const api =
   ({ dispatch }) =>
@@ -14,14 +15,14 @@ const api =
         next(action);
 
         try {
-          const response = await axios.request({
+          const response = await axiosPrivate.request({
             baseURL: import.meta.env.VITE_APP_BASE_URL,
             url,
             method,
             data,
           });
 
-          console.log(response.data);
+ 
 
           // General
           dispatch(actions.apiCallSucess(response.data));
@@ -29,9 +30,10 @@ const api =
           if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
         } catch (error) {
           // General
-          dispatch(actions.apiCallFailed(error.message));
+          dispatch(actions.apiCallFailed(error?.response?.data?.message));
           // Specific
-          if (onError) dispatch({ type: onError, payload: error.message });
+
+          if (onError) dispatch({ type: onError, payload: error?.response?.data?.message });
         }
       };
 

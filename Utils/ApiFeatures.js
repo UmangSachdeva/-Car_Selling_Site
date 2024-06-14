@@ -8,11 +8,10 @@ class ApiFeatures {
     const excluded = ["limit", "sort", "page", "field", "search"];
 
     const queryObj = { ...this.queryString };
-    console.log(queryObj);
 
     excluded.map((el) => delete queryObj[el]);
 
-    console.log(queryObj);
+
 
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt|eq)\b/g, (match) => {
@@ -21,9 +20,9 @@ class ApiFeatures {
     queryStr = queryStr.replace(/~/g, () => {
       return `.`;
     });
-    console.log("queryStr", queryStr);
 
-    console.log(JSON.parse(queryStr));
+
+
     this.query = this.query.find(JSON.parse(queryStr));
 
     return this;
@@ -37,7 +36,7 @@ class ApiFeatures {
       this.query = this.query.sort("-createdAt");
     }
 
-    console.log(this.queryString);
+
 
     return this;
   }

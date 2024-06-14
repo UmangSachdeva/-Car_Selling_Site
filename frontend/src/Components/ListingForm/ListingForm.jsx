@@ -70,12 +70,12 @@ function ListingForm() {
     if (step < steps.length) {
       setStep((prev) => prev + 1);
     } else {
-      // console.log(image);
+
 
       await addForm({ ...data, images: image });
 
       nav("/car-space");
-      // console.log({ ...data, images: image });
+
     }
   };
 

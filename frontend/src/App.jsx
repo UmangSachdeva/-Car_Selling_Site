@@ -50,22 +50,22 @@ function App() {
     socket.emit("setup", userData);
 
     socket.on("typing", () => {
-      console.log("typing recieved");
+    
       setIsTyping(true);
     });
 
     socket.on("stop-typing", () => setIsTyping(false));
 
     socket.on("connected", () => {
-      console.log("socket connected");
+   
       setSocketConnected(true);
     });
   }, []);
 
   useEffect(() => {
-    console.log("listening for messages...");
+    
     socket.on("message-received", (newMessageReceived) => {
-      console.log("message recieved");
+      
       if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
         if (!notification.includes(newMessageReceived)) {
           setNotification([newMessageReceived, ...notification]);

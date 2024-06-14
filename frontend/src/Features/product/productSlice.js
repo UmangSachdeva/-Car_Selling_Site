@@ -42,7 +42,7 @@ export const loadProducts = (query) => (dispatch) => {
   if (query) {
     const qs = new URLSearchParams(query);
     url = url + "?" + qs;
-    console.log(url);
+
   }
 
   return dispatch(

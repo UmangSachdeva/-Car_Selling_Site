@@ -6,6 +6,8 @@ const authController = require("../Controller/authController");
 router
   .route("/")
   .get(authController.verifyMe, chatController.getChats)
-  .post(authController.verifyMe, chatController.getChat);
+
+
+router.route("/:slug").post(authController.verifyMe, chatController.createChat);
 
 module.exports = router;

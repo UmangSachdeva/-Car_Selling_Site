@@ -54,7 +54,7 @@ function Feedback() {
 
   const getReviewsFn = async () => {
     const reviews = await getReviews(params.id);
-    console.log(reviews);
+   
     dispatch(setReviews(reviews?.data?.data));
   };
 

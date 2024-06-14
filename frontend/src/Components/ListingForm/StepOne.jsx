@@ -28,7 +28,7 @@ function StepOne() {
     setValue("images", imageArr)
   }, [imageArr])
 
-  console.log(errors);
+
 
   return (
     <div className="flex gap-4">

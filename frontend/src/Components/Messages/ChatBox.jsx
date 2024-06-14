@@ -9,6 +9,7 @@ import SingleMessage from "./SingleMessage";
 import { useDispatch } from "react-redux";
 import { setMessagesGlobal } from "../../Features/messages/messageSlice";
 import { CircularProgress } from "@mui/material";
+import axiosPrivate from "../../axios_config/axiosPrivate";
 
 function ChatBox({ username, setUsername, room, setRoom }) {
   const [message, setMessage] = useState("");
@@ -38,7 +39,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     if (!typing) {
       setTyping(true);
-      console.log("typing emitted");
+     
       socket.emit("typing", selectedChat._id);
     }
 
@@ -74,7 +75,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
         )
         .then((results) => {
           setMessages(results.data.data);
-          console.log("Messages", results.data.data);
+       
           dispatch(setMessagesGlobal(results.data.data));
           socket.emit("join-chat", selectedChat._id);
         });
@@ -88,23 +89,15 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     setMessageLoading(true);
 
-    axios
-      .post(
-        `${import.meta.env.VITE_APP_BASE_URL}/message`,
-        {
-          message: message,
-          chatId: selectedChat._id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
+    axiosPrivate
+      .post(`/message`, {
+        message: message,
+        chatId: selectedChat._id,
+      })
       .then((res) => {
         setMessage("");
         setMessages([...messages, res.data.data]);
-        console.log("New message", res.data.data);
+
         dispatch(setMessagesGlobal([...messages, res.data.data]));
         socket.emit("new-message", res.data.data);
       })
@@ -130,9 +123,9 @@ function ChatBox({ username, setUsername, room, setRoom }) {
                 {selectedChat.chatName}
               </p>
               <span>
-                {selectedChat.users[0]._id === user._id
-                  ? selectedChat.users[1].profile_name
-                  : selectedChat.users[0].profile_name}{" "}
+                {selectedChat.users[0]?._id === user._id
+                  ? selectedChat.users[1]?.profile_name
+                  : selectedChat.users[0]?.profile_name}{" "}
                 | Delhi, India
               </span>
             </div>

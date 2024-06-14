@@ -12,10 +12,11 @@ const themeOptions = {
     },
     background: {
       default: "#eeeeee",
-      paper: "#393e46",
+      paper: "#eeeeee",
     },
     text: {
       secondary: "#393e46",
+      teriary: "#FFD369",
       disabled: "rgba(96,96,96,0.38)",
       hint: "rgba(65,65,65,0.38)",
       primary: "#222831",

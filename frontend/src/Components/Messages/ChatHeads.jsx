@@ -146,7 +146,7 @@ function ChatHeads() {
   };
 
   useEffect(() => {
-    console.log(selectedChat);
+   
     if (localStorage.getItem("user")) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
@@ -181,7 +181,9 @@ function ChatHeads() {
           {!loading &&
             chats?.map((item, index) => {
               const chatWith =
-                item.users[0]._id === user._id ? item.users[1] : item.users[0];
+                item.users[0]?._id === user?._id
+                  ? item?.users[1]
+                  : item?.users[0];
 
               return (
                 <div
@@ -193,21 +195,23 @@ function ChatHeads() {
                 >
                   <div className="user-avatar">
                     <Avatar
-                      {...stringAvatar(chatWith.f_name + " " + chatWith.l_name)}
+                      {...stringAvatar(
+                        chatWith?.f_name + " " + chatWith?.l_name
+                      )}
                     />
                   </div>
                   <div className="user-details">
                     <span className="user-name">
-                      {chatWith.f_name + " " + chatWith.l_name}
+                      {chatWith?.f_name + " " + chatWith?.l_name}
                     </span>
                     <br />
-                    <span className="spec-unit">for {item.chatName}</span>
+                    <span className="spec-unit">for {item?.chatName}</span>
                     <br />
                     {item?.latestMessages && (
                       <p className="last_message">
-                        {item.latestMessages.sender.profile_name}:{" "}
+                        {item?.latestMessages?.sender?.profile_name}:{" "}
                         <span className="spec-unit">
-                          {item.latestMessages.message}
+                          {item?.latestMessages?.message}
                         </span>
                       </p>
                     )}

@@ -17,7 +17,6 @@ function SingleMessage() {
 
   useEffect(() => {
     scrollToBottom();
-    console.log("typing");
   }, [messages, isTyping]);
 
   return (

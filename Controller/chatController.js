@@ -2,21 +2,43 @@ const Chat = require("../Schema/Chat");
 const User = require("../Schema/User");
 const catchAsync = require("../Utils/catchAsync");
 const AppError = require("../Utils/AppError");
+const Car = require("../Schema/Car");
+const Message = require("../Schema/Message")
 
-exports.getChat = async (req, res, next) => {
+exports.createChat = async (req, res, next) => {
   try {
-    const { userId } = req.body;
+    const { slug } = req.params;
 
-    if (!userId) {
+    const { offer } = req.body;
+
+    const message = `Hi, I want to make an offer for ${offer}`
+
+
+
+    const post = await Car.findOne({ slug })
+    if (!post) {
+      throw new Error("No Post found");
+    }
+
+    const user = await User.findById(post.posted_by);
+
+
+    if (!user) {
       throw new Error("No User found");
+    }
+
+    if (req.user.id == user._id) {
+      throw new Error("User cannot chat with themselves");
     }
 
     let chat = await Chat.find({
       isGroupChat: false,
-      $and: [{ users: req.user.id }, { users: userId }],
+      $and: [{ users: req.user.id }, { users: user._id }, { chatName: post.name + " " + post.model }],
     })
       .populate({ path: "users" })
-      .populate("latestMessage");
+      .populate("latestMessages");
+
+
 
     chat = await User.populate(chat, {
       path: "latestMessage.sender",
@@ -27,11 +49,34 @@ exports.getChat = async (req, res, next) => {
       res.send(chat[0]);
     } else {
       const createChat = await Chat.create({
-        chatName: "sender",
-        users: [req.user.id, userId],
+        chatName: post.name + " " + post.model,
+        users: [req.user.id, user._id],
       });
 
       const fullChat = await Chat.findOne({ _id: createChat._id });
+
+      let newMessage = {
+        sender: req.user.id,
+        message: message,
+        chat: createChat._id,
+      };
+
+      let msg = await Message.create(newMessage);
+      msg = await msg.populate({
+        path: "sender",
+        select: "email profile_name _id",
+      });
+      msg = await msg.populate({ path: "chat", select: "users _id" });
+      msg = await User.populate(msg, {
+        path: "chat.users",
+        select: "profile_name email _id",
+      });
+
+      await Chat.findByIdAndUpdate(
+        createChat._id,
+        { latestMessages: msg },
+        { new: true }
+      );
 
       res.status(200).json({ status: "success", data: fullChat });
     }

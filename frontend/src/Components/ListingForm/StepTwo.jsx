@@ -40,7 +40,7 @@ function StepTwo() {
     return null;
   };
 
-  console.log(errors);
+
 
   const eventHandlers = useMemo(
     () => ({

@@ -24,7 +24,7 @@ const ShopState = (props) => {
     if (localStorage.getItem("user")) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
-  }, []);
+  }, [localStorage.getItem("user")]);
 
   return (
     <shopContext.Provider
