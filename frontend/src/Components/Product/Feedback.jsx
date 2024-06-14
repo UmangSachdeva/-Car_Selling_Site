@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Rating } from "@mui/material";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { getReviews } from "../../api/reviews/getReviews";
+import { submitReview } from "../../api/reviews/submitReview";
+import { useParams } from "react-router-dom";
+import { setReviews } from "../../Features/reviews/reviewsSlice";
 
 const stringToColor = (string) => {
   let hash = 0;
@@ -35,21 +38,43 @@ const stringAvatar = (name) => {
   };
 };
 
-function Feedback({ data }) {
+function Feedback() {
+  const params = useParams();
   const user = useSelector((state) => state.auth.user);
-  const reviews = useSelector((state) => state.reviewsRed.reviews);
+  const reviews = useSelector((state) => state?.reviewsRed?.reviews);
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(0);
+  const [reload, setReload] = useState(false);
+
+  const onReviewChange = (e) => {
+    setReview(e.target.value);
+  };
 
   const dispatch = useDispatch();
 
   const getReviewsFn = async () => {
-    const reviews = await getReviews(data);
-    console.log(reviews?.dat?.data?.cars);
-    dispatch(reviews?.data?.data?.cars);
+    const reviews = await getReviews(params.id);
+    console.log(reviews);
+    dispatch(setReviews(reviews?.data?.data));
+  };
+
+  const giveFeedback = async () => {
+    await submitReview({
+      rating,
+      message: review,
+      postId: params.id,
+    });
+
+    setReload((prev) => !prev);
+  };
+
+  const onRatingChange = async (e) => {
+    setRating(e.target.value);
   };
 
   useEffect(() => {
     getReviewsFn();
-  }, []);
+  }, [reload]);
 
   return (
     <section style={{ padding: "60px 0" }}>
@@ -74,18 +99,23 @@ function Feedback({ data }) {
             placeholder="Write a review..."
             name=""
             id=""
+            onChange={(e) => onReviewChange(e)}
           />
         </div>
         <div className="justify-center w-full gap-2">
           <Rating
             name="size-large"
-            defaultValue={2}
+            defaultValue={rating}
+            onChange={(e) => onRatingChange(e)}
             size="large"
             style={{ fontSize: "40px" }}
           />
         </div>
 
-        <button className="w-[30%] bg-zinc-800 rounded text-white hover:bg-zinc-700 duration-500 hover:drop-shadow-2xl mobile:w-full p-4">
+        <button
+          onClick={() => giveFeedback()}
+          className="w-[30%] bg-zinc-800 rounded text-white hover:bg-zinc-700 duration-500 hover:drop-shadow-2xl mobile:w-full p-4"
+        >
           Give Feedback
         </button>
       </div>

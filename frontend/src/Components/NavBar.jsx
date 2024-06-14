@@ -27,6 +27,7 @@ import axios from "axios";
 import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
 import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import axiosPrivate from "../axios_config/axiosPrivate";
 
 let selectedChatCompare;
 let socket;
@@ -109,16 +110,18 @@ function NavBar() {
   };
 
   const checkMe = () => {
+
+    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
-      axios
-        .get(`${import.meta.env.VITE_APP_BASE_URL}/auth/me`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
+      axiosPrivate
+        .get(`/auth/me`)
         .then((res) => {
+          console.log(res.data.user);
           dispatch(addAuth(res.data.user));
           setLoggedIn(res.data.user);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       setLoggedIn(false);

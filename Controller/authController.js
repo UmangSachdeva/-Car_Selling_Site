@@ -101,13 +101,19 @@ exports.verifyMe = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
-  if (!token) {
+  console.log("token", token);
+
+  if (token != null && !token) {
     return next(
       new AppError("You are not logged in! Please Login to get excess", 401)
     );
   }
 
+
+
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  console.log("decode", decode);
 
   const currentUser = await User.findById(decode.id);
   if (!currentUser) {

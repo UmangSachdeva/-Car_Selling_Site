@@ -41,7 +41,7 @@ function ProductDetails() {
       <div className="product_details_body mobile:px-2">
         <Details data={product} />
 
-        <Feedback data={product?._id} />
+        <Feedback />
 
         <ProductBanner />
       </div>

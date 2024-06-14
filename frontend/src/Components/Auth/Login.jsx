@@ -5,9 +5,12 @@ import loginPic from "../../Resources/login.gif";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import shopContext from "../../Context/shopContext";
+import { addAuth } from "../../Features/Auth/authSlice";
+import { useDispatch } from "react-redux";
 
 function Login({ showCmd, handleClose }) {
   const context = useContext(shopContext);
+  const dispatch = useDispatch();
   const { setLoginState } = context;
   const [login, setLogin] = useState(true);
   const [loginDetails, setLoginDetails] = useState({
@@ -98,9 +101,11 @@ function Login({ showCmd, handleClose }) {
         toast.success("Logged in successfully", {
           id: toastId,
         });
+        dispatch(addAuth(res.data.user));
         handleClose();
       })
       .catch((err) => {
+        console.log(err);
         toast.error(`${err.response.data.message}`, {
           id: toastId,
         });

@@ -22,37 +22,42 @@ function Details({ data }) {
 
       <div className="more-details mobile:flex-wrap mobile:gap-4">
         <div>
-          <span className="detail-head mobile:text-lg">Max. Speed</span>
+          <span className="detail-head mobile:text-lg">Speed</span>
           <p className="value mobile:text-4xl">
-            120 <span className="unit mobile:text-xl">kmph</span>
+            {data?.features?.speed?.value}{" "}
+            <span className="unit mobile:text-xl">
+              {data?.features?.speed?.unit}
+            </span>
           </p>
         </div>
         <div className="bdr mobile:hidden"></div>
         <div>
-          <span className="detail-head mobile:text-lg">Max. Speed</span>
+          <span className="detail-head mobile:text-lg">Engine</span>
           <p className="value mobile:text-4xl">
-            120 <span className="unit mobile:text-xl">kmph</span>
+            {data?.features?.engine?.value}{" "}
+            <span className="unit mobile:text-xl">
+              {data?.features?.engine?.unit}
+            </span>
           </p>
         </div>
         <div className="bdr mobile:hidden"></div>
         <div>
-          <span className="detail-head mobile:text-lg">Max. Speed</span>
+          <span className="detail-head mobile:text-lg">Torq</span>
           <p className="value mobile:text-4xl">
-            120 <span className="unit mobile:text-xl">kmph</span>
+            {data?.features?.torq?.value}{" "}
+            <span className="unit mobile:text-xl">
+              {data?.features?.torq?.unit}
+            </span>
           </p>
         </div>
         <div className="bdr mobile:hidden"></div>
         <div>
-          <span className="detail-head mobile:text-lg">Max. Speed</span>
+          <span className="detail-head mobile:text-lg">Seating</span>
           <p className="value mobile:text-4xl">
-            120 <span className="unit mobile:text-xl">kmph</span>
-          </p>
-        </div>
-        <div className="bdr mobile:hidden"></div>
-        <div>
-          <span className="detail-head mobile:text-lg">Max. Speed</span>
-          <p className="value mobile:text-4xl">
-            120 <span className="unit mobile:text-xl">kmph</span>
+            {data?.features?.seating?.value}{" "}
+            <span className="unit mobile:text-xl">
+              {data?.features?.seating?.unit}
+            </span>
           </p>
         </div>
       </div>
