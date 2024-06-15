@@ -8,25 +8,35 @@ import {
   IconButton,
   Divider,
   Badge,
+  BottomNavigation,
+  BottomNavigationAction,
 } from "@mui/material";
 import { Toaster } from "react-hot-toast";
 
-import { Logout, Settings } from "@mui/icons-material";
+import {
+  CarRentalRounded,
+  DirectionsCarFilled,
+  DirectionsCarFilledOutlined,
+  Home,
+  Logout,
+  PaidRounded,
+  Settings,
+} from "@mui/icons-material";
 import logo from "../Resources/logo-no-background.png";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
-// import HomeIcon from "@mui/icons-material/HomeOutlined";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-// import PaidRoundedIcon from "@mui/icons-material/ForumOutlined";
-// import CarRentalRoundedIcon from "@mui/icons-material/CarRentalOutlined";
-// import LoginIcon from "@mui/icons-material/Login";
+import HomeIcon from "@mui/icons-material/HomeOutlined";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PaidRoundedIcon from "@mui/icons-material/ForumOutlined";
+import CarRentalRoundedIcon from "@mui/icons-material/CarRentalOutlined";
+import LoginIcon from "@mui/icons-material/Login";
 import Login from "./Auth/Login";
 import { useDispatch } from "react-redux";
 import { addAuth, removeAuth } from "../Features/Auth/authSlice";
 import axios from "axios";
 import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { useLocation, useNavigate, NavLink, Link } from "react-router-dom";
 import axiosPrivate from "../axios_config/axiosPrivate";
 
 let selectedChatCompare;
@@ -40,8 +50,10 @@ function NavBar() {
     selectedChat,
     notification,
     setNotification,
+    selectedPage,
     setSelectedChat,
     loggedIn,
+    setSelectedPage,
     setLoggedIn,
   } = context;
   const nav = useNavigate();
@@ -65,7 +77,6 @@ function NavBar() {
     setAnchorEl2(event.currentTarget);
   };
   const handleCloseAccount = () => {
- 
     setAnchorEl(null);
   };
   const handleCloseAccount2 = () => {
@@ -111,18 +122,14 @@ function NavBar() {
   };
 
   const checkMe = () => {
-
     if (localStorage.getItem("token")) {
       axiosPrivate
         .get(`/auth/me`)
         .then((res) => {
-       
           dispatch(addAuth(res.data.user));
           setLoggedIn(res.data.user);
         })
-        .catch((err) => {
-         
-        });
+        .catch((err) => {});
     } else {
       setLoggedIn(false);
     }
@@ -364,6 +371,7 @@ function NavBar() {
                     PaperProps={{
                       elevation: 0,
                       sx: {
+                        minWidth: "200px",
                         overflow: "visible",
                         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                         mt: 1.5,
@@ -396,7 +404,17 @@ function NavBar() {
                         <Settings fontSize="small" />
                       </ListItemIcon>
                       <span className="menu-title">Setting</span>
-                      Settings
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      sx={{ color: "black" }}
+                      // LinkComponent={Link}
+                      onClick={() => nav("/list-your-car")}
+                    >
+                      <ListItemIcon>
+                        <DirectionsCarFilled fontSize="small" />
+                      </ListItemIcon>
+                      <span>List Your Car</span>
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
@@ -433,8 +451,12 @@ function NavBar() {
               />
             </div>
           </div>
-          {/* <BottomNavigation
-            sx={{ height: "80px", borderRadius: 0 }}
+          <BottomNavigation
+            sx={{
+              height: "80px",
+              borderRadius: 0,
+              "& .MuiBottomNavigationLable": { color: "white" },
+            }}
             showLabels
             value={selectedPage}
             onChange={(event, newValue) => {
@@ -449,6 +471,7 @@ function NavBar() {
             />
             <BottomNavigationAction
               label="CATALOG"
+              onClick={() => nav("/car-space")}
               value="catalog"
               icon={<CarRentalRoundedIcon sx={{ width: 40, height: 40 }} />}
             />
@@ -532,8 +555,8 @@ function NavBar() {
                 <span className="Logout">Logout</span>
               </MenuItem>
             </Menu>
-          </BottomNavigation> */}
-          <div className="z-40 navigation">
+          </BottomNavigation>
+          {/* <div className="z-40 navigation">
             <ul>
               <li
                 className={`list ${activeLink === 1 ? "active" : ""}`}
@@ -656,7 +679,7 @@ function NavBar() {
               </Menu>
               <div className="indicator"></div>
             </ul>
-          </div>
+          </div> */}
         </>
       )}
     </div>

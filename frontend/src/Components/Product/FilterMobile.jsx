@@ -1,4 +1,5 @@
 import React from "react";
+import FilterOptions from "./FilterOptions";
 
 function FilterMobile({ open }) {
   if (!open) {
@@ -6,7 +7,9 @@ function FilterMobile({ open }) {
   }
 
   return (
-    <div className="w-[92vw] h-[80vh] border-black border rounded absolute left-[4%] z-20 bg-white"></div>
+    <div className="w-[92vw] absolute left-[4%] z-20 bg-light-yellow rounded-2xl">
+      <FilterOptions />
+    </div>
   );
 }
 

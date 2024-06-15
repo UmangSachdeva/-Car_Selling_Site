@@ -11,9 +11,12 @@ import { fadeIn } from "../Utils/motion";
 
 function ProductCard({ index, data }) {
   return (
-    <motion.div variants={fadeIn("right", "spring", 0.5 * index, 0.75)}>
-      <div className="transition-transform cursor-pointer parallax-effect product-card hover:outline hover:outline-black hover:scale-105">
-        <div className="w-[367px] h-[247px] product-carousel">
+    <motion.div
+      variants={fadeIn("right", "spring", 0.5 * index, 0.75)}
+      className="mobile:w-full"
+    >
+      <div className="transition-transform cursor-pointer parallax-effect product-card hover:outline hover:outline-black hover:scale-105 mobile:w-full">
+        <div className="w-[367px] h-[247px] product-carousel mobile:w-full mobile:object-cover">
           <img src={data.images[0]} className="w-full h-full" alt="" />
         </div>
         <div className="product-card-body">

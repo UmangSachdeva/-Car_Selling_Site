@@ -39,7 +39,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
 
     if (!typing) {
       setTyping(true);
-     
+
       socket.emit("typing", selectedChat._id);
     }
 
@@ -75,7 +75,7 @@ function ChatBox({ username, setUsername, room, setRoom }) {
         )
         .then((results) => {
           setMessages(results.data.data);
-       
+
           dispatch(setMessagesGlobal(results.data.data));
           socket.emit("join-chat", selectedChat._id);
         });
@@ -126,7 +126,6 @@ function ChatBox({ username, setUsername, room, setRoom }) {
                 {selectedChat.users[0]?._id === user._id
                   ? selectedChat.users[1]?.profile_name
                   : selectedChat.users[0]?.profile_name}{" "}
-                | Delhi, India
               </span>
             </div>
             <SingleMessage messages={messages} isTyping={isTyping} />

@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { styled, useTheme } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
 import { toast } from "react-hot-toast";
+import MenuIcon from "@mui/icons-material/Menu";
+// import CssBaseline from "@mui/material/CssBaseline";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import logo from "../../Resources/logo-no-background.png";
 import {
   Avatar,
   IconButton,
@@ -20,15 +26,49 @@ import shopContext from "../../Context/shopContext";
 
 const drawerWidth = 240;
 
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  })
+);
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
-  minHeight: "60px",
-  color: "grey",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
 }));
 
 const closedMixin = (theme) => ({
@@ -58,24 +98,24 @@ const openedMixin = (theme) => ({
   overflowX: "hidden",
 });
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  position: "relative",
-  height: "100%",
-  width: "100%",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
+// const Drawer = styled(MuiDrawer, {
+//   shouldForwardProp: (prop) => prop !== "open",
+// })(({ theme, open }) => ({
+//   flexShrink: 0,
+//   whiteSpace: "nowrap",
+//   boxSizing: "border-box",
+//   position: "relative",
+//   height: "100%",
+//   width: "100%",
+//   // ...(open && {
+//   //   ...openedMixin(theme),
+//   //   "& .MuiDrawer-paper": openedMixin(theme),
+//   // }),
+//   // ...(!open && {
+//   //   ...closedMixin(theme),
+//   //   "& .MuiDrawer-paper": closedMixin(theme),
+//   // }),
+// }));
 
 function ChatHeads() {
   const [chats, setChats] = useState();
@@ -146,7 +186,6 @@ function ChatHeads() {
   };
 
   useEffect(() => {
-   
     if (localStorage.getItem("user")) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
@@ -223,7 +262,44 @@ function ChatHeads() {
       )}
       {window.innerWidth < 786 && (
         <>
-          <Drawer variant="permanent" open={open}>
+          <AppBar
+            position="fixed"
+            open={open}
+            className="bg-[#fffcf5] h-[60px]"
+          >
+            <Toolbar>
+              <IconButton
+                className="z-20"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 2, ...(open && { display: "none" }) }}
+              >
+                <MenuIcon className="text-black" />
+              </IconButton>
+              <div
+                className="heading font-type-1"
+                style={{
+                  fontWeight: 700,
+                  fontSize: 28,
+                  marginTop: "14px",
+                  position: `${
+                    location.pathname === "/messages" ? "fixed" : ""
+                  }`,
+                  width: "100%",
+                }}
+              >
+                <img
+                  style={{ width: "50%" }}
+                  src={logo}
+                  alt=""
+                  className="m-auto"
+                />
+              </div>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="persistent" open={open}>
             <DrawerHeader
               sx={{
                 justifyContent: open ? "flex-end" : "center",
@@ -249,6 +325,7 @@ function ChatHeads() {
                 </IconButton>
               )}
             </DrawerHeader>
+
             <Divider />
             <List>
               {loading && (

@@ -11,6 +11,21 @@ function ChatSpace() {
     setSelectedPage("message");
   }, []);
 
+  if (window.innerWidth < 786) {
+    return (
+      <div className="chatspace-container mobile:w-full">
+        {/* <ChatHeads />
+        <div className="w-full mt-10 mb-10">
+          <ChatBox />
+        </div> */}
+
+        <ChatHeads />
+        <div className="mb-[375px] chatspace-container h-[80vh] mobile:w-full">
+          <ChatBox />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="chat-container">
       <div className="chathead-container">
