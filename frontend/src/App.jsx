@@ -16,6 +16,9 @@ const ChatSpace = lazy(() => import("./Components/Messages/ChatSpace"));
 const Home = lazy(() => import("./Components/Home"));
 const ProductPage = lazy(() => import("./Components/Product/ProductPage"));
 const ListingForm = lazy(() => import("./Components/ListingForm/ListingForm"));
+const Notification = lazy(() =>
+  import("./Components/Notifications/NotificationMobile")
+);
 // import NavBar from "./Components/NavBar";
 // import Footer from "./Components/Footer";
 // import ChatSpace from "./Components/Messages/ChatSpace";
@@ -28,19 +31,7 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const context = useContext(shopContext);
-  const {
-    user,
-    setSocket,
-    setIsTyping,
-    setSocketConnected,
-    notification,
-    setNotification,
-    fetchAgain,
-    setMessages,
-    setFetchAgain,
-    messages,
-    selectedChat,
-  } = context;
+  const { user, setSocket, setIsTyping, setSocketConnected } = context;
 
   useEffect(() => {
     socket = io(import.meta.env.VITE_APP_SOCKET_URL);
@@ -50,39 +41,16 @@ function App() {
     socket.emit("setup", userData);
 
     socket.on("typing", () => {
-    
       setIsTyping(true);
     });
 
     socket.on("stop-typing", () => setIsTyping(false));
 
     socket.on("connected", () => {
-   
+      console.log("Connected");
       setSocketConnected(true);
     });
-  }, []);
-
-  useEffect(() => {
-    
-    socket.on("message-received", (newMessageReceived) => {
-      
-      if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
-        if (!notification.includes(newMessageReceived)) {
-          setNotification([newMessageReceived, ...notification]);
-          setFetchAgain(!fetchAgain);
-        } else {
-          setFetchAgain(!fetchAgain);
-        }
-      } else {
-        // setFetchAgain(!fetchAgain);
-        dispatch(addMessages(newMessageReceived));
-        setMessages([...messages, newMessageReceived]);
-      }
-    });
-    return () => {
-      socket.off("message-received");
-    };
-  });
+  }, [user]);
 
   return (
     <div className="App">
@@ -95,6 +63,7 @@ function App() {
             <Route path="/car-space" element={<ProductPage />} />
             <Route path="/car-space/:id" element={<ProductDetails />} />
             <Route path="/list-your-car" element={<ListingForm />} />
+            <Route path="/your-notifications" element={<Notification />} />
           </Routes>
         </AnimatePresence>
         {location.pathname !== "/messages" && <Footer />}

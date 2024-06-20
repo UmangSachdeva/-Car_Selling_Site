@@ -22,7 +22,6 @@ mongoose
   });
 
 app.get("/", (req, res) => {
-  console.log(__dirname);
   res.sendFile(__dirname + "/index.html");
 });
 
@@ -41,11 +40,12 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData?._id);
-
+    console.log("setup", userData);
     socket.emit("connected");
   });
 
   socket.on("typing", (room) => {
+    // console.log(room);
     socket.in(room).emit("typing");
   });
   socket.on("stop-typing", (room) => {
@@ -60,11 +60,11 @@ io.on("connection", (socket) => {
     let chat = newMessageReceived.chat;
 
     if (!chat.users) return console.log(`chat.users not defined`);
-
+    // console.log(chat);
     chat.users.forEach((user) => {
       if (user._id === newMessageReceived.sender._id) return;
-
-      socket.in(user._id).emit("message-received", newMessageReceived);
+      // console.log("sent to", user._id);
+      socket.to(user._id).emit("message-received", newMessageReceived);
     });
   });
 

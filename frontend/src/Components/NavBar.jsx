@@ -14,6 +14,7 @@ import {
 import { Toaster } from "react-hot-toast";
 
 import {
+  CarRental,
   CarRentalRounded,
   DirectionsCarFilled,
   DirectionsCarFilledOutlined,
@@ -38,6 +39,7 @@ import shopContext from "../Context/shopContext";
 import io from "socket.io-client";
 import { useLocation, useNavigate, NavLink, Link } from "react-router-dom";
 import axiosPrivate from "../axios_config/axiosPrivate";
+import Notification from "./Notifications/Notification";
 
 let selectedChatCompare;
 let socket;
@@ -58,10 +60,10 @@ function NavBar() {
   } = context;
   const nav = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [anchorEl2, setAnchorEl2] = useState(null);
+
   const [login, setLogin] = useState(false);
   const open = Boolean(anchorEl);
-  const open2 = Boolean(anchorEl2);
+
   const location = useLocation();
   const [activeLink, setActiveLink] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
@@ -73,14 +75,8 @@ function NavBar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClick2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
   const handleCloseAccount = () => {
     setAnchorEl(null);
-  };
-  const handleCloseAccount2 = () => {
-    setAnchorEl2(null);
   };
 
   const stringToColor = (string) => {
@@ -218,135 +214,7 @@ function NavBar() {
             {loggedIn && (
               <div className="profile-part">
                 <div className="login-info">
-                  <IconButton
-                    onClick={handleClick2}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={open2 ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open2 ? "true" : undefined}
-                  >
-                    {notification.length === 0 ? (
-                      <NotificationsNoneRoundedIcon
-                        sx={{ color: "#212529", width: 30, height: 30 }}
-                      />
-                    ) : (
-                      <Badge badgeContent={notification.length} color="primary">
-                        <NotificationsRoundedIcon
-                          sx={{ color: "#212529", width: 30, height: 30 }}
-                        />
-                      </Badge>
-                    )}
-                  </IconButton>
-
-                  {notification.length === 0 ? (
-                    <Menu
-                      anchorEl={anchorEl2}
-                      id="account-menu"
-                      open={open2}
-                      onClose={handleCloseAccount2}
-                      onClick={handleCloseAccount2}
-                      PaperProps={{
-                        elevation: 0,
-                        sx: {
-                          overflow: "visible",
-                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                          mt: 1.5,
-                          "& .MuiAvatar-root": {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                          },
-                          "&:before": {
-                            content: '""',
-                            display: "block",
-                            position: "absolute",
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: "background.paper",
-                            color: "black",
-                            transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
-                          },
-                        },
-                      }}
-                      transformOrigin={{
-                        horizontal: "right",
-                        vertical: "top",
-                      }}
-                      anchorOrigin={{
-                        horizontal: "right",
-                        vertical: "bottom",
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>
-                        <span className="menu-title">No Notifications</span>
-                      </MenuItem>
-                    </Menu>
-                  ) : (
-                    <Menu
-                      anchorEl={anchorEl2}
-                      id="account-menu"
-                      open={open2}
-                      onClose={handleCloseAccount2}
-                      onClick={handleCloseAccount2}
-                      PaperProps={{
-                        elevation: 0,
-                        sx: {
-                          overflow: "visible",
-                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                          mt: 1.5,
-                          "& .MuiAvatar-root": {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                          },
-                          "&:before": {
-                            content: '""',
-                            display: "block",
-                            position: "absolute",
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: "background.paper",
-                            color: "black",
-                            transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
-                          },
-                        },
-                      }}
-                      transformOrigin={{
-                        horizontal: "right",
-                        vertical: "top",
-                      }}
-                      anchorOrigin={{
-                        horizontal: "right",
-                        vertical: "bottom",
-                      }}
-                    >
-                      {notification.map((noti, index) => (
-                        <MenuItem
-                          onClick={() => {
-                            setSelectedChat(noti.chat);
-                            setNotification(
-                              notification.filter((n) => n !== noti)
-                            );
-                            nav("/messages");
-                          }}
-                          key={index}
-                        >
-                          <span className="menu-title">
-                            New Message From {noti?.sender.profile_name}
-                          </span>
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  )}
+                  <Notification />
                 </div>
                 <div className="login-info">
                   <IconButton
@@ -455,7 +323,16 @@ function NavBar() {
             sx={{
               height: "80px",
               borderRadius: 0,
-              "& .MuiBottomNavigationLable": { color: "white" },
+              "& .Mui-selected": {
+                "& .MuiSvgIcon-root, & .MuiBottomNavigationAction-label": {},
+              },
+
+              "& .MuiBottomNavigationAction-label": {
+                color: "white",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#eeeeee",
+              },
             }}
             showLabels
             value={selectedPage}
@@ -464,19 +341,19 @@ function NavBar() {
             }}
           >
             <BottomNavigationAction
-              label="HOME"
+              label="Home"
               value="home"
               icon={<HomeIcon sx={{ width: 40, height: 40 }} />}
               onClick={() => nav("/")}
             />
             <BottomNavigationAction
-              label="CATALOG"
+              label="Catalog"
               onClick={() => nav("/car-space")}
               value="catalog"
               icon={<CarRentalRoundedIcon sx={{ width: 40, height: 40 }} />}
             />
             <BottomNavigationAction
-              label="MESSAGES"
+              label="Messages"
               onClick={() => nav("/messages")}
               value="message"
               icon={<PaidRoundedIcon sx={{ width: 40, height: 40 }} />}
@@ -484,8 +361,8 @@ function NavBar() {
 
             {loggedIn ? (
               <BottomNavigationAction
-                value="account"
-                label="ACCOUNT"
+                // value="account"
+                label="Account"
                 onClick={handleClick}
                 icon={
                   <Avatar
@@ -511,6 +388,7 @@ function NavBar() {
               PaperProps={{
                 elevation: 0,
                 sx: {
+                  minWidth: "200px",
                   bottom: "74px !important",
                   top: "auto !important",
                   overflow: "visible",
@@ -540,14 +418,18 @@ function NavBar() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() => nav("/your-notifications")}>
                 <ListItemIcon>
-                  <Settings fontSize="small" />
+                  <NotificationsNoneRoundedIcon fontSize="small" />
                 </ListItemIcon>
-                <span className="menu-title">Setting</span>
-                Settings
+                <span className="menu-title">Notifications</span>
               </MenuItem>
-              <Divider />
+              <MenuItem onClick={() => nav("/list-your-car")}>
+                <ListItemIcon>
+                  <DirectionsCarFilled fontSize="small" />
+                </ListItemIcon>
+                <span className="menu-title">List your Car</span>
+              </MenuItem>
               <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
                 <ListItemIcon>
                   <Logout sx={{ color: "#ff7730" }} fontSize="small" />
@@ -556,130 +438,6 @@ function NavBar() {
               </MenuItem>
             </Menu>
           </BottomNavigation>
-          {/* <div className="z-40 navigation">
-            <ul>
-              <li
-                className={`list ${activeLink === 1 ? "active" : ""}`}
-                onClick={() => setActiveLink(1)}
-                id="1"
-              >
-                <NavLink to="/">
-                  <span className="nav-icon">
-                    <ion-icon name="home-outline"></ion-icon>
-                  </span>
-                  <span className="nav-text">Home</span>
-                </NavLink>
-              </li>
-              <li
-                className={`list ${activeLink === 2 ? "active" : ""}`}
-                onClick={() => setActiveLink(2)}
-                id="2"
-              >
-                <NavLink to="/car-space">
-                  <span className="nav-icon">
-                    <ion-icon name="car-sport-outline"></ion-icon>
-                  </span>
-                  <span className="nav-text">Catelog</span>
-                </NavLink>
-              </li>
-              <li
-                className={`list ${activeLink === 3 ? "active" : ""}`}
-                onClick={() => setActiveLink(3)}
-                id="3"
-              >
-                <NavLink to="/messages">
-                  <span className="nav-icon">
-                    <ion-icon name="chatbubbles-outline"></ion-icon>
-                  </span>
-                  <span className="nav-text">Messages</span>
-                </NavLink>
-              </li>
-              {loggedIn ? (
-                <li
-                  className={`list ${activeLink === 4 ? "active" : ""}`}
-                  onClick={(e) => {
-                    setActiveLink(4);
-                    handleClick(e);
-                  }}
-                  id="4"
-                >
-                  <NavLink href="#">
-                    <span className="nav-icon">
-                      <ion-icon name="person-outline"></ion-icon>
-                    </span>
-                    <span className="nav-text">Account</span>
-                  </NavLink>
-                </li>
-              ) : (
-                <li
-                  className={`list ${activeLink === 4 ? "active" : ""}`}
-                  onClick={() => setLogin(true)}
-                  id="4"
-                >
-                  <NavLink href="#">
-                    <span className="nav-icon">
-                      <ion-icon name="person-outline"></ion-icon>
-                    </span>
-                    <span className="nav-text">LogIn</span>
-                  </NavLink>
-                </li>
-              )}
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={open}
-                onClose={handleCloseAccount}
-                onClick={handleCloseAccount}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    bottom: "74px !important",
-                    top: "auto !important",
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      bottom: -10,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      color: "black",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  <span className="menu-title">Setting</span>
-                  Settings
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={handleLogout} sx={{ color: "black" }}>
-                  <ListItemIcon>
-                    <Logout sx={{ color: "#ff7730" }} fontSize="small" />
-                  </ListItemIcon>
-                  <span className="Logout">Logout</span>
-                </MenuItem>
-              </Menu>
-              <div className="indicator"></div>
-            </ul>
-          </div> */}
         </>
       )}
     </div>
